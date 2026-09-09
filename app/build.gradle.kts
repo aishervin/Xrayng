@@ -66,6 +66,7 @@ android {
 }
 
 dependencies {
+    implementation(files("libs/libv2ray.aar"))
     // AndroidX Core Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

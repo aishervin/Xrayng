@@ -27,12 +27,14 @@ V2rayNG/app/libs
 # Ignore APK and AAR files
 *.apk
 *.aar
+!app/libs/libv2ray.aar
 
 # Ignore signing properties
 signing.properties
 
 # Ignore shared object files
 *.so
+!app/src/main/jniLibs/**/*.so
 
 # Ignore Google services JSON
 V2rayNG/app/google-services.json
