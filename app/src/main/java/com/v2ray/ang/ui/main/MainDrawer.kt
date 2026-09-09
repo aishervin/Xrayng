@@ -100,7 +100,7 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(175.dp),
+                        .height(185.dp),
                     color = MaterialTheme.colorScheme.surfaceContainer
                 ) {
                     Column(
@@ -113,17 +113,33 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                         Image(
                             painter = painterResource(R.drawable.ic_launcher_foreground),
                             contentDescription = null,
-                            modifier = Modifier.size(90.dp)
+                            modifier = Modifier.size(86.dp)
                         )
-                        Spacer(modifier = Modifier.height(6.dp))
-                        Text(
-                            text = stringResource(R.string.app_name),
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                                letterSpacing = 1.sp
-                            ),
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Xrayng",
+                                style = MaterialTheme.typography.titleLarge.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                                    letterSpacing = 1.sp
+                                ),
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "SHΞN™ made",
+                                color = Color(0xFFFF7A00),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontWeight = FontWeight.Normal,
+                                    letterSpacing = 0.4.sp,
+                                    fontSize = 11.sp
+                                )
+                            )
+                        }
                     }
                 }
                 drawerItems.forEachIndexed { index, item ->

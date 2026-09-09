@@ -1,34 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Outer Glow for Italic X -->
-    <path
-        android:fillColor="#26FF7A00"
-        android:pathData="M37,23 L54,23 L79,85 L62,85 Z" />
-    <path
-        android:fillColor="#26FF7A00"
-        android:pathData="M71,23 L88,23 L47,85 L30,85 Z" />
 
-    <!-- Main Diagonal Slash 1 (Top-Left to Bottom-Right) in Neon Orange -->
+    <!-- Soft Ambient Neon Orange Glow -->
     <path
-        android:fillColor="#FF7A00"
-        android:pathData="M39,25 L52,25 L77,83 L64,83 Z" />
+        android:pathData="M24,20 L58,20 C54,26 62,32 64,36 L84,70 C88,77 96,80 98,88 L64,88 C68,82 60,76 58,72 L38,38 C34,31 26,28 24,20 Z"
+        android:fillColor="#22FF7A00" />
+    <path
+        android:pathData="M64,20 L96,20 C90,26 84,30 80,36 L38,72 C32,77 28,82 32,88 L4,88 C10,82 18,78 22,72 L62,36 C66,31 68,26 64,20 Z"
+        android:fillColor="#22FF7A00" />
 
-    <!-- Top-Right to Center Slash in Silver White -->
+    <!-- Roman Italic X - Main Heavy Stem with Wavy Metallic Silver-Black Gradient & Serifs -->
     <path
-        android:fillColor="#F0F0F5"
-        android:pathData="M73,25 L86,25 L63,51 L53,43 Z" />
+        android:pathData="M25,22 L56,22 C52,26 53,30 57,36 L79,72 C83,78 88,80 94,86 L65,86 C69,82 67,78 63,72 L41,36 C37,30 31,28 25,22 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="25"
+                android:startY="22"
+                android:endX="94"
+                android:endY="86">
+                <item android:offset="0.0" android:color="#FFFFFFFF" />
+                <item android:offset="0.25" android:color="#FFD4D5DF" />
+                <item android:offset="0.55" android:color="#FF5A5B6A" />
+                <item android:offset="0.80" android:color="#FF24242E" />
+                <item android:offset="1.0" android:color="#FF0D0D12" />
+            </gradient>
+        </aapt:attr>
+    </path>
 
-    <!-- Center to Bottom-Left Slash in Silver White -->
+    <!-- Roman Italic X - Counter Thin Stroke with Silver Wavy Gradient & Serifs -->
     <path
-        android:fillColor="#F0F0F5"
-        android:pathData="M51,59 L61,67 L39,83 L26,83 Z" />
+        android:pathData="M70,22 L94,22 C88,27 82,31 78,37 L38,71 C33,76 30,81 33,86 L10,86 C16,81 21,77 26,71 L66,37 C70,31 71,27 70,22 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="94"
+                android:startY="22"
+                android:endX="10"
+                android:endY="86">
+                <item android:offset="0.0" android:color="#FFFFFFFF" />
+                <item android:offset="0.30" android:color="#FFC8C9D6" />
+                <item android:offset="0.65" android:color="#FF636475" />
+                <item android:offset="1.0" android:color="#FF1A1A22" />
+            </gradient>
+        </aapt:attr>
+    </path>
 
-    <!-- Sharp Dynamic Accent Highlight -->
+    <!-- Inner Smooth Highlight Wave -->
     <path
-        android:fillColor="#FFA347"
-        android:pathData="M39,25 L45,25 L71,83 L64,83 Z" />
+        android:pathData="M29,24 L48,24 C45,28 47,31 51,36 L72,71 C75,76 79,78 84,83 L77,83 C74,78 71,76 68,71 L46,36 C42,31 38,29 29,24 Z"
+        android:fillColor="#33FFFFFF" />
+
+    <!-- Delicate Neon Orange Precision Edge Accent -->
+    <path
+        android:pathData="M56,22 L58,23 L80,72 C84,78 89,80 94,86 L92,86 C87,80 82,78 78,72 L56,22 Z"
+        android:fillColor="#FFFF7A00" />
+    <path
+        android:pathData="M25,22 L27,22 C33,28 39,30 43,36 L65,72 C69,78 69,82 65,86 L63,86 C67,82 67,78 63,72 L41,36 C37,30 31,28 25,22 Z"
+        android:fillColor="#99FF7A00" />
+
 </vector>
