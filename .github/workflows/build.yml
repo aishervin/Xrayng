@@ -1,5 +1,4 @@
 name: Build APK
-
 on:
   workflow_dispatch:
     inputs:
@@ -9,42 +8,45 @@ on:
   push:
     branches:
       - master
-
 permissions:
   contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         submodules: 'recursive'
         fetch-depth: '0'
-
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '17'
-
+        
     - name: Generate debug keystore
       run: |
         if [ ! -f "debug.keystore" ]; then
           keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Android Debug"
         fi
 
+    # ---> این مرحله را حتماً اضافه کنید <---
+    - name: Download core dependencies
+      run: |
+        mkdir -p app/libs
+        curl -L -o app/libs/libv2ray.aar "https://github.com/2dust/AndroidLibXrayLite/releases/download/v26.9.9/libv2ray.aar"
+    # ----------------------------------------
+
     - name: Build APK
       run: |
         chmod +x gradlew
         ./gradlew assembleRelease
-    
+        
     - name: Rename APK
       run: |
         if [ -f app/build/outputs/apk/release/app-release.apk ]; then mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Xrayng-release.apk; fi
-    
+        
     - name: Upload universal APK
       uses: actions/upload-artifact@v4
       if: ${{ success() }}
@@ -56,13 +58,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && inputs.release_tag != ''
-
     steps:
       - name: Download APK artifacts
         uses: actions/download-artifact@v4
         with:
           path: release
-
       - name: Upload APKs to release
         uses: svenstaro/upload-release-action@v2
         with:
