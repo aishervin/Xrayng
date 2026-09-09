@@ -86,10 +86,11 @@ object LauncherManager {
             }
 
         if (!config.configType.isComplexType()
+            && !Utils.isValidServerAddress(config.server)
             && !Utils.isValidUrl(config.server)
             && !Utils.isPureIpAddress(config.server.orEmpty())
         ) {
-            LogUtil.e(AppConfig.TAG, "LauncherManager: Invalid server configuration")
+            LogUtil.e(AppConfig.TAG, "LauncherManager: Invalid server configuration (${config.server})")
             error(context.getString(R.string.toast_config_file_invalid))
         }
 

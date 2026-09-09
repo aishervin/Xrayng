@@ -125,10 +125,14 @@ object Utils {
      */
     fun encode(text: String, removePadding: Boolean = false): String {
         return try {
-            var encoded = try {
-                Base64.encodeToString(text.toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
-            } catch (t: Throwable) {
-                java.util.Base64.getEncoder().encodeToString(text.toByteArray(Charsets.UTF_8))
+            val bytes = text.toByteArray(Charsets.UTF_8)
+            var encoded: String? = null
+            try {
+                encoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
+            } catch (_: Throwable) {
+            }
+            if (encoded.isNullOrEmpty()) {
+                encoded = java.util.Base64.getEncoder().encodeToString(bytes)
             }
             if (removePadding) {
                 encoded = encoded.trimEnd('=')
@@ -190,7 +194,15 @@ object Utils {
      * @return True if the string is a pure IP address, false otherwise.
      */
     fun isPureIpAddress(value: String): Boolean {
-        return isIpv4Address(value) || isIpv6Address(value)
+        if (value.isBlank()) return false
+        var addr = value.trim()
+        if (addr.startsWith("[") && addr.contains("]")) {
+            val closing = addr.indexOf("]")
+            addr = addr.substring(1, closing)
+        } else if (addr.count { it == ':' } == 1 && !addr.contains("/")) {
+            addr = addr.substringBefore(":")
+        }
+        return isIpv4Address(addr) || isIpv6Address(addr) || isIpAddress(addr)
     }
 
     /**
@@ -202,10 +214,35 @@ object Utils {
      * @return True if the string is a valid domain name, false otherwise.
      */
     fun isDomainName(input: String?): Boolean {
-        if (input.isNullOrEmpty()) return false
+        if (input.isNullOrBlank()) return false
+        val trimmed = input.trim()
+        return !isPureIpAddress(trimmed) && isValidServerAddress(trimmed)
+    }
 
-        // Must not be an IP address and must be a valid URL format
-        return !isPureIpAddress(input) && isValidUrl(input)
+    /**
+     * Check if a string is a valid server address (IP address, domain, or hostname).
+     *
+     * @param value The string to check.
+     * @return True if the string is a valid server address, false otherwise.
+     */
+    fun isValidServerAddress(value: String?): Boolean {
+        if (value.isNullOrBlank()) return false
+        var host = value.trim()
+        if (host.isEmpty()) return false
+
+        if (host.startsWith("[") && host.contains("]")) {
+            val closeIdx = host.indexOf(']')
+            host = host.substring(1, closeIdx)
+        } else if (host.count { it == ':' } == 1) {
+            host = host.substringBefore(':')
+        }
+
+        if (host.isEmpty()) return false
+        if (isPureIpAddress(host) || isIpAddress(host)) return true
+        if (host.equals("localhost", ignoreCase = true)) return true
+
+        val hostRegex = Regex("^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$")
+        return hostRegex.matches(host)
     }
 
     /**
@@ -215,7 +252,8 @@ object Utils {
      * @return True if the string is a valid IPv4 address, false otherwise.
      */
     private fun isIpv4Address(value: String): Boolean {
-        return IPV4_REGEX.matches(value)
+        val trimmed = value.trim()
+        return IPV4_REGEX.matches(trimmed)
     }
 
     /**
@@ -225,13 +263,14 @@ object Utils {
      * @return True if the string is a valid IPv6 address, false otherwise.
      */
     private fun isIpv6Address(value: String): Boolean {
-        var addr = value
+        var addr = value.trim()
         if (addr.startsWith("[")) {
             val closingBracket = addr.lastIndexOf(']')
             if (closingBracket <= 1) return false
             addr = addr.substring(1, closingBracket)
         }
-        return IPV6_REGEX.matches(addr)
+        if (addr.contains('.')) return false
+        return IPV6_REGEX.matches(addr) || (addr.contains(':') && isIpAddress(addr))
     }
 
     /**
@@ -254,15 +293,17 @@ object Utils {
      * @return True if the string is a valid URL, false otherwise.
      */
     fun isValidUrl(value: String?): Boolean {
-        if (value.isNullOrEmpty()) return false
+        if (value.isNullOrBlank()) return false
+        val trimmed = value.trim()
 
         return try {
-            Patterns.WEB_URL.matcher(value).matches() ||
-                    Patterns.DOMAIN_NAME.matcher(value).matches() ||
-                    URLUtil.isValidUrl(value)
+            Patterns.WEB_URL.matcher(trimmed).matches() ||
+                    Patterns.DOMAIN_NAME.matcher(trimmed).matches() ||
+                    URLUtil.isValidUrl(trimmed) ||
+                    isValidServerAddress(trimmed)
         } catch (e: Exception) {
             LogUtil.e(AppConfig.TAG, "Failed to validate URL", e)
-            false
+            isValidServerAddress(trimmed)
         }
     }
 

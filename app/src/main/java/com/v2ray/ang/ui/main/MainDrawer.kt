@@ -148,7 +148,13 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                         label = { Text(stringResource(item.labelRes)) },
                         selected = false,
                         onClick = { onNavigate(item) },
-                        icon = { Icon(painterResource(item.iconRes), contentDescription = null) },
+                        icon = {
+                            Icon(
+                                painter = painterResource(item.iconRes),
+                                contentDescription = null,
+                                tint = Color(0xFFFF7A00)
+                            )
+                        },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
                 }
@@ -183,13 +189,6 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_telegram_24dp),
-                        contentDescription = null,
-                        tint = Color(0xFFFF7A00),
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = footerText,
                         color = Color(0xFFFF7A00),
