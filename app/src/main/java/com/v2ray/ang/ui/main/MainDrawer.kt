@@ -111,7 +111,7 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                         verticalArrangement = Arrangement.Center
                     ) {
                         Image(
-                            painter = painterResource(R.drawable.ic_launcher_foreground),
+                            painter = painterResource(R.drawable.ic_xrayng_logo),
                             contentDescription = null,
                             modifier = Modifier.size(86.dp)
                         )
