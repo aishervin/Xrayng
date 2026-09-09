@@ -39,7 +39,7 @@ jobs:
     - name: Download core dependencies
       run: |
         mkdir -p app/libs
-        curl -L -o app/libs/libv2ray.aar "https://github.com/2dust/AndroidLibXrayLite/releases/download/v26.9.9/libv2ray.aar"
+        curl -L -o app/libs/libv2ray.aar "https://github.com/2dust/AndroidLibXrayLite/releases/download/v26.8.20/libv2ray.aar"
 
     - name: Build APK
       run: |
