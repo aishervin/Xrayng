@@ -25,9 +25,10 @@ jobs:
         fetch-depth: '0'
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v4
       with:
         log-accepted-android-sdk-licenses: true
+        cmdline-tools-version: '14742923'
         packages: 'platforms;android-37 build-tools;37.0.0 platform-tools'
 
     - name: Setup Java
