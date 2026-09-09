@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Shenbypass"
+rootProject.name = "Xrayng"
 include(":app")

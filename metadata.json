@@ -1,6 +1,6 @@
 {
-  "name": "Shenbypass",
-  "description": "V2Ray and proxy client for Android with subscription management, routing rules, and connection testing",
+  "name": "Xrayng",
+  "description": "V2Ray and proxy client for Android with built-in SHΞN subscriptions, routing rules, and connection testing",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -19,6 +19,12 @@ object AppConfig {
     // Default subscription ID for ungrouped servers
     const val DEFAULT_SUBSCRIPTION_ID = "__default_subscription__"
 
+    /** Built-in dedicated subscriptions */
+    const val BUILTIN_SUB_PROXYNG_URL = "https://raw.githubusercontent.com/shervinofpersia/Config/refs/heads/main/ProxyNg.json"
+    const val BUILTIN_SUB_PROXYNG_REMARKS = "SHΞN ProxyNG"
+    const val BUILTIN_SUB_VLESS_URL = "https://subshen.pages.dev"
+    const val BUILTIN_SUB_VLESS_REMARKS = "SHΞN VLESS"
+
     /** Preferences mapped to MMKV storage. */
     const val PREF_SNIFFING_ENABLED = "pref_sniffing_enabled"
     const val PREF_ROUTE_ONLY_ENABLED = "pref_route_only_enabled"
