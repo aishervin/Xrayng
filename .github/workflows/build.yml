@@ -24,9 +24,6 @@ jobs:
         submodules: 'recursive'
         fetch-depth: '0'
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
@@ -35,7 +32,6 @@ jobs:
 
     - name: Build APK
       run: |
-        echo "sdk.dir=${ANDROID_HOME}" > local.properties
         chmod +x gradlew
         ./gradlew assembleRelease
     
