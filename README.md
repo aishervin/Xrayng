@@ -1,11 +1,21 @@
-<div align="center">
+# ShenBypass
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Shenbypass is an advanced V2Ray and proxy client for Android, built with Kotlin and Jetpack Compose.
 
-  <h1>Built with AI Studio</h2>
+## Features
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+- **Protocol Support**: Supports VMess, VLESS, Shadowsocks, Trojan, WireGuard, Hysteria2, SOCKS, and HTTP proxies.
+- **Modern Jetpack Compose UI**: Complete Material Design 3 interface with server list, drawer navigation, group tabs, and dark/light mode themes.
+- **Subscription Management**: Import and manage subscription links, update configs on demand or on a schedule, with QR code sharing and scanning.
+- **Flexible Routing**: Custom routing rules (Blacklist, Whitelist, Global, and custom domain/IP rules), with Per-App Proxy configuration.
+- **Network Tools & Diagnostics**: Real ping testing, speed testing, logcat viewer, connection status indicators, and quick-settings tile integration.
+- **Backup & Restore**: Easily backup configurations to local storage or WebDAV and restore on another device.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Tech Stack
 
-</div>
+- **Platform**: Android SDK 37 (Min SDK 24)
+- **Language**: Kotlin 2.4+
+- **UI Toolkit**: Jetpack Compose & Material 3
+- **State & Storage**: MMKV, ViewModel, Coroutines, StateFlow
+- **Camera & Scanning**: CameraX + ZXing
+- **Build System**: Gradle (Kotlin DSL) with Version Catalog
