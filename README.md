@@ -1,7 +1,7 @@
 <div align="center">
   <img src="app/src/main/ic_launcher-web.png" width="150" alt="Xrayng Logo">
-  <h1 style="color: #FFA500;">Xrayng (شین بای‌پس)</h1>
-  <p><b>یک کلاینت قدرتمند، ارتقا یافته و بهینه‌شده بر پایه v2rayNG</b></p>
+  <h1 style="color: #FFA500;">Xrayng (SHΞN™)</h1>
+  <p><b> کلاینت اختصاصی ، ارتقا یافته و بهینه‌شده بر پایه v2rayNG</b></p>
 </div>
 
 <p align="center">
@@ -64,4 +64,4 @@
 <br>
 
 ---
-<p align="center"><b>توسعه یافته برای دسترسی آزاد به اینترنت | Xrayng</b></p>
+<p align="center"><b> ☬Exclusive SHΞN™ made | Xrayng</b></p>
