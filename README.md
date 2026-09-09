@@ -1,21 +1,67 @@
-# ShenBypass
+<div align="center">
+  <img src="app/src/main/ic_launcher-web.png" width="150" alt="Xrayng Logo">
+  <h1 style="color: #FFA500;">Xrayng (شین بای‌پس)</h1>
+  <p><b>یک کلاینت قدرتمند، ارتقا یافته و بهینه‌شده بر پایه v2rayNG</b></p>
+</div>
 
-Shenbypass is an advanced V2Ray and proxy client for Android, built with Kotlin and Jetpack Compose.
+<p align="center">
+  <a href="https://github.com/aishervin/xrayng/releases/latest">
+    <img src="https://img.shields.io/github/v/release/aishervin/xrayng?color=FFA500&label=Latest%20Release&style=for-the-badge" alt="Latest Release">
+  </a>
+  <a href="https://github.com/aishervin/xrayng/releases/latest">
+    <img src="https://img.shields.io/github/downloads/aishervin/xrayng/total?color=FF8C00&style=for-the-badge" alt="Downloads">
+  </a>
+</p>
 
-## Features
+<img src="assets/neon_line.svg" width="100%" height="15">
 
-- **Protocol Support**: Supports VMess, VLESS, Shadowsocks, Trojan, WireGuard, Hysteria2, SOCKS, and HTTP proxies.
-- **Modern Jetpack Compose UI**: Complete Material Design 3 interface with server list, drawer navigation, group tabs, and dark/light mode themes.
-- **Subscription Management**: Import and manage subscription links, update configs on demand or on a schedule, with QR code sharing and scanning.
-- **Flexible Routing**: Custom routing rules (Blacklist, Whitelist, Global, and custom domain/IP rules), with Per-App Proxy configuration.
-- **Network Tools & Diagnostics**: Real ping testing, speed testing, logcat viewer, connection status indicators, and quick-settings tile integration.
-- **Backup & Restore**: Easily backup configurations to local storage or WebDAV and restore on another device.
+## 🌟 معرفی پروژه
+پروژه **Xrayng** یک نسخه ارتقا یافته و سفارشی‌سازی شده از کلاینت محبوب `v2rayNG` است. هدف ما در این پروژه، رفع محدودیت‌ها، بهبود رابط کاربری (با تم تاریک و المان‌های نارنجی)، و اضافه کردن قابلیت‌های کاربردی است که جای خالی آن‌ها به شدت در نسخه اصلی حس می‌شد.
 
-## Tech Stack
+<img src="assets/neon_line.svg" width="100%" height="15">
 
-- **Platform**: Android SDK 37 (Min SDK 24)
-- **Language**: Kotlin 2.4+
-- **UI Toolkit**: Jetpack Compose & Material 3
-- **State & Storage**: MMKV, ViewModel, Coroutines, StateFlow
-- **Camera & Scanning**: CameraX + ZXing
-- **Build System**: Gradle (Kotlin DSL) with Version Catalog
+## 🚀 فاز اول: امکانات فعلی (انجام شده)
+در نسخه فعلی (فاز اول)، تمرکز ما بر روی بهبود تجربه کاربری و دسترسی سریع‌تر به اینترنت آزاد بوده است:
+*   ✅ **حل مشکل پراکسی‌های HTTP و SOCKS:** انتقال و ایمپورت دسته‌ای (Batch Import) پراکسی‌های SOCKS و HTTP که در نسخه اصلی با مشکل مواجه بود، کاملاً برطرف شده است.
+*   ✅ **منابع پیش‌فرض غنی:** اضافه شدن دو مخزن (Subscription) قدرتمند و غنی به صورت درون‌برنامه‌ای، تا کاربران بدون نیاز به جستجو، به سرورهای باکیفیت دسترسی داشته باشند.
+
+<img src="assets/neon_line.svg" width="100%" height="15">
+
+## 🚧 فاز دوم: نقشه‌راه (آینده)
+در فاز دوم، پروژه وارد مرحله تخصصی **MTProxy** خواهد شد:
+*   🔍 **دریافت و تست سلامت:** استخراج پروکسی‌های MTProto از منابع معتبر و تست سلامت و پینگ آن‌ها به صورت خودکار.
+*   ✈️ **پراکسی مستقیم تلگرام:** اعمال پراکسی‌های سالم به صورت مستقیم روی کلاینت تلگرام از داخل خود برنامه.
+*   🔗 **اشتراک‌گذاری هوشمند:** امکان ارسال و اشتراک‌گذاری مستقیم لیست پراکسی‌های سالم در محیط تلگرام برای سایرین.
+
+<img src="assets/neon_line.svg" width="100%" height="15">
+
+## 🛡️ امنیت و هشدار Google Play Protect
+ممکن است در هنگام نصب فایل APK با خطای **"Unsafe App"** یا مسدودسازی موقت توسط **Google Play Protect** مواجه شوید. 
+**چرا این اتفاق می‌افتد؟** این هشدار کاملاً طبیعی و غیرقابل اجتناب است؛ زیرا این اپلیکیشن هنوز در گوگل پلی منتشر نشده و با کلیدهای توسعه‌دهنده اختصاصی (Custom Keystore) بیلد و امضا (Sign) شده است. سپر ایمنی گوگل (Play Protect) برنامه‌های خارج از استور خود را به صورت پیش‌فرض ناشناس تلقی کرده و این اخطار را نمایش می‌دهد.
+
+**آیا جای نگرانی است؟** به هیچ وجه! این پروژه کاملاً **منبع‌باز (Open-Source)** است. برای اطمینان صد درصدی از عدم وجود هرگونه کد مخرب، می‌توانید لینک مخزن گیت‌هاب ما را مستقیماً به هوش مصنوعی (مثل ChatGPT یا DeepSeek) بدهید تا سورس کد را بررسی و امنیت آن را برای شما تضمین کند.
+
+### 🤖 بررسی امنیت مخزن توسط هوش مصنوعی
+با کلیک روی دکمه‌های زیر، می‌توانید یک درخواست (Prompt) آماده را مستقیماً برای هوش مصنوعی بفرستید تا سورس این مخزن را بررسی کند:
+
+<a href="https://chatgpt.com/?q=Please+analyze+this+open-source+GitHub+repository+for+any+malicious+code,+backdoors,+or+security+threats:+https://github.com/aishervin/xrayng" target="_blank"><img src="https://img.shields.io/badge/Audit_with-ChatGPT-10a37f?style=for-the-badge&logo=openai&logoColor=white" alt="ChatGPT"></a>
+<a href="https://chat.deepseek.com/" target="_blank"><img src="https://img.shields.io/badge/Audit_with-DeepSeek-4d6bfe?style=for-the-badge&logo=deepseek&logoColor=white" alt="DeepSeek"></a>
+
+*(نکته: در دیپ‌سیک، متن زیر را به صورت دستی کپی کرده و در چت ارسال کنید)*
+> `Please analyze this open-source Android project for any malicious code or security threats: https://github.com/aishervin/xrayng`
+
+<img src="assets/neon_line.svg" width="100%" height="15">
+
+## 📥 دانلود و نصب
+برای دریافت آخرین نسخه پایدار، همیشه از بخش Releases در گیت‌هاب استفاده کنید:
+
+<br>
+<p align="center">
+  <a href="https://github.com/aishervin/xrayng/releases/latest">
+    <img src="https://img.shields.io/badge/Download_Latest_APK-FFA500?style=for-the-badge&logo=android&logoColor=black&scale=1.5" alt="Download APK">
+  </a>
+</p>
+<br>
+
+---
+<p align="center"><b>توسعه یافته برای دسترسی آزاد به اینترنت | Xrayng</b></p>
