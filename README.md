@@ -13,7 +13,8 @@
   </a>
 </p>
 
-<img src="assets/neon_line.svg" width="100%" height="15">
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif"><br><br>
+
 
 ## 🌟 معرفی پروژه
 پروژه **Xrayng** یک نسخه ارتقا یافته و سفارشی‌سازی شده از کلاینت محبوب `v2rayNG` است. هدف ما در این پروژه، رفع محدودیت‌ها، بهبود رابط کاربری و اضافه کردن قابلیت‌های کاربردی است که جای خالی آن‌ها به شدت در نسخه اصلی حس می‌شد.
@@ -51,16 +52,11 @@
 *(نکته: در دیپ‌سیک، متن زیر را به صورت دستی کپی کرده و در چت ارسال کنید)*
 > `Please analyze this open-source Android project for any malicious code or security threats: https://github.com/aishervin/xrayng`
 
-<img src="assets/neon_line.svg" width="100%" height="15">
-
-
-[<img src="https://cdn.iconscout.com/icon/free/png-256/kotlin-283155.png" alt="kotlin" width="100">](https://kotlinlang.org/docs/home.html)
-[<img src="https://cdn.iconscout.com/icon/free/png-256/android-3521272-2944776.png" alt="android" width="100">](https://developer.android.com/reference)
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif"><br><br>
 
 
 ## 📥 دانلود و نصب
 برای دریافت آخرین نسخه پایدار، همیشه از بخش Releases در گیت‌هاب استفاده کنید:
-
 <br>
 <p align="center">
   <a href="https://github.com/aishervin/xrayng/releases/latest">
@@ -69,5 +65,9 @@
 </p>
 <br>
 
----
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif"><br><br>
+
 <p align="center"><b> ☬Exclusive SHΞN™ made | Xrayng</b></p>
+
+[<img src="https://cdn.iconscout.com/icon/free/png-256/kotlin-283155.png" alt="kotlin" width="100">](https://kotlinlang.org/docs/home.html)
+[<img src="https://cdn.iconscout.com/icon/free/png-256/android-3521272-2944776.png" alt="android" width="100">](https://developer.android.com/reference)
