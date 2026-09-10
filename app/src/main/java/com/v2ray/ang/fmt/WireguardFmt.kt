@@ -31,6 +31,7 @@ object WireguardFmt : FmtBase() {
         config.localAddress = queryParam["address"] ?: AppConfig.WIREGUARD_LOCAL_ADDRESS_V4
         config.publicKey = queryParam["publickey"].orEmpty()
         config.preSharedKey = queryParam["presharedkey"]?.nullIfBlank()
+        config.keepAlive = queryParam["persistentkeepalive"]?.toIntOrNull()
         config.mtu = Utils.parseInt(queryParam["mtu"] ?: AppConfig.WIREGUARD_LOCAL_MTU)
         config.reserved = queryParam["reserved"] ?: "0,0,0"
 
@@ -86,12 +87,12 @@ object WireguardFmt : FmtBase() {
         config.keepAlive = peerParams["persistentkeepalive"]?.toIntOrNull()
         
         val endpoint = peerParams["endpoint"].orEmpty()
-        val endpointParts = endpoint.split(":", limit = 2)
-        if (endpointParts.size == 2) {
-            config.server = endpointParts[0]
-            config.serverPort = endpointParts[1]
+        val lastColon = endpoint.lastIndexOf(':')
+        if (lastColon > 0 && lastColon > endpoint.lastIndexOf(']')) {
+            config.server = endpoint.substring(0, lastColon).removePrefix("[").removeSuffix("]")
+            config.serverPort = endpoint.substring(lastColon + 1)
         } else {
-            config.server = endpoint
+            config.server = endpoint.removePrefix("[").removeSuffix("]")
             config.serverPort = ""
         }
         config.reserved = peerParams["reserved"] ?: "0,0,0"
