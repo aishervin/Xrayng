@@ -191,9 +191,13 @@ object AngConfigManager {
      */
     fun importBatchConfig(server: String?, subid: String, append: Boolean): Pair<Int, Int> {
         return try {
+            val decoded = Utils.decode(server)
             var count = parseCustomConfigServer(server, subid, append)
             if (count <= 0) {
-                count = parseBatchConfig(Utils.decode(server), subid, append)
+                count = parseCustomConfigServer(decoded, subid, append)
+            }
+            if (count <= 0) {
+                count = parseBatchConfig(decoded, subid, append)
             }
             if (count <= 0) {
                 count = parseBatchConfig(server, subid, append)
@@ -380,7 +384,7 @@ object AngConfigManager {
                 LogUtil.e(AppConfig.TAG, "Failed to parse custom config server as single config", e)
             }
             return 0
-        } else if (server.trim().startsWith("[Interface]", ignoreCase = true) && server.contains("[Peer]", ignoreCase = true)) {
+        } else if (server.contains("[Interface]", ignoreCase = true) && server.contains("[Peer]", ignoreCase = true)) {
             try {
                 val config = WireguardFmt.parseWireguardConfFile(server)
                 config.subscriptionId = subid

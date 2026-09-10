@@ -151,7 +151,7 @@ object HttpFmt : FmtBase() {
                 }
             }
 
-            if (host.isEmpty() || port <= 0 || port > 65535) return null
+            if (host.isEmpty() || host.contains(" ") || port <= 0 || port > 65535) return null
 
             val config = ProfileItem.create(EConfigType.HTTP)
             config.server = host
@@ -186,6 +186,7 @@ object HttpFmt : FmtBase() {
         val colonIndex = trimmed.lastIndexOf(':')
         if (colonIndex == -1) return null
         val host = trimmed.substring(0, colonIndex).trim()
+        if (host.contains(" ")) return null
         val port = trimmed.substring(colonIndex + 1).trim().toIntOrNull() ?: return null
         return host to port
     }
