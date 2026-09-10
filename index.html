@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xrayng (SHΞN™) - کلاینت اختصاصی v2rayNG</title>
+    
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FFA500',
+                        secondary: '#FF8C00',
+                        dark: '#121212',
+                        darker: '#0a0a0a',
+                        card: '#1e1e1e'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 165, 0, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 140, 0, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        
+        .glass-card {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 165, 0, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,165,0,0.5), transparent);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="pt-16 pb-8 px-4 text-center">
+        <div class="relative inline-block mb-6">
+            <div class="absolute inset-0 bg-primary rounded-full blur-2xl opacity-20 animate-pulse"></div>
+            <img src="https://raw.githubusercontent.com/aishervin/xrayng/main/app/src/main/ic_launcher-web.png" 
+                 alt="Xrayng Logo" 
+                 class="w-32 h-32 mx-auto relative z-10 drop-shadow-[0_0_15px_rgba(255,165,0,0.5)]"
+                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/2889/2889312.png'"> <!-- Fallback if logo not found -->
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-3 neon-text">Xrayng (SHΞN™)</h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            کلاینت اختصاصی، ارتقا یافته و بهینه‌شده بر پایه <span class="text-white font-semibold">v2rayNG</span>
+        </p>
+        
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="https://github.com/aishervin/xrayng/releases/latest" class="btn-primary text-black font-bold py-3 px-8 rounded-full inline-flex items-center gap-2">
+                <i class="fa-brands fa-android text-xl"></i>
+                <span>دانلود آخرین نسخه</span>
+            </a>
+            <a href="https://github.com/aishervin/xrayng" target="_blank" class="bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all inline-flex items-center gap-2">
+                <i class="fa-brands fa-github text-xl"></i>
+                <span>مشاهده سورس</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 pb-16 max-w-4xl space-y-8">
+        
+        <!-- Introduction -->
+        <section class="glass-card rounded-2xl p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-primary mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-star"></i> معرفی پروژه
+            </h2>
+            <p class="text-gray-300 leading-8 text-justify">
+                پروژه <strong class="text-white">Xrayng</strong> یک نسخه ارتقا یافته و سفارشی‌سازی شده از کلاینت محبوب <code>v2rayNG</code> است. هدف ما در این پروژه، رفع محدودیت‌ها، بهبود رابط کاربری و اضافه کردن قابلیت‌های کاربردی است که جای خالی آن‌ها به شدت در نسخه اصلی حس می‌شد.
+            </p>
+        </section>
+
+        <!-- Phase 1 -->
+        <section class="glass-card rounded-2xl p-6 md:p-8 border-t-4 border-t-primary">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-rocket text-primary"></i> فاز اول: امکانات فعلی
+            </h2>
+            <ul class="space-y-4">
+                <li class="flex items-start gap-4">
+                    <div class="mt-1 bg-green-500/20 text-green-400 p-1.5 rounded-full">
+                        <i class="fa-solid fa-check text-sm"></i>
+                    </div>
+                    <div>
+                        <strong class="text-white block mb-1">حل مشکل پراکسی‌های HTTP و SOCKS</strong>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">انتقال و ایمپورت دسته‌ای (Batch Import) پراکسی‌های SOCKS و HTTP که در نسخه اصلی با مشکل مواجه بود، کاملاً برطرف شده است.</p>
+                    </div>
+                </li>
+                <li class="flex items-start gap-4">
+                    <div class="mt-1 bg-green-500/20 text-green-400 p-1.5 rounded-full">
+                        <i class="fa-solid fa-check text-sm"></i>
+                    </div>
+                    <div>
+                        <strong class="text-white block mb-1">منابع پیش‌فرض غنی</strong>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">اضافه شدن دو مخزن (Subscription) قدرتمند و غنی به صورت درون‌برنامه‌ای، تا کاربران بدون نیاز به جستجو، به سرورهای باکیفیت دسترسی داشته باشند.</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Phase 2 -->
+        <section class="glass-card rounded-2xl p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-map-location-dot text-primary"></i> فاز دوم: نقشه‌راه (آینده)
+            </h2>
+            <p class="text-gray-300 mb-6">در فاز دوم، پروژه وارد مرحله تخصصی <strong class="text-primary">MTProxy</strong> خواهد شد:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-darker/50 p-4 rounded-xl border border-gray-800">
+                    <i class="fa-solid fa-magnifying-glass text-primary text-2xl mb-3"></i>
+                    <h3 class="text-white font-bold mb-2">دریافت و تست سلامت</h3>
+                    <p class="text-gray-400 text-sm">استخراج پروکسی‌های MTProto از منابع معتبر و تست سلامت و پینگ آن‌ها به صورت خودکار.</p>
+                </div>
+                <div class="bg-darker/50 p-4 rounded-xl border border-gray-800">
+                    <i class="fa-brands fa-telegram text-[#0088cc] text-2xl mb-3"></i>
+                    <h3 class="text-white font-bold mb-2">پراکسی مستقیم تلگرام</h3>
+                    <p class="text-gray-400 text-sm">اعمال پراکسی‌های سالم به صورت مستقیم روی کلاینت تلگرام از داخل خود برنامه.</p>
+                </div>
+                <div class="bg-darker/50 p-4 rounded-xl border border-gray-800">
+                    <i class="fa-solid fa-share-nodes text-green-500 text-2xl mb-3"></i>
+                    <h3 class="text-white font-bold mb-2">اشتراک‌گذاری هوشمند</h3>
+                    <p class="text-gray-400 text-sm">امکان ارسال و اشتراک‌گذاری مستقیم لیست پراکسی‌های سالم در محیط تلگرام برای سایرین.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Google Play Protect Warning -->
+        <section class="glass-card rounded-2xl p-6 md:p-8 border border-red-500/30 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-3xl"></div>
+            
+            <h2 class="text-2xl font-bold text-red-400 mb-4 flex items-center gap-3 relative z-10">
+                <i class="fa-solid fa-shield-halved"></i> امنیت و هشدار Google Play Protect
+            </h2>
+            
+            <div class="space-y-4 text-gray-300 text-sm md:text-base leading-relaxed relative z-10">
+                <p>
+                    ممکن است در هنگام نصب فایل APK با خطای <strong class="text-red-400">"Unsafe App"</strong> یا مسدودسازی موقت توسط <strong>Google Play Protect</strong> مواجه شوید.
+                </p>
+                
+                <div class="bg-red-500/10 border-r-4 border-red-500 p-4 rounded-l-lg">
+                    <strong class="text-white block mb-2"><i class="fa-solid fa-circle-question text-red-400 mr-2"></i> چرا این اتفاق می‌افتد؟</strong>
+                    <p>این هشدار کاملاً طبیعی و غیرقابل اجتناب است؛ زیرا این اپلیکیشن هنوز در گوگل پلی منتشر نشده و با کلیدهای توسعه‌دهنده اختصاصی (Custom Keystore) بیلد و امضا (Sign) شده است. سپر ایمنی گوگل برنامه‌های خارج از استور خود را به صورت پیش‌فرض ناشناس تلقی کرده و این اخطار را نمایش می‌دهد.</p>
+                </div>
+                
+                <div class="bg-green-500/10 border-r-4 border-green-500 p-4 rounded-l-lg">
+                    <strong class="text-white block mb-2"><i class="fa-solid fa-check-circle text-green-400 mr-2"></i> آیا جای نگرانی است؟</strong>
+                    <p>به هیچ وجه! این پروژه کاملاً <strong>منبع‌باز (Open-Source)</strong> است. برای اطمینان صد درصدی از عدم وجود هرگونه کد مخرب، می‌توانید لینک مخزن گیت‌هاب ما را مستقیماً به هوش مصنوعی بدهید تا سورس کد را بررسی و امنیت آن را تضمین کند.</p>
+                </div>
+
+                <!-- AI Audit Buttons -->
+                <div class="mt-8 pt-6 border-t border-gray-800">
+                    <h3 class="text-white font-bold mb-4 text-center">🤖 بررسی امنیت سورس کد توسط هوش مصنوعی</h3>
+                    <p class="text-center text-gray-400 text-sm mb-6">با کلیک روی دکمه‌های زیر، درخواست بررسی امنیتی به صورت خودکار برای هوش مصنوعی ارسال می‌شود:</p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="https://chatgpt.com/?q=Please+analyze+this+open-source+GitHub+repository+for+any+malicious+code,+backdoors,+or+security+threats:+https://github.com/aishervin/xrayng" target="_blank" 
+                           class="flex items-center justify-center gap-3 bg-[#10a37f] hover:bg-[#0d8a6b] text-white py-3 px-6 rounded-xl font-bold transition-colors">
+                            <i class="fa-solid fa-robot text-xl"></i>
+                            بررسی با ChatGPT
+                        </a>
+                        <a href="https://chat.deepseek.com/" target="_blank" 
+                           class="flex items-center justify-center gap-3 bg-[#4d6bfe] hover:bg-[#3b55db] text-white py-3 px-6 rounded-xl font-bold transition-colors">
+                            <i class="fa-solid fa-brain text-xl"></i>
+                            بررسی با DeepSeek
+                        </a>
+                    </div>
+                    <p class="text-center text-gray-500 text-xs mt-4">
+                        * در DeepSeek متن زیر را کپی و در چت ارسال کنید:<br>
+                        <code class="bg-darker px-2 py-1 rounded text-primary mt-2 inline-block select-all" dir="ltr">Please analyze this open-source Android project for any malicious code or security threats: https://github.com/aishervin/xrayng</code>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 bg-darker py-8 text-center mt-auto">
+        <p class="text-gray-500 font-medium tracking-wider">
+            <i class="fa-solid fa-yin-yang text-primary mr-1"></i> Exclusive SHΞN™ made | Xrayng
+        </p>
+        <p class="text-gray-600 text-sm mt-2">© 2026 Open Source Project</p>
+    </footer>
+
+</body>
+</html>
