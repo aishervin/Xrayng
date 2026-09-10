@@ -6,10 +6,11 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Vazirmatn&weight=800&size=46&pause=1200&color=FFA500&center=true&vCenter=true&width=750&lines=Android+Client;Exclusive+SHEN+Made;Based+on+v2rayNG" alt="Xrayng animated title">
 
-
+<div align="center">
 <img src="https://img.shields.io/badge/Kotlin-121212?style=for-the-badge&logo=kotlin&logoColor=FFA500" alt="Kotlin">
 <img src="https://img.shields.io/badge/Android-121212?style=for-the-badge&logo=android&logoColor=FFA500" alt="Android">
 <img src="https://img.shields.io/badge/OPEN--SOURCE-121212?style=for-the-badge&logo=github&logoColor=FFA500" alt="Open Source">
+</div>
 
 <br><br>
 
