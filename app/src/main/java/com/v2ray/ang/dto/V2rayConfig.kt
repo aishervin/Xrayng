@@ -103,7 +103,8 @@ data class V2rayConfig(
             data class WireGuardBean(
                 var publicKey: String = "",
                 var preSharedKey: String? = null,
-                var endpoint: String = ""
+                var endpoint: String = "",
+                var keepAlive: Int? = null
             )
         }
 

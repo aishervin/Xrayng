@@ -83,6 +83,8 @@ object WireguardFmt : FmtBase() {
         config.mtu = Utils.parseInt(interfaceParams["mtu"] ?: AppConfig.WIREGUARD_LOCAL_MTU)
         config.publicKey = peerParams["publickey"].orEmpty()
         config.preSharedKey = peerParams["presharedkey"]?.nullIfBlank()
+        config.keepAlive = peerParams["persistentkeepalive"]?.toIntOrNull()
+        
         val endpoint = peerParams["endpoint"].orEmpty()
         val endpointParts = endpoint.split(":", limit = 2)
         if (endpointParts.size == 2) {
@@ -114,6 +116,9 @@ object WireguardFmt : FmtBase() {
         dicQuery["address"] = config.localAddress.removeWhiteSpace().orEmpty()
         if (config.mtu != null) {
             dicQuery["mtu"] = config.mtu.toString()
+        }
+        if (config.keepAlive != null) {
+            dicQuery["persistentkeepalive"] = config.keepAlive.toString()
         }
         if (config.preSharedKey != null) {
             dicQuery["presharedkey"] = config.preSharedKey.removeWhiteSpace().orEmpty()

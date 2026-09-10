@@ -30,6 +30,7 @@ class ServerUiState(
     reserved: String = "0,0,0",
     localAddress: String = WIREGUARD_LOCAL_ADDRESS_V4,
     mtu: String = WIREGUARD_LOCAL_MTU,
+    keepAlive: String = "",
     obfsPassword: String = "",
     portHopping: String = "",
     portHoppingInterval: String = "",
@@ -78,6 +79,7 @@ class ServerUiState(
     var reserved by mutableStateOf(reserved)
     var localAddress by mutableStateOf(localAddress)
     var mtu by mutableStateOf(mtu)
+    var keepAlive by mutableStateOf(keepAlive)
     var obfsPassword by mutableStateOf(obfsPassword)
     var portHopping by mutableStateOf(portHopping)
     var portHoppingInterval by mutableStateOf(portHoppingInterval)
@@ -142,6 +144,7 @@ class ServerUiState(
             reserved = if (isWireguard) reserved else null,
             localAddress = if (isWireguard) localAddress else null,
             mtu = if (isWireguard) mtu.toIntOrNull() else null,
+            keepAlive = if (isWireguard) keepAlive.toIntOrNull() else null,
             obfsPassword = if (isHysteria2) obfsPassword else null,
             portHopping = if (isHysteria2) portHopping else null,
             portHoppingInterval = if (isHysteria2) portHoppingInterval else null,
@@ -199,6 +202,7 @@ class ServerUiState(
                 reserved = initialConfig.reserved ?: "0,0,0",
                 localAddress = initialConfig.localAddress ?: WIREGUARD_LOCAL_ADDRESS_V4,
                 mtu = initialConfig.mtu?.toString() ?: WIREGUARD_LOCAL_MTU,
+                keepAlive = initialConfig.keepAlive?.toString() ?: "",
                 obfsPassword = initialConfig.obfsPassword ?: "",
                 portHopping = initialConfig.portHopping ?: "",
                 portHoppingInterval = initialConfig.portHoppingInterval ?: "",

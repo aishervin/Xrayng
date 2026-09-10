@@ -53,6 +53,7 @@ data class ProfileItem(
 
     var secretKey: String? = null,
     var preSharedKey: String? = null,
+    var keepAlive: Int? = null,
     var localAddress: String? = null,
     var reserved: String? = null,
     var mtu: Int? = null,
