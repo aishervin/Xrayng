@@ -58,7 +58,7 @@ jobs:
       uses: actions/upload-artifact@v4
       if: ${{ success() }}
       with:
-        name: universal-apk
+        name: release-apks
         path: app/build/outputs/apk/release/*.apk
 
   sign-and-release:
@@ -73,9 +73,8 @@ jobs:
           path: release
 
       - name: Upload APKs to release
-        uses: svenstaro/upload-release-action@v2
+        uses: softprops/action-gh-release@v2
         with:
-          file: release/**/*.apk
-          tag: ${{ inputs.release_tag }}
-          file_glob: true
+          files: release/**/*.apk
+          tag_name: ${{ inputs.release_tag }}
           prerelease: false
