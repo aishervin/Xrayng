@@ -83,7 +83,7 @@ object MessageHelper {
             intent.component = ComponentName(ctx, CoreTestService::class.java)
             intent.putExtra("content", message)
             when (message.key) {
-                AppConfig.MSG_MEASURE_CONFIG_START -> {
+                AppConfig.MSG_MEASURE_CONFIG_START, AppConfig.MSG_MEASURE_GEMINI_START -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         ContextCompat.startForegroundService(ctx, intent)
                     } else {

@@ -342,6 +342,8 @@
     <string name="title_sub_update">Update subscription</string>
     <string name="title_ping_all_server">Test TCP delays (TCPing)</string>
     <string name="title_real_ping_all_server">Test real delays</string>
+    <string name="title_test_gemini">✨ Gemini\'s Access Test</string>
+    <string name="toast_gemini_test_requirement">Please run URL test first (Runs on configs with ping &lt; 500ms)</string>
     <string name="title_user_asset_setting">Asset files</string>
     <string name="title_sort_by_test_results">Sort by test results</string>
     <string name="title_filter_config">Filter configs</string>

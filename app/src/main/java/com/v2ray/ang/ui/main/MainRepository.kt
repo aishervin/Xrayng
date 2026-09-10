@@ -62,6 +62,7 @@ class MainRepository(
                     ?.let { MainServiceEvent.MeasureDelayResult(it) }
 
                 AppConfig.MSG_MEASURE_CONFIG_SUCCESS -> MainServiceEvent.MeasureConfigSuccess
+                AppConfig.MSG_MEASURE_GEMINI_SUCCESS -> MainServiceEvent.MeasureGeminiSuccess
                 AppConfig.MSG_MEASURE_CONFIG_NOTIFY -> MainServiceEvent.MeasureConfigNotify(
                     safeIntent.getStringExtra("content").orEmpty()
                 )

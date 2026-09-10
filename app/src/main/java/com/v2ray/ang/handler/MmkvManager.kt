@@ -478,6 +478,13 @@ object MmkvManager {
      * @param guid The server GUID.
      * @param testResult The test delay in milliseconds.
      */
+    fun encodeServerAffiliationInfo(guid: String, aff: ServerAffiliationInfo) {
+        if (guid.isBlank()) {
+            return
+        }
+        serverAffStorage.encode(guid, JsonUtil.toJson(aff))
+    }
+
     fun encodeServerTestDelayMillis(guid: String, testResult: Long) {
         if (guid.isBlank()) {
             return

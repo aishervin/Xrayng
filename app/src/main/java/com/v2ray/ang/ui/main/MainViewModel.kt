@@ -116,7 +116,7 @@ class MainViewModel(
                 _uiState.update { it.copy(status = MainStatus.ConnectionTest(event.result)) }
             }
 
-            MainServiceEvent.MeasureConfigSuccess -> {
+            MainServiceEvent.MeasureConfigSuccess, MainServiceEvent.MeasureGeminiSuccess -> {
                 viewModelScope.launch(ioDispatcher) {
                     val gid = testingGroupId ?: uiState.value.selectedGroupId
                     cacheMutex.withLock { groupDataCache.remove(gid) }
@@ -194,6 +194,7 @@ class MainViewModel(
             MainAction.RefreshGroups -> setupGroupTab(forceRefresh = true)
             MainAction.TestAllServers -> testAllRealPing(true)
             MainAction.TestRealAllServers -> testAllRealPing()
+            MainAction.TestGeminiServers -> testGeminiAccess()
             MainAction.CancelTesting -> cancelAllPing()
             MainAction.RemoveAllServers -> removeAllServerAsync()
             MainAction.RemoveDuplicateServers -> removeDuplicateServerAsync()
@@ -266,7 +267,8 @@ class MainViewModel(
             ServersCache(
                 guid = guid,
                 profile = profile.copy(),
-                testDelayMillis = affiliation?.testDelayMillis ?: 0L
+                testDelayMillis = affiliation?.testDelayMillis ?: 0L,
+                geminiPassed = affiliation?.geminiPassed ?: false
             )
         }
 
@@ -724,6 +726,44 @@ class MainViewModel(
             it.copy(
                 isTesting = false,
                 status = if (it.isRunning) MainStatus.Connected else MainStatus.Disconnected
+            )
+        }
+    }
+
+    fun testGeminiAccess() {
+        dataSource.cancelAllPing()
+        val groupId = uiState.value.selectedGroupId
+        val servers = currentServers()
+        if (servers.isEmpty()) {
+            _uiState.update { it.copy(isTesting = false) }
+            return
+        }
+
+        val targetServers = servers.filter { it.testDelayMillis in 1..499 }
+        if (targetServers.isEmpty()) {
+            _uiState.update { it.copy(isTesting = false) }
+            toast(R.string.toast_gemini_test_requirement)
+            return
+        }
+
+        val serverGuids = targetServers.map { it.guid }
+        
+        testingGroupId = groupId
+        _uiState.update {
+            it.copy(
+                isTesting = true,
+                status = MainStatus.Testing
+            )
+        }
+
+        viewModelScope.launch(ioDispatcher) {
+            dataSource.sendMsg2TestService(
+                TestServiceMessage(
+                    key = AppConfig.MSG_MEASURE_GEMINI_START,
+                    subscriptionId = "",
+                    serverGuids = serverGuids,
+                    onlyTcp = false
+                )
             )
         }
     }

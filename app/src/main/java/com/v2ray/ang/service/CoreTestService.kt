@@ -99,7 +99,8 @@ class CoreTestService : Service() {
         }
 
         when (message.key) {
-            AppConfig.MSG_MEASURE_CONFIG_START -> handleMeasureStart(message, startId)
+            AppConfig.MSG_MEASURE_CONFIG_START -> handleMeasureStart(message, startId, false)
+            AppConfig.MSG_MEASURE_GEMINI_START -> handleMeasureStart(message, startId, true)
             AppConfig.MSG_MEASURE_CONFIG_CANCEL -> handleMeasureCancel()
             else -> {
                 NotificationHelper.stopForeground(this); stopSelf(startId)
@@ -108,7 +109,7 @@ class CoreTestService : Service() {
         return START_NOT_STICKY
     }
 
-    private fun handleMeasureStart(message: TestServiceMessage, startId: Int) {
+    private fun handleMeasureStart(message: TestServiceMessage, startId: Int, isGeminiTest: Boolean) {
         LogUtil.i(AppConfig.TAG, "CoreTestService starting worker   subscription ${message.subscriptionId}")
 
         val guidsList = when {
@@ -123,7 +124,8 @@ class CoreTestService : Service() {
                 context = this,
                 guids = guidsList,
                 onlyTcp = message.onlyTcp,
-                onEvent = { event -> handleWorkerEvent(event, message) { activeWorkers.remove(worker) } }
+                customUrl = if (isGeminiTest) "https://generativelanguage.googleapis.com/" else null,
+                onEvent = { event -> handleWorkerEvent(event, message, isGeminiTest) { activeWorkers.remove(worker) } }
             )
             activeWorkers.add(worker)
             worker.start()
@@ -133,7 +135,7 @@ class CoreTestService : Service() {
         }
     }
 
-    private fun handleWorkerEvent(event: RealPingEvent, message: TestServiceMessage, onWorkerDone: () -> Unit) {
+    private fun handleWorkerEvent(event: RealPingEvent, message: TestServiceMessage, isGeminiTest: Boolean, onWorkerDone: () -> Unit) {
         when (event) {
             is RealPingEvent.Progress -> {
                 NotificationHelper.updateNotification(
@@ -146,8 +148,15 @@ class CoreTestService : Service() {
             }
 
             is RealPingEvent.Result -> {
-                MmkvManager.encodeServerTestDelayMillis(event.guid, event.delayMillis)
-                MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_SUCCESS, event.guid)
+                if (isGeminiTest) {
+                    val aff = MmkvManager.decodeServerAffiliationInfo(event.guid) ?: com.v2ray.ang.dto.entities.ServerAffiliationInfo()
+                    aff.geminiPassed = event.delayMillis > 0
+                    MmkvManager.encodeServerAffiliationInfo(event.guid, aff)
+                    MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_GEMINI_SUCCESS, event.guid)
+                } else {
+                    MmkvManager.encodeServerTestDelayMillis(event.guid, event.delayMillis)
+                    MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_SUCCESS, event.guid)
+                }
             }
 
             is RealPingEvent.Finish -> {
