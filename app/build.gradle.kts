@@ -72,6 +72,12 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    applicationVariants.all {
+        outputs.all {
+            outputFileName = "Xrayng-${versionName}-${buildType.name}.apk"
+        }
+    }
 }
 
 dependencies {
