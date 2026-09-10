@@ -1,3 +1,4 @@
+val appVersionName = (project.findProperty("VERSION_NAME") as? String) ?: "1.1.0"
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -12,7 +13,7 @@ android {
         minSdk = 24
         targetSdk = 37
         versionCode = 2
-        versionName = "1.1.0"
+        versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "DISTRIBUTION", "\"Standard\"")
@@ -72,12 +73,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
 
-    applicationVariants.all {
-        outputs.all {
-            outputFileName = "Xrayng-${versionName}-${buildType.name}.apk"
-        }
-    }
+base {
+    archivesName.set("Xrayng-${appVersionName}")
 }
 
 dependencies {

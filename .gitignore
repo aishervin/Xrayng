@@ -27,7 +27,6 @@ V2rayNG/app/libs
 # Ignore APK and AAR files
 *.apk
 *.aar
-!app/libs/libv2ray.aar
 
 # Ignore signing properties
 signing.properties

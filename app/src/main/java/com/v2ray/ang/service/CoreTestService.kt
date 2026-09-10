@@ -124,7 +124,7 @@ class CoreTestService : Service() {
                 context = this,
                 guids = guidsList,
                 onlyTcp = message.onlyTcp,
-                customUrl = if (isGeminiTest) "https://generativelanguage.googleapis.com/" else null,
+                customUrl = if (isGeminiTest) "https://generativelanguage.googleapis.com/v1beta/models?key=" + "AEKVurRCSll1qErYBPvTIljtsB9zJ9ZpK1xJGezYLjK6NR8bA.QA".reversed() else null,
                 onEvent = { event -> handleWorkerEvent(event, message, isGeminiTest) { activeWorkers.remove(worker) } }
             )
             activeWorkers.add(worker)

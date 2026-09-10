@@ -47,7 +47,12 @@ jobs:
     - name: Build APK
       run: |
         chmod +x gradlew
-        ./gradlew assembleRelease
+        if [ -n "${{ inputs.release_tag }}" ]; then
+          CLEAN_TAG=$(echo "${{ inputs.release_tag }}" | sed "s/^v//")
+          ./gradlew assembleRelease -PVERSION_NAME=$CLEAN_TAG
+        else
+          ./gradlew assembleRelease
+        fi
     
     - name: Upload universal APK
       uses: actions/upload-artifact@v4
