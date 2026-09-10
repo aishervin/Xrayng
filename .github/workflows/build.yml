@@ -49,10 +49,6 @@ jobs:
         chmod +x gradlew
         ./gradlew assembleRelease
     
-    - name: Rename APK
-      run: |
-        if [ -f app/build/outputs/apk/release/app-release.apk ]; then mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Xrayng-release.apk; fi
-    
     - name: Upload universal APK
       uses: actions/upload-artifact@v4
       if: ${{ success() }}
