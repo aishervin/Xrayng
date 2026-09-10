@@ -6,6 +6,7 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Vazirmatn&weight=800&size=46&pause=1200&color=FFA500&center=true&vCenter=true&width=780&lines=Xrayng;Exclusive+SHEN+Made;Based+on+v2rayNG" alt="Xrayng animated title">
 
+
 <img src="https://img.shields.io/badge/Kotlin-121212?style=for-the-badge&logo=kotlin&logoColor=FFA500" alt="Kotlin">
 <img src="https://img.shields.io/badge/Android-121212?style=for-the-badge&logo=android&logoColor=FFA500" alt="Android">
 <img src="https://img.shields.io/badge/OPEN--SOURCE-121212?style=for-the-badge&logo=github&logoColor=FFA500" alt="Open Source">
@@ -28,13 +29,13 @@
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/━━━━━━━━━━-FFA500?style=flat-square" alt="divider">
+<img src="https://img.shields.io/badge/━━━━━━━━━━☬SHΞN™🪽━━━━━━━━━━-FFA500?style=flat-square" alt="divider">
 
 </div>
 
 <div align="right" dir="rtl">
 
-## 🚀 فاز اول — امکانات فعلی
+## 🟠 فاز اول — امکانات فعلی
 
 <table>
 <tr>
@@ -66,13 +67,13 @@
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/━━━━━━━━━━-FFA500?style=flat-square" alt="divider">
+<img src="https://img.shields.io/badge/━━━━━☬SHΞN™🪽━━━━━-FFA500?style=flat-square" alt="divider">
 
 </div>
 
 <div align="right" dir="rtl">
 
-## 🚧 فاز دوم — نقشه‌راه
+## 🟠 🟠 فاز دوم — نقشه‌راه
 
 در فاز دوم، تمرکز پروژه روی قابلیت‌های تخصصی **MTProxy** خواهد بود.
 
@@ -106,7 +107,7 @@
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/━━━━━━━━━━-FFA500?style=flat-square" alt="divider">
+<img src="https://img.shields.io/badge/━━━━━☬SHΞN™🪽━━━━━-FFA500?style=flat-square" alt="divider">
 
 </div>
 
@@ -156,8 +157,6 @@
 </a>
 
 <br><br>
-
-<img src="https://img.shields.io/badge/━━━━━━━━━━━━━━━━━━━━-FFA500?style=flat-square" alt="neon line">
 
 <br><br>
 
