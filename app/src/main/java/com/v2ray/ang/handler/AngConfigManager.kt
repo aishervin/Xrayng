@@ -191,12 +191,12 @@ object AngConfigManager {
      */
     fun importBatchConfig(server: String?, subid: String, append: Boolean): Pair<Int, Int> {
         return try {
-            var count = parseBatchConfig(Utils.decode(server), subid, append)
+            var count = parseCustomConfigServer(server, subid, append)
             if (count <= 0) {
-                count = parseBatchConfig(server, subid, append)
+                count = parseBatchConfig(Utils.decode(server), subid, append)
             }
             if (count <= 0) {
-                count = parseCustomConfigServer(server, subid, append)
+                count = parseBatchConfig(server, subid, append)
             }
 
             var countSub = parseBatchSubscription(server)
@@ -652,12 +652,12 @@ object AngConfigManager {
      * @return The number of configurations parsed.
      */
     private fun parseConfigViaSub(server: String?, subid: String, append: Boolean): Int {
-        var count = parseBatchConfig(Utils.decode(server), subid, append)
+        var count = parseCustomConfigServer(server, subid, append)
         if (count <= 0) {
-            count = parseBatchConfig(server, subid, append)
+            count = parseBatchConfig(Utils.decode(server), subid, append)
         }
         if (count <= 0) {
-            count = parseCustomConfigServer(server, subid, append)
+            count = parseBatchConfig(server, subid, append)
         }
         return count
     }
