@@ -777,19 +777,13 @@ class MainViewModel(
             _uiState.update { it.copy(isTesting = false) }
             return
         }
+
+        // IMPORTANT: do not clear persisted testDelayMillis here.
+        // Successful URL-test results are the checkpoint used by the worker to
+        // skip already-tested configs. This makes starting the test again act as
+        // Resume: completed successes remain visible/exportable and only pending
+        // (or failed) configs are tested.
         val serverGuids = servers.map { it.guid }
-        mutableServerGroupState(groupId).update { current ->
-            current.copy(
-                servers = current.servers.map { server ->
-                    if (server.testDelayMillis == 0L) server
-                    else server.copy(testDelayMillis = 0L)
-                },
-                rows = current.rows.map { row ->
-                    if (row.testDelayMillis == 0L) row
-                    else row.copy(testDelayMillis = 0L)
-                }
-            )
-        }
         testingGroupId = groupId
         _uiState.update {
             it.copy(
@@ -798,7 +792,6 @@ class MainViewModel(
             )
         }
         viewModelScope.launch(ioDispatcher) {
-            dataSource.clearAllTestDelayResults(serverGuids)
             cacheMutex.withLock { groupDataCache.remove(groupId) }
             dataSource.sendMsg2TestService(
                 TestServiceMessage(
