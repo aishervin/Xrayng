@@ -91,10 +91,22 @@ class CoreTestService : Service() {
     private fun handleMeasureStart(message: TestServiceMessage, startId: Int, isGeminiTest: Boolean) {
         LogUtil.i(AppConfig.TAG, "CoreTestService starting worker   subscription ${message.subscriptionId}")
 
-        val guidsList = when {
+        val allGuids = when {
             message.serverGuids.isNotEmpty() -> message.serverGuids
             message.subscriptionId.isNotEmpty() -> MmkvManager.decodeServerList(message.subscriptionId)
             else -> MmkvManager.decodeAllServerList()
+        }
+
+        // Gemini is a second-stage test: only configurations that already passed
+        // the normal URL test are eligible. Successful Gemini results are retained
+        // and skipped on subsequent runs, so the test can be resumed safely.
+        val guidsList = if (isGeminiTest) {
+            allGuids.filter { guid ->
+                val aff = MmkvManager.decodeServerAffiliationInfo(guid)
+                (aff?.testDelayMillis ?: 0L) > 0L && aff?.geminiPassed != true
+            }
+        } else {
+            allGuids
         }
 
         if (guidsList.isNotEmpty()) {
@@ -103,12 +115,20 @@ class CoreTestService : Service() {
                 context = this,
                 guids = guidsList,
                 onlyTcp = message.onlyTcp,
-                customUrl = if (isGeminiTest) "https://generativelanguage.googleapis.com/v1beta/models?key=" + "AEKVurRCSll1qErYBPvTIljtsB9zJ9ZpK1xJGezYLjK6NR8bA.QA".reversed() else null,
+                // Do not embed a Gemini API key in the APK. The Gemini web app
+                // is deliberately used for this second-stage reachability test;
+                // the request still travels through the candidate V2Ray outbound.
+                customUrl = if (isGeminiTest) "https://gemini.google.com/" else null,
                 onEvent = { event -> handleWorkerEvent(event, message, isGeminiTest) { activeWorkers.remove(worker) } }
             )
             activeWorkers.add(worker)
             worker.start()
         } else {
+            MessageHelper.sendMsg2UI(
+                this,
+                AppConfig.MSG_MEASURE_CONFIG_FINISH,
+                if (isGeminiTest) "NO_HEALTHY_GEMINI_CANDIDATES" else "0"
+            )
             NotificationHelper.stopForeground(this)
             stopSelf(startId)
         }
