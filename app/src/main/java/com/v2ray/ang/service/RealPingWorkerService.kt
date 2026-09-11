@@ -69,9 +69,9 @@ class RealPingWorkerService(
                 try {
                     if (stopRequested.get()) return@launch
                     val result = if (onlyTcp) startTcping(guid) else startRealPing(guid)
-                    // Do not gate this on scope.isActive: if the native probe completed
-                    // after a stop request, its result is exactly what the user asked to keep.
-                    onEvent(RealPingEvent.Result(guid, result))
+                    if (result != -2L) {
+                        onEvent(RealPingEvent.Result(guid, result))
+                    }
                 } catch (_: Throwable) {
                     // ignore individual probe failures
                 } finally {
