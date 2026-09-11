@@ -33,21 +33,49 @@ jobs:
     - name: Download core dependencies
       run: |
         mkdir -p app/libs
-        curl -L -o app/libs/libv2ray.aar "https://github.com/2dust/AndroidLibXrayLite/releases/download/v26.8.20/libv2ray.aar"
+        curl -fL -o app/libs/libv2ray.aar "https://github.com/2dust/AndroidLibXrayLite/releases/download/v26.8.20/libv2ray.aar"
 
     - name: Restore Keystore
       env:
         ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      shell: bash
       run: |
+        set -euo pipefail
         mkdir -p keystore
-        if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
-          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore/debug.keystore
-        elif [ -f "debug.keystore.base64" ]; then
-          base64 -d debug.keystore.base64 > keystore/debug.keystore
-        else
-          echo "Stable signing key is missing" >&2
-          exit 1
+
+        decode_keystore() {
+          local input="$1"
+          local output="$2"
+          printf '%s' "$input" | tr -d '[:space:]' | base64 --decode > "$output"
+          test -s "$output"
+          keytool -list -keystore "$output" -storepass android >/dev/null 2>&1
+        }
+
+        if [ -n "${ANDROID_KEYSTORE_BASE64:-}" ]; then
+          echo "Trying ANDROID_KEYSTORE_BASE64 secret..."
+          if decode_keystore "$ANDROID_KEYSTORE_BASE64" keystore/debug.keystore; then
+            echo "Using GitHub Actions keystore secret."
+          else
+            echo "ANDROID_KEYSTORE_BASE64 is empty/invalid; falling back to repository keystore."
+            rm -f keystore/debug.keystore
+          fi
         fi
+
+        if [ ! -s keystore/debug.keystore ]; then
+          if [ ! -s debug.keystore.base64 ]; then
+            echo "Stable signing key is missing or empty." >&2
+            exit 1
+          fi
+          echo "Using repository fallback keystore."
+          tr -d '[:space:]' < debug.keystore.base64 | base64 --decode > keystore/debug.keystore
+          test -s keystore/debug.keystore
+          keytool -list -keystore keystore/debug.keystore -storepass android >/dev/null 2>&1 || {
+            echo "Repository keystore is invalid or corrupted." >&2
+            exit 1
+          }
+        fi
+
+        echo "Keystore restored and validated successfully."
 
     - name: Build APK
       run: |
