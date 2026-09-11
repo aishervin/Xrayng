@@ -10,7 +10,6 @@ import com.v2ray.ang.extension.isNotNullEmpty
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.handler.SpeedtestManager
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -21,15 +20,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 internal object RealPingExecutionLimiter {
     private val customConfigMutex = Mutex()
 
     suspend fun <T> run(configType: EConfigType, block: () -> T): T {
-        // Custom profiles bypass speed-test trimming and start complete Xray configs.
-        // Parallel teardown can abort the native probe process, so serialize their
-        // JNI measurements globally across batches.
         return if (configType == EConfigType.CUSTOM) {
             customConfigMutex.withLock { block() }
         } else {
@@ -39,8 +36,9 @@ internal object RealPingExecutionLimiter {
 }
 
 /**
- * Worker that runs a batch of real-ping tests independently.
- * Each batch owns its own CoroutineScope/dispatcher and can be cancelled separately.
+ * Worker for a real-ping batch.
+ * A stop request is a cooperative pause: already-running native probes are
+ * allowed to finish so their results are persisted, while queued probes do not start.
  */
 class RealPingWorkerService(
     private val context: Context,
@@ -53,6 +51,7 @@ class RealPingWorkerService(
     private val concurrency = SettingsManager.getRealPingConcurrency()
     private val dispatcher = Executors.newFixedThreadPool(if (onlyTcp) concurrency * 2 else concurrency).asCoroutineDispatcher()
     private val scope = CoroutineScope(job + dispatcher + CoroutineName("RealPingBatchWorker"))
+    private val stopRequested = AtomicBoolean(false)
 
     private val runningCount = AtomicInteger(0)
     private val totalCount = AtomicInteger(0)
@@ -61,14 +60,20 @@ class RealPingWorkerService(
         val jobs = guids.map { guid ->
             totalCount.incrementAndGet()
             scope.launch {
+                if (stopRequested.get()) {
+                    totalCount.decrementAndGet()
+                    return@launch
+                }
+
                 runningCount.incrementAndGet()
                 try {
+                    if (stopRequested.get()) return@launch
                     val result = if (onlyTcp) startTcping(guid) else startRealPing(guid)
-                    if (scope.isActive) {
-                        onEvent(RealPingEvent.Result(guid, result))
-                    }
+                    // Do not gate this on scope.isActive: if the native probe completed
+                    // after a stop request, its result is exactly what the user asked to keep.
+                    onEvent(RealPingEvent.Result(guid, result))
                 } catch (_: Throwable) {
-                    // ignore
+                    // ignore individual probe failures
                 } finally {
                     val count = totalCount.decrementAndGet()
                     val left = runningCount.decrementAndGet()
@@ -80,21 +85,20 @@ class RealPingWorkerService(
         }
 
         scope.launch {
-            try {
-                joinAll(*jobs.toTypedArray())
-                if (isActive) {
-                    onEvent(RealPingEvent.Finish("0"))
-                }
-            } catch (_: CancellationException) {
-                // If cancelled, don't send finish event to avoid confusion
-            } finally {
-                close()
+            joinAll(*jobs.toTypedArray())
+            if (isActive) {
+                onEvent(RealPingEvent.Finish(if (stopRequested.get()) "PAUSED" else "0"))
             }
+            close()
         }
     }
 
+    fun requestStop() {
+        stopRequested.set(true)
+    }
+
     fun cancel() {
-        job.cancel()
+        requestStop()
     }
 
     private fun close() {
@@ -106,6 +110,7 @@ class RealPingWorkerService(
     }
 
     private suspend fun startRealPing(guid: String): Long {
+        if (stopRequested.get()) return -2L
         val retFailure = -1L
 
         val config = MmkvManager.decodeServerConfig(guid) ?: return retFailure
@@ -116,6 +121,7 @@ class RealPingWorkerService(
             && config.server.isNotNullEmpty()
             && config.serverPort?.toIntOrNull() != null
         ) {
+            if (stopRequested.get()) return -2L
             val url = config.server.orEmpty()
             val port = config.serverPort.orEmpty().toInt()
             val tcpTime = SpeedtestManager.socketConnectTime(url, port, 1000)
@@ -124,16 +130,19 @@ class RealPingWorkerService(
             }
         }
 
+        if (stopRequested.get()) return -2L
         val configResult = CoreConfigManager.getV2rayConfig4Speedtest(context, guid)
         if (!configResult.status) {
             return retFailure
         }
+        if (stopRequested.get()) return -2L
         return RealPingExecutionLimiter.run(config.configType) {
             CoreNativeManager.measureOutboundDelay(configResult.content, customUrl ?: SettingsManager.getDelayTestUrl())
         }
     }
 
     private fun startTcping(guid: String): Long {
+        if (stopRequested.get()) return -2L
         val retFailure = -1L
 
         val config = MmkvManager.decodeServerConfig(guid) ?: return retFailure
@@ -144,11 +153,10 @@ class RealPingWorkerService(
             && config.server.isNotNullEmpty()
             && config.serverPort?.toIntOrNull() != null
         ) {
+            if (stopRequested.get()) return -2L
             val url = config.server.orEmpty()
             val port = config.serverPort.orEmpty().toInt()
-            val tcpTime = SpeedtestManager.socketConnectTime(url, port, 1000)
-
-            return tcpTime
+            return SpeedtestManager.socketConnectTime(url, port, 1000)
         }
 
         return retFailure
