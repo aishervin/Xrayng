@@ -68,14 +68,9 @@ class MainActivity : HelperBaseComponentActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode != RESULT_OK) return@registerForActivityResult
             val data = result.data ?: return@registerForActivityResult
-            val action = data.getStringExtra(ProfileEditorResult.EXTRA_ACTION)
-                ?: return@registerForActivityResult
-            if (action != ProfileEditorResult.ACTION_SAVED &&
-                action != ProfileEditorResult.ACTION_DELETED
-            ) return@registerForActivityResult
-            val restartService = data.getBooleanExtra(
-                ProfileEditorResult.EXTRA_RESTART_SERVICE, false
-            )
+            val action = data.getStringExtra(ProfileEditorResult.EXTRA_ACTION) ?: return@registerForActivityResult
+            if (action != ProfileEditorResult.ACTION_SAVED && action != ProfileEditorResult.ACTION_DELETED) return@registerForActivityResult
+            val restartService = data.getBooleanExtra(ProfileEditorResult.EXTRA_RESTART_SERVICE, false)
             val selectedProfileSaved = action == ProfileEditorResult.ACTION_SAVED &&
                     data.getStringExtra(ProfileEditorResult.EXTRA_GUID) == mainViewModel.uiState.value.selectedGuid
             mainViewModel.onAction(MainAction.RefreshGroups)
@@ -94,7 +89,6 @@ class MainActivity : HelperBaseComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel.onAction(MainAction.Initialize)
-
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
     }
 
@@ -113,6 +107,7 @@ class MainActivity : HelperBaseComponentActivity() {
                     is MainAction.ImportManually -> importManually(action.type)
                     MainAction.RestartService -> LauncherManager.restartServiceOrStart(this, ::requestServiceStart)
                     MainAction.LocateSelectedServer -> mainViewModel.triggerLocateSelectedServer()
+                    MainAction.ExportTested -> exportTestedAsync()
                     is MainAction.SelectServer -> setSelectServer(action.guid)
                     is MainAction.EditServer -> editServer(action.guid, action.profile)
                     is MainAction.ShareClipboard -> shareToClipboard(action.guid)
@@ -131,8 +126,25 @@ class MainActivity : HelperBaseComponentActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             val result = AngConfigManager.shareFullContent2Clipboard(this@MainActivity, guid)
             withContext(Dispatchers.Main) {
-                if (result == 0) toastSuccess(R.string.toast_success)
-                else toastError(R.string.toast_failure)
+                if (result == 0) toastSuccess(R.string.toast_success) else toastError(R.string.toast_failure)
+            }
+        }
+    }
+
+    private fun exportTestedAsync() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val groupId = mainViewModel.uiState.value.selectedGroupId
+            val guids = if (groupId.isEmpty()) MmkvManager.decodeAllServerList() else MmkvManager.decodeServerList(groupId)
+            val tested = guids.filter {
+                (MmkvManager.decodeServerAffiliationInfo(it)?.testDelayMillis ?: 0L) > 0L
+            }
+            val result = if (tested.isEmpty()) 0 else AngConfigManager.shareNonCustomConfigsToClipboard(this@MainActivity, tested)
+            withContext(Dispatchers.Main) {
+                if (result > 0) {
+                    toast(getString(R.string.title_export_tested_count, result))
+                } else {
+                    toastError(R.string.toast_none_data)
+                }
             }
         }
     }
@@ -149,10 +161,7 @@ class MainActivity : HelperBaseComponentActivity() {
             MainDestination.BackupRestore -> Intent(this, BackupActivity::class.java)
             MainDestination.About -> Intent(this, AboutActivity::class.java)
             MainDestination.Promotion -> {
-                Utils.openUri(
-                    this,
-                    "${Utils.decode(AppConfig.APP_PROMOTION_URL)}?t=${System.currentTimeMillis()}"
-                )
+                Utils.openUri(this, "${Utils.decode(AppConfig.APP_PROMOTION_URL)}?t=${System.currentTimeMillis()}")
                 return
             }
         }
@@ -160,11 +169,7 @@ class MainActivity : HelperBaseComponentActivity() {
     }
 
     private fun handleFabAction() {
-        if (mainViewModel.uiState.value.isRunning) {
-            LauncherManager.stopService(this)
-        } else {
-            requestServiceStart()
-        }
+        if (mainViewModel.uiState.value.isRunning) LauncherManager.stopService(this) else requestServiceStart()
     }
 
     private fun requestServiceStart() {
@@ -177,9 +182,7 @@ class MainActivity : HelperBaseComponentActivity() {
     }
 
     private fun handleLayoutTestClick() {
-        if (mainViewModel.uiState.value.isRunning) {
-            mainViewModel.testCurrentServerRealPing()
-        }
+        if (mainViewModel.uiState.value.isRunning) mainViewModel.testCurrentServerRealPing()
     }
 
     private fun startV2Ray() {
@@ -193,9 +196,7 @@ class MainActivity : HelperBaseComponentActivity() {
             toast(R.string.title_file_chooser)
             return
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN &&
-            MmkvManager.decodeSettingsBool(AppConfig.PREF_PROXY_SHARING)
-        ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN && MmkvManager.decodeSettingsBool(AppConfig.PREF_PROXY_SHARING)) {
             checkAndRequestPermission(PermissionType.ACCESS_LOCAL_NETWORK) {}
         }
         LauncherManager.startService(this, selectedGuid)
@@ -213,9 +214,7 @@ class MainActivity : HelperBaseComponentActivity() {
             EConfigType.TROJAN.value -> Intent(this, ServerTrojanActivity::class.java)
             EConfigType.WIREGUARD.value -> Intent(this, ServerWireguardActivity::class.java)
             EConfigType.HYSTERIA2.value -> Intent(this, ServerHysteria2Activity::class.java)
-            else -> Intent(this, ServerHttpActivity::class.java).apply {
-                putExtra("createConfigType", createConfigType)
-            }
+            else -> Intent(this, ServerHttpActivity::class.java).apply { putExtra("createConfigType", createConfigType) }
         }.apply {
             putExtra("subscriptionId", mainViewModel.uiState.value.selectedGroupId)
         }
@@ -224,9 +223,7 @@ class MainActivity : HelperBaseComponentActivity() {
 
     private fun importQRcode() {
         launchQRCodeScanner { scanResult ->
-            if (scanResult != null) {
-                mainViewModel.onAction(MainAction.ImportBatchConfig(scanResult))
-            }
+            if (scanResult != null) mainViewModel.onAction(MainAction.ImportBatchConfig(scanResult))
         }
     }
 
