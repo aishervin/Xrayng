@@ -168,6 +168,7 @@ fun MainScreen(
                             MainMoreMenuAction.DeleteDuplicate -> showDelDuplicateConfirm = true
                             MainMoreMenuAction.DeleteInvalid -> showDelInvalidConfirm = true
                             MainMoreMenuAction.ExportAll -> onAction(MainAction.ExportAll)
+                            MainMoreMenuAction.ExportTested -> onAction(MainAction.ExportTested)
                             MainMoreMenuAction.LocateSelected -> onAction(MainAction.LocateSelectedServer)
                             MainMoreMenuAction.SortByTestResults -> onAction(MainAction.SortByTestResults)
                             MainMoreMenuAction.TestAll -> onAction(MainAction.TestAllServers)
@@ -189,7 +190,6 @@ fun MainScreen(
             floatingActionButton = {},
         ) { innerPadding ->
             val layoutDirection = LocalLayoutDirection.current
-
             if (groups.isNotEmpty()) {
                 Column(
                     modifier = Modifier
@@ -220,7 +220,6 @@ fun MainScreen(
                         key = { page -> groups.getOrNull(page)?.id ?: "group-page-$page" }
                     ) { page ->
                         val group = groups.getOrNull(page) ?: return@HorizontalPager
-
                         GroupPagerPage(
                             groupId = group.id,
                             mainViewModel = mainViewModel,
@@ -232,19 +231,10 @@ fun MainScreen(
                             lazyGridStates = lazyGridStates,
                             onSelectServer = { guid -> onAction(MainAction.SelectServer(guid)) },
                             onEditServer = { guid, profile -> onAction(MainAction.EditServer(guid, profile)) },
-                            onShareServer = { guid, profile ->
-                                shareTarget = Triple(guid, profile, false)
-                            },
-                            onMoreServer = { guid, profile ->
-                                shareTarget = Triple(guid, profile, true)
-                            },
+                            onShareServer = { guid, profile -> shareTarget = Triple(guid, profile, false) },
+                            onMoreServer = { guid, profile -> shareTarget = Triple(guid, profile, true) },
                             onRemoveServer = removeServer,
-                            contentPadding = PaddingValues(
-                                start = 0.dp,
-                                top = 0.dp,
-                                end = 0.dp,
-                                bottom = 80.dp
-                            )
+                            contentPadding = PaddingValues(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 80.dp)
                         )
                     }
                 }
