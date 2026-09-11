@@ -27,7 +27,6 @@ class CoreTestService : Service() {
         super.attachBaseContext(newBase?.let(AppLocaleManager::localizedContext))
     }
 
-    // manage active batch workers so each batch is independent and cancellable
     private val activeWorkers = Collections.synchronizedList(mutableListOf<RealPingWorkerService>())
     private val cancelAction by lazy {
         val intent = Intent(this, CoreTestService::class.java).putExtra(
@@ -47,29 +46,15 @@ class CoreTestService : Service() {
         ).build()
     }
 
-    /**
-     * Initializes the V2Ray environment.
-     */
     override fun onCreate() {
         super.onCreate()
         CoreNativeManager.initCoreEnv(this)
     }
 
-    /**
-     * Binds the service.
-     * @param intent The intent.
-     * @return The binder.
-     */
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
-    /**
-     * Cleans up resources when the service is destroyed.
-     */
     override fun onDestroy() {
         LogUtil.i(AppConfig.TAG, "CoreTestService is being destroyed, cancelling ${activeWorkers.size} active workers")
-        // cancel any active workers
         val snapshot = ArrayList(activeWorkers)
         snapshot.forEach { it.cancel() }
         activeWorkers.clear()
@@ -77,13 +62,6 @@ class CoreTestService : Service() {
         super.onDestroy()
     }
 
-    /**
-     * Handles the start command for the service.
-     * @param intent The intent.
-     * @param flags The flags.
-     * @param startId The start ID.
-     * @return The start mode.
-     */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         NotificationHelper.startForeground(
             this,
@@ -103,7 +81,8 @@ class CoreTestService : Service() {
             AppConfig.MSG_MEASURE_GEMINI_START -> handleMeasureStart(message, startId, true)
             AppConfig.MSG_MEASURE_CONFIG_CANCEL -> handleMeasureCancel()
             else -> {
-                NotificationHelper.stopForeground(this); stopSelf(startId)
+                NotificationHelper.stopForeground(this)
+                stopSelf(startId)
             }
         }
         return START_NOT_STICKY
@@ -135,7 +114,12 @@ class CoreTestService : Service() {
         }
     }
 
-    private fun handleWorkerEvent(event: RealPingEvent, message: TestServiceMessage, isGeminiTest: Boolean, onWorkerDone: () -> Unit) {
+    private fun handleWorkerEvent(
+        event: RealPingEvent,
+        message: TestServiceMessage,
+        isGeminiTest: Boolean,
+        onWorkerDone: () -> Unit
+    ) {
         when (event) {
             is RealPingEvent.Progress -> {
                 NotificationHelper.updateNotification(
@@ -149,7 +133,8 @@ class CoreTestService : Service() {
 
             is RealPingEvent.Result -> {
                 if (isGeminiTest) {
-                    val aff = MmkvManager.decodeServerAffiliationInfo(event.guid) ?: com.v2ray.ang.dto.entities.ServerAffiliationInfo()
+                    val aff = MmkvManager.decodeServerAffiliationInfo(event.guid)
+                        ?: com.v2ray.ang.dto.entities.ServerAffiliationInfo()
                     aff.geminiPassed = event.delayMillis > 0
                     MmkvManager.encodeServerAffiliationInfo(event.guid, aff)
                     MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_GEMINI_SUCCESS, event.guid)
@@ -160,11 +145,11 @@ class CoreTestService : Service() {
             }
 
             is RealPingEvent.Finish -> {
-                if (message.subscriptionId.isNotEmpty()) {
+                val paused = event.status == "PAUSED"
+                if (!paused && message.subscriptionId.isNotEmpty()) {
                     if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_REMOVE_INVALID_AFTER_TEST, false)) {
                         AngConfigManager.removeInvalidServer(message.subscriptionId)
                     }
-
                     if (MmkvManager.decodeSettingsBool(AppConfig.PREF_AUTO_SORT_AFTER_TEST, false)) {
                         AngConfigManager.sortByTestResultsForSub(message.subscriptionId)
                     }
@@ -181,12 +166,16 @@ class CoreTestService : Service() {
     }
 
     private fun handleMeasureCancel() {
-        MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_FINISH, "0")
-        LogUtil.i(AppConfig.TAG, "CoreTestService received cancel message, cancelling ${activeWorkers.size} active workers")
+        LogUtil.i(AppConfig.TAG, "CoreTestService received pause message, requesting ${activeWorkers.size} active workers to stop")
         val snapshot = ArrayList(activeWorkers)
-        snapshot.forEach { it.cancel() }
-        activeWorkers.clear()
-        NotificationHelper.stopForeground(this)
-        stopSelf()
+        if (snapshot.isEmpty()) {
+            MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_FINISH, "PAUSED")
+            NotificationHelper.stopForeground(this)
+            stopSelf()
+            return
+        }
+        snapshot.forEach { it.requestStop() }
+        // Do not clear workers or stop the service here. Active native probes must
+        // finish and publish their results before the service is torn down.
     }
 }
