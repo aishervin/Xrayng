@@ -55,22 +55,18 @@ class MainRepository(
                 AppConfig.MSG_STATE_NOT_RUNNING -> MainServiceEvent.StateNotRunning
                 AppConfig.MSG_STATE_START_SUCCESS -> MainServiceEvent.StateStartSuccess
                 AppConfig.MSG_STATE_START_FAILURE -> MainServiceEvent.StateStartFailure
-
                 AppConfig.MSG_STATE_STOP_SUCCESS -> MainServiceEvent.StateStopSuccess
                 AppConfig.MSG_MEASURE_DELAY_RESULT -> safeIntent
                     .serializable<ConnectionTestResult>("content")
                     ?.let { MainServiceEvent.MeasureDelayResult(it) }
-
                 AppConfig.MSG_MEASURE_CONFIG_SUCCESS -> MainServiceEvent.MeasureConfigSuccess
                 AppConfig.MSG_MEASURE_GEMINI_SUCCESS -> MainServiceEvent.MeasureGeminiSuccess
                 AppConfig.MSG_MEASURE_CONFIG_NOTIFY -> MainServiceEvent.MeasureConfigNotify(
                     safeIntent.getStringExtra("content").orEmpty()
                 )
-
                 AppConfig.MSG_MEASURE_CONFIG_FINISH -> MainServiceEvent.MeasureConfigFinish(
                     safeIntent.getStringExtra("content")
                 )
-
                 else -> null
             }
             event?.let { _mainServiceEvent.tryEmit(it) }
@@ -140,18 +136,12 @@ class MainRepository(
         return result
     }
 
-    override fun getSubscriptionItem(id: String): SubscriptionItem? =
-        MmkvManager.decodeSubscription(id)
+    override fun getSubscriptionItem(id: String): SubscriptionItem? = MmkvManager.decodeSubscription(id)
 
     override fun getServerGuidList(groupId: String): List<String> =
-        if (groupId.isEmpty()) {
-            MmkvManager.decodeAllServerList()
-        } else {
-            MmkvManager.decodeServerList(groupId)
-        }
+        if (groupId.isEmpty()) MmkvManager.decodeAllServerList() else MmkvManager.decodeServerList(groupId)
 
-    override fun decodeServerConfig(guid: String): ProfileItem? =
-        MmkvManager.decodeServerConfig(guid)
+    override fun decodeServerConfig(guid: String): ProfileItem? = MmkvManager.decodeServerConfig(guid)
 
     override fun decodeAffiliationInfo(guid: String): ServerAffiliationInfo? =
         MmkvManager.decodeServerAffiliationInfo(guid)
@@ -160,21 +150,23 @@ class MainRepository(
         MmkvManager.encodeServerList(ArrayList(guids), groupId)
 
     override fun removeServer(guid: String) = MmkvManager.removeServer(guid)
-
     override fun removeAllServer(): Int = MmkvManager.removeAllServer()
-
-    override fun removeInvalidServerByGuid(guid: String): Int =
-        MmkvManager.removeInvalidServer(guid)
+    override fun removeInvalidServerByGuid(guid: String): Int = MmkvManager.removeInvalidServer(guid)
 
     override fun removeInvalidServersInGroup(groupId: String): Int =
-        if (groupId.isEmpty()) {
-            MmkvManager.removeInvalidServer("")
-        } else {
-            getServerGuidList(groupId).sumOf(::removeInvalidServerByGuid)
-        }
+        if (groupId.isEmpty()) MmkvManager.removeInvalidServer("")
+        else getServerGuidList(groupId).sumOf(::removeInvalidServerByGuid)
 
-    override fun clearAllTestDelayResults(guids: List<String>) =
-        MmkvManager.clearAllTestDelayResults(guids)
+    override fun clearAllTestDelayResults(guids: List<String>) {
+        // A second run is now a resume operation. Keep already successful
+        // handshakes so they can be exported and so the remaining batch continues.
+        val hasSuccessfulResult = guids.any {
+            (MmkvManager.decodeServerAffiliationInfo(it)?.testDelayMillis ?: 0L) > 0L
+        }
+        if (!hasSuccessfulResult) {
+            MmkvManager.clearAllTestDelayResults(guids)
+        }
+    }
 
     override fun sortByTestResultsForSub(subId: String) {
         AngConfigManager.sortByTestResultsForSub(subId)
@@ -182,14 +174,10 @@ class MainRepository(
 
     override fun getSubsList(): List<String> = MmkvManager.decodeSubsList()
 
-    override suspend fun importBatchConfig(
-        server: String?,
-        subscriptionId: String,
-        updateUI: Boolean
-    ): Pair<Int, Int> = AngConfigManager.importBatchConfig(server, subscriptionId, updateUI)
+    override suspend fun importBatchConfig(server: String?, subscriptionId: String, updateUI: Boolean): Pair<Int, Int> =
+        AngConfigManager.importBatchConfig(server, subscriptionId, updateUI)
 
-    override fun updateConfigViaSubAll(): SubscriptionUpdateResult =
-        AngConfigManager.updateConfigViaSubAll()
+    override fun updateConfigViaSubAll(): SubscriptionUpdateResult = AngConfigManager.updateConfigViaSubAll()
 
     override fun updateConfigViaSub(subscriptionCache: SubscriptionCache): SubscriptionUpdateResult =
         AngConfigManager.updateConfigViaSub(subscriptionCache)
@@ -197,33 +185,17 @@ class MainRepository(
     override fun shareNonCustomConfigsToClipboard(guids: List<String>): Int =
         AngConfigManager.shareNonCustomConfigsToClipboard(app, guids)
 
-    override fun share2QRCode(guid: String): android.graphics.Bitmap? =
-        AngConfigManager.share2QRCode(guid)
+    override fun share2QRCode(guid: String): android.graphics.Bitmap? = AngConfigManager.share2QRCode(guid)
+    override fun share2Clipboard(guid: String): Boolean = AngConfigManager.share2Clipboard(app, guid) == 0
 
-    override fun share2Clipboard(guid: String): Boolean =
-        AngConfigManager.share2Clipboard(app, guid) == 0
-
-    override fun sendMsg2Service(msgId: Int, content: String) =
-        MessageHelper.sendMsg2Service(app, msgId, content)
-
-    override fun sendMsg2TestService(msg: TestServiceMessage) =
-        MessageHelper.sendMsg2TestService(app, msg)
+    override fun sendMsg2Service(msgId: Int, content: String) = MessageHelper.sendMsg2Service(app, msgId, content)
+    override fun sendMsg2TestService(msg: TestServiceMessage) = MessageHelper.sendMsg2TestService(app, msg)
 
     override fun cancelAllPing() {
-        sendMsg2TestService(
-            TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
-        )
+        sendMsg2TestService(TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL))
     }
 
-    override fun testCurrentServerRealPing() {
-        sendMsg2Service(AppConfig.MSG_MEASURE_DELAY, "")
-    }
-
-    override fun syncSubscriptions() {
-        SubscriptionUpdater.sync(app)
-    }
-
-    override fun initAssets() {
-        SettingsManager.initAssets(app, app.assets)
-    }
+    override fun testCurrentServerRealPing() = sendMsg2Service(AppConfig.MSG_MEASURE_DELAY, "")
+    override fun syncSubscriptions() = SubscriptionUpdater.sync(app)
+    override fun initAssets() = SettingsManager.initAssets(app, app.assets)
 }
