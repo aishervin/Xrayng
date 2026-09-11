@@ -57,7 +57,10 @@ class RealPingWorkerService(
     private val totalCount = AtomicInteger(0)
 
     fun start() {
-        val jobs = guids.map { guid ->
+        val pendingGuids = guids.filter { guid ->
+            (MmkvManager.decodeServerAffiliationInfo(guid)?.testDelayMillis ?: 0L) <= 0L
+        }
+        val jobs = pendingGuids.map { guid ->
             totalCount.incrementAndGet()
             scope.launch {
                 if (stopRequested.get()) {
@@ -125,16 +128,12 @@ class RealPingWorkerService(
             val url = config.server.orEmpty()
             val port = config.serverPort.orEmpty().toInt()
             val tcpTime = SpeedtestManager.socketConnectTime(url, port, 1000)
-            if (tcpTime <= -1L) {
-                return retFailure
-            }
+            if (tcpTime <= -1L) return retFailure
         }
 
         if (stopRequested.get()) return -2L
         val configResult = CoreConfigManager.getV2rayConfig4Speedtest(context, guid)
-        if (!configResult.status) {
-            return retFailure
-        }
+        if (!configResult.status) return retFailure
         if (stopRequested.get()) return -2L
         return RealPingExecutionLimiter.run(config.configType) {
             CoreNativeManager.measureOutboundDelay(configResult.content, customUrl ?: SettingsManager.getDelayTestUrl())
