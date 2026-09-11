@@ -12,7 +12,7 @@ android {
         applicationId = "com.aistudio.shenbypass.kvrwsp"
         minSdk = 24
         targetSdk = 37
-        versionCode = 2
+        versionCode = maxOf(3, System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 3)
         versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -81,14 +81,10 @@ base {
 
 dependencies {
     implementation(files("libs/libv2ray.aar"))
-    // AndroidX Core Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-
-    // Compose Libraries
     implementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(platform(libs.androidx.compose.bom))
-
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.foundation)
@@ -96,37 +92,22 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
-
     debugImplementation(libs.androidx.compose.ui.tooling)
-
-    // Data and Storage Libraries
     implementation(libs.mmkv.static)
     implementation(libs.gson)
     implementation(libs.okhttp)
-
-    // Reactive and Utility Libraries
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-
-    // QR Code: CameraX + ZXing
     implementation(libs.camerax.core)
     implementation(libs.camerax.camera2)
     implementation(libs.camerax.lifecycle)
     implementation(libs.camerax.compose)
-    implementation(libs.core) // zxing core
-
-    // AndroidX Lifecycle and Architecture Components
+    implementation(libs.core)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.runtime.ktx)
-
-    // Background Task Libraries
     implementation(libs.work.runtime.ktx)
     implementation(libs.work.multiprocess)
-
-    // Reorderable list
     implementation(libs.reorderable)
-
-    // Testing Libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
