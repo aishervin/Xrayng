@@ -4,7 +4,6 @@ import com.v2ray.ang.dto.ConnectionTestResult
 import com.v2ray.ang.dto.GroupMapItem
 import com.v2ray.ang.dto.LocateTarget
 
-/** Locale-neutral state formatted only when it reaches the main UI. */
 sealed interface MainStatus {
     data object Disconnected : MainStatus
     data object Connected : MainStatus
@@ -13,9 +12,6 @@ sealed interface MainStatus {
     data class ConnectionTest(val result: ConnectionTestResult) : MainStatus
 }
 
-/**
- * Main UI state
- */
 data class MainUiState(
     val groups: List<GroupMapItem> = emptyList(),
     val selectedGroupId: String = "",
@@ -29,9 +25,6 @@ data class MainUiState(
     val shareQRCodeBitmap: android.graphics.Bitmap? = null
 )
 
-/**
- * All possible user interaction intents
- */
 sealed interface MainAction {
     data object Initialize : MainAction
     data object RefreshGroups : MainAction
@@ -47,6 +40,7 @@ sealed interface MainAction {
     data object SortByTestResults : MainAction
     data object UpdateSubscriptions : MainAction
     data object ExportAll : MainAction
+    data object ExportTested : MainAction
 
     data object ImportQRcode : MainAction
     data object ImportClipboard : MainAction
@@ -66,6 +60,5 @@ sealed interface MainAction {
     data object DismissQRCodeDialog : MainAction
 
     data class ImportBatchConfig(val configText: String) : MainAction
-
     data object LocateHandled : MainAction
 }
