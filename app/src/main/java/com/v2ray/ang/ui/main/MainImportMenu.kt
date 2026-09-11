@@ -32,6 +32,7 @@ enum class MainMoreMenuAction(@StringRes val labelRes: Int) {
     DeleteDuplicate(R.string.title_del_duplicate_config),
     DeleteInvalid(R.string.title_del_invalid_config),
     ExportAll(R.string.title_export_all),
+    ExportTested(R.string.title_export_tested),
     LocateSelected(R.string.title_locate_selected_config),
     SortByTestResults(R.string.title_sort_by_test_results),
     TestAll(R.string.title_ping_all_server),
