@@ -1,7 +1,16 @@
 val appVersionName = (project.findProperty("VERSION_NAME") as? String) ?: "1.1.0"
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+}
+
+val brandIconSource = rootProject.file("Picsart_26-08-07_19-36-12-944.png")
+val brandIconResDir = layout.buildDirectory.dir("generated/res/brand/main")
+val prepareBrandIcon = tasks.register<Copy>("prepareBrandIcon") {
+    from(brandIconSource)
+    into(brandIconResDir.map { it.dir("drawable") })
+    rename { "shen_brand_icon.png" }
 }
 
 android {
@@ -18,6 +27,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "DISTRIBUTION", "\"Standard\"")
     }
+
+    sourceSets["main"].res.srcDir(brandIconResDir)
 
     signingConfigs {
         create("release") {
@@ -75,8 +86,12 @@ android {
     }
 }
 
+tasks.named("preBuild").configure {
+    dependsOn(prepareBrandIcon)
+}
+
 base {
-    archivesName.set("Xrayng-${appVersionName}")
+    archivesName.set("Seekdeep-${appVersionName}")
 }
 
 dependencies {
