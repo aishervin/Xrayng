@@ -32,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.border
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -53,7 +54,6 @@ enum class MainDestination(@DrawableRes val iconRes: Int, @StringRes val labelRe
     Routing(R.drawable.ic_routing_24dp, R.string.routing_settings_title),
     UserAssets(R.drawable.ic_file_24dp, R.string.title_user_asset_setting),
     Settings(R.drawable.ic_settings_24dp, R.string.title_settings),
-    Promotion(R.drawable.ic_promotion_24dp, R.string.title_pref_promotion),
     Logcat(R.drawable.ic_logcat_24dp, R.string.title_logcat),
     CheckUpdate(R.drawable.ic_check_update_24dp, R.string.update_check_for_update),
     BackupRestore(R.drawable.ic_restore_24dp, R.string.title_configuration_backup_restore),
@@ -69,7 +69,6 @@ private val primaryDrawerItems = listOf(
 )
 
 private val drawerItems = primaryDrawerItems + listOf(
-    MainDestination.Promotion,
     MainDestination.Logcat,
     MainDestination.CheckUpdate,
     MainDestination.BackupRestore,
@@ -88,9 +87,7 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
             .border(0.8.dp, Color(0x38FF7A00), RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)),
         drawerContainerColor = MaterialTheme.colorScheme.surface
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
+        Column(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -111,35 +108,20 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                         verticalArrangement = Arrangement.Center
                     ) {
                         Image(
-                            painter = painterResource(R.drawable.ic_xrayng_logo),
+                            painter = painterResource(R.drawable.shen_brand_icon),
                             contentDescription = null,
                             modifier = Modifier.size(86.dp)
                         )
                         Spacer(modifier = Modifier.height(4.dp))
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "Xrayng",
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
-                                    letterSpacing = 1.sp
-                                ),
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = "SHΞN™ made",
-                                color = Color(0xFFFF7A00),
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontWeight = FontWeight.Normal,
-                                    letterSpacing = 0.4.sp,
-                                    fontSize = 11.sp
-                                )
-                            )
-                        }
+                        Text(
+                            text = "Seekdeep",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                                letterSpacing = 1.sp
+                            ),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
                     }
                 }
                 drawerItems.forEachIndexed { index, item ->
@@ -160,9 +142,8 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                 }
             }
 
-            // Drawer Footer with neon orange styling and telegram link
             AppDivider()
-            val footerText = "Exclusive SHΞN™ overhauld"
+            val footerText = "Exclusive SHΞN™ made"
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -171,8 +152,7 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                         contentDescription = "$footerText - t.me/shervini"
                     }
                     .clickable {
-                        val telegramUrl = "https://t.me/shervini"
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(telegramUrl)).apply {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/shervini")).apply {
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }
                         try {
