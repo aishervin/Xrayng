@@ -54,37 +54,33 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : HelperBaseComponentActivity() {
-
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModel.Factory(application, MainRepository(application as AngApplication))
     }
 
-    private val requestVpnPermission =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) startV2Ray()
-        }
+    private val requestVpnPermission = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) startV2Ray()
+    }
 
-    private val profileEditorLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode != RESULT_OK) return@registerForActivityResult
-            val data = result.data ?: return@registerForActivityResult
-            val action = data.getStringExtra(ProfileEditorResult.EXTRA_ACTION) ?: return@registerForActivityResult
-            if (action != ProfileEditorResult.ACTION_SAVED && action != ProfileEditorResult.ACTION_DELETED) return@registerForActivityResult
-            val restartService = data.getBooleanExtra(ProfileEditorResult.EXTRA_RESTART_SERVICE, false)
-            val selectedProfileSaved = action == ProfileEditorResult.ACTION_SAVED &&
-                    data.getStringExtra(ProfileEditorResult.EXTRA_GUID) == mainViewModel.uiState.value.selectedGuid
-            mainViewModel.onAction(MainAction.RefreshGroups)
-            if (restartService || selectedProfileSaved) LauncherManager.restartService(this)
-        }
+    private val profileEditorLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val data = result.data ?: return@registerForActivityResult
+        val action = data.getStringExtra(ProfileEditorResult.EXTRA_ACTION) ?: return@registerForActivityResult
+        if (action != ProfileEditorResult.ACTION_SAVED && action != ProfileEditorResult.ACTION_DELETED) return@registerForActivityResult
+        val restartService = data.getBooleanExtra(ProfileEditorResult.EXTRA_RESTART_SERVICE, false)
+        val selectedProfileSaved = action == ProfileEditorResult.ACTION_SAVED &&
+                data.getStringExtra(ProfileEditorResult.EXTRA_GUID) == mainViewModel.uiState.value.selectedGuid
+        mainViewModel.onAction(MainAction.RefreshGroups)
+        if (restartService || selectedProfileSaved) LauncherManager.restartService(this)
+    }
 
-    private val settingsActivityLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val restartService = SettingsChangeManager.consumeRestartService()
-            val refreshGroups = SettingsChangeManager.consumeSetupGroupTab()
-            mainViewModel.refreshUiSettings()
-            if (refreshGroups) mainViewModel.onAction(MainAction.RefreshGroups)
-            if (restartService) LauncherManager.restartService(this)
-        }
+    private val settingsActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        val restartService = SettingsChangeManager.consumeRestartService()
+        val refreshGroups = SettingsChangeManager.consumeSetupGroupTab()
+        mainViewModel.refreshUiSettings()
+        if (refreshGroups) mainViewModel.onAction(MainAction.RefreshGroups)
+        if (restartService) LauncherManager.restartService(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,8 +115,7 @@ class MainActivity : HelperBaseComponentActivity() {
         )
     }
 
-    private fun shareToClipboard(guid: String): Boolean =
-        AngConfigManager.share2Clipboard(this, guid) == 0
+    private fun shareToClipboard(guid: String): Boolean = AngConfigManager.share2Clipboard(this, guid) == 0
 
     private fun shareFullContentAsync(guid: String) {
         lifecycleScope.launch(Dispatchers.IO) {
@@ -135,16 +130,10 @@ class MainActivity : HelperBaseComponentActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             val groupId = mainViewModel.uiState.value.selectedGroupId
             val guids = if (groupId.isEmpty()) MmkvManager.decodeAllServerList() else MmkvManager.decodeServerList(groupId)
-            val tested = guids.filter {
-                (MmkvManager.decodeServerAffiliationInfo(it)?.testDelayMillis ?: 0L) > 0L
-            }
+            val tested = guids.filter { (MmkvManager.decodeServerAffiliationInfo(it)?.testDelayMillis ?: 0L) > 0L }
             val result = if (tested.isEmpty()) 0 else AngConfigManager.shareNonCustomConfigsToClipboard(this@MainActivity, tested)
             withContext(Dispatchers.Main) {
-                if (result > 0) {
-                    toast(getString(R.string.title_export_tested_count, result))
-                } else {
-                    toastError(R.string.toast_none_data)
-                }
+                if (result > 0) toast(getString(R.string.title_export_tested_count, result)) else toastError(R.string.toast_none_data)
             }
         }
     }
@@ -211,9 +200,7 @@ class MainActivity : HelperBaseComponentActivity() {
             EConfigType.WIREGUARD.value -> Intent(this, ServerWireguardActivity::class.java)
             EConfigType.HYSTERIA2.value -> Intent(this, ServerHysteria2Activity::class.java)
             else -> Intent(this, ServerHttpActivity::class.java).apply { putExtra("createConfigType", createConfigType) }
-        }.apply {
-            putExtra("subscriptionId", mainViewModel.uiState.value.selectedGroupId)
-        }
+        }.apply { putExtra("subscriptionId", mainViewModel.uiState.value.selectedGroupId) }
         profileEditorLauncher.launch(intent)
     }
 
@@ -234,11 +221,54 @@ class MainActivity : HelperBaseComponentActivity() {
 
     private fun importConfigLocal() {
         launchFileChooser { uri ->
-            if (uri != null) mainViewModel.onAction(MainAction.ImportBatchConfig(uri.toString()))
+            if (uri == null) return@launchFileChooser
+            try {
+                contentResolver.openInputStream(uri)?.bufferedReader()?.use { reader ->
+                    mainViewModel.onAction(MainAction.ImportBatchConfig(reader.readText()))
+                }
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "Failed to read content from URI", e)
+            }
         }
     }
 
+    private fun editServer(guid: String, profile: ProfileItem) {
+        val activityClass = when (profile.configType) {
+            EConfigType.CUSTOM -> ServerCustomConfigActivity::class.java
+            EConfigType.POLICYGROUP -> ServerGroupActivity::class.java
+            EConfigType.PROXYCHAIN -> ServerProxyChainActivity::class.java
+            EConfigType.VMESS -> ServerVmessActivity::class.java
+            EConfigType.VLESS -> ServerVlessActivity::class.java
+            EConfigType.SHADOWSOCKS -> ServerShadowsocksActivity::class.java
+            EConfigType.SOCKS -> ServerSocksActivity::class.java
+            EConfigType.HTTP -> ServerHttpActivity::class.java
+            EConfigType.TROJAN -> ServerTrojanActivity::class.java
+            EConfigType.WIREGUARD -> ServerWireguardActivity::class.java
+            EConfigType.HYSTERIA2 -> ServerHysteria2Activity::class.java
+            else -> ServerHttpActivity::class.java
+        }
+        val intent = Intent(this, activityClass).apply {
+            putExtra("guid", guid)
+            putExtra("isRunning", mainViewModel.uiState.value.isRunning)
+            putExtra("createConfigType", profile.configType.value)
+            putExtra("subscriptionId", mainViewModel.uiState.value.selectedGroupId)
+        }
+        profileEditorLauncher.launch(intent)
+    }
+
     private fun setSelectServer(guid: String) {
-        mainViewModel.onAction(MainAction.SelectServer(guid))
+        val selected = mainViewModel.uiState.value.selectedGuid
+        if (guid != selected) {
+            mainViewModel.updateSelectedGuid(guid)
+            LauncherManager.restartService(this)
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BUTTON_B) {
+            moveTaskToBack(false)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
