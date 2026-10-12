@@ -2,7 +2,7 @@
 
 <img src="app/src/main/ic_launcher-web.png" width="170" alt="Xrayng Logo">
 
-# Xrayng
+# Xrayng™ 
 
 <img src="https://readme-typing-svg.demolab.com?font=Vazirmatn&weight=800&size=46&pause=1200&color=FFA500&center=true&vCenter=true&width=750&lines=Android+Client;Exclusive+SHEN+Made;Based+on+v2rayNG" alt="Xrayng animated title">
 
@@ -42,7 +42,7 @@
 <tr>
 <td width="33%" valign="top" align="center">
 
-### ⚡ تست پینگ پارالل
+### ⚡ تست پینگ پارالل + Gemini pass
 
 افزایش **۲ برابری سرعت** تست URL کانفیگ‌ها با استفاده از استراتژی اختصاصی و اجرای موازی تست‌ها.
 
