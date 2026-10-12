@@ -30,7 +30,9 @@ android {
         buildConfigField("String", "DISTRIBUTION", "\"Standard\"")
     }
 
-    sourceSets["main"].res.srcDir(brandIconResDir)
+    // AGP 9 rejects Provider instances passed directly to Android SourceSet.
+    // Resolve the generated directory here; preBuild below explicitly depends on its producer.
+    sourceSets["main"].res.srcDir(brandIconResDir.get().asFile)
 
     signingConfigs {
         create("release") {
