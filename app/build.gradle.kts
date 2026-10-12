@@ -95,7 +95,7 @@ tasks.named("preBuild").configure {
 }
 
 base {
-    archivesName.set("Seekdeep-${appVersionName}")
+    archivesName.set("Xrayng-${appVersionName}")
 }
 
 dependencies {

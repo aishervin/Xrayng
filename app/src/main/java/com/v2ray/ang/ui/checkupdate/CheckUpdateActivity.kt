@@ -106,7 +106,7 @@ class CheckUpdateActivity : BaseComponentActivity() {
         if (isDownloading) return
         try {
             val request = DownloadManager.Request(Uri.parse(url))
-                .setTitle("Seekdeep — به‌روزرسانی")
+                .setTitle("Xrayng — به‌روزرسانی")
                 .setDescription("در حال دریافت نسخه جدید برنامه")
                 .setMimeType("application/vnd.android.package-archive")
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)

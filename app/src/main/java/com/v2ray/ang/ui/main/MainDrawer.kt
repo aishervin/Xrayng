@@ -113,7 +113,7 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Seekdeep",
+                            text = "Xrayng",
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
                                 fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,

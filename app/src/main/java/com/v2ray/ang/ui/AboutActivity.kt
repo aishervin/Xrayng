@@ -40,12 +40,12 @@ class AboutActivity : BaseComponentActivity() {
 
     @Composable
     override fun ScreenContent() {
-        SeekdeepAboutScreen(onBackClick = { finish() })
+        XrayngAboutScreen(onBackClick = { finish() })
     }
 }
 
 @Composable
-private fun SeekdeepAboutScreen(onBackClick: () -> Unit) {
+private fun XrayngAboutScreen(onBackClick: () -> Unit) {
     val context = LocalContext.current
     val version = "v${BuildConfig.VERSION_NAME} (${CoreNativeManager.getLibVersion()})"
 
@@ -60,7 +60,7 @@ private fun SeekdeepAboutScreen(onBackClick: () -> Unit) {
         contentWindowInsets = WindowInsets(0),
         topBar = {
             AppTopBar(
-                title = "About Seekdeep",
+                title = "About Xrayng",
                 onBackClick = onBackClick
             )
         }
@@ -75,13 +75,13 @@ private fun SeekdeepAboutScreen(onBackClick: () -> Unit) {
         ) {
             Image(
                 painter = painterResource(R.drawable.shen_brand_icon),
-                contentDescription = "Seekdeep",
+                contentDescription = "Xrayng",
                 modifier = Modifier
                     .padding(top = 28.dp, bottom = 10.dp)
                     .size(110.dp)
             )
             Text(
-                text = "Seekdeep",
+                text = "Xrayng",
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
