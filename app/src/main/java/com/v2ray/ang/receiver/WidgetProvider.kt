@@ -35,7 +35,11 @@ class WidgetProvider : AppWidgetProvider() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         remoteViews.setOnClickPendingIntent(R.id.layout_switch, pendingIntent)
-        remoteViews.setImageViewResource(R.id.image_switch, R.drawable.shen_brand_icon)
+        // Keep the widget control stateful: brand artwork must not replace the play/stop action.
+        remoteViews.setImageViewResource(
+            R.id.image_switch,
+            if (isRunning) R.drawable.ic_stop_24dp else R.drawable.ic_play_24dp
+        )
         remoteViews.setInt(
             R.id.layout_background,
             "setBackgroundResource",
