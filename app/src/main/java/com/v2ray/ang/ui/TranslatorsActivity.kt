@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
@@ -133,14 +131,6 @@ private fun ContributorRow(displayName: String, linkUrl: String?) {
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (isLink) {
-            Icon(
-                painter = painterResource(R.drawable.ic_github_24dp),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(20.dp)
-            )
-        }
         Text(
             text = displayName,
             style = MaterialTheme.typography.bodyLarge,
@@ -149,7 +139,7 @@ private fun ContributorRow(displayName: String, linkUrl: String?) {
             } else {
                 MaterialTheme.colorScheme.onSurface
             },
-            modifier = Modifier.padding(start = if (isLink) 12.dp else 0.dp)
+            modifier = Modifier.padding(start = 0.dp)
         )
     }
 }
