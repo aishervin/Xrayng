@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090909">
-<meta name="description" content="Xrayng (SHΞN™) v2.0.0 — کلاینت پیشرفته، پرسرعت و بهینه‌شده اندروید بر پایه هسته قدرتمند Xray">
-<title>Xrayng (SHΞN™) v2.0.0 | کلاینت پیشرفته اندروید</title>
+<meta name="theme-color" content="#090a0d">
+<meta name="description" content="Xrayng (SHΞN™) v2.1.1 — کلاینت پیشرفته، پرسرعت و بهینه‌شده اندروید بر پایه هسته قدرتمند Xray">
+<title>Xrayng (SHΞN™) v2.1.1 | کلاینت پیشرفته اندروید</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root {
-  --bg: #09090b;
-  --card: #141417;
+  --bg: #090a0d;
+  --card: #12161b;
   --card-border: rgba(255, 255, 255, 0.08);
   --orange: #ff9800;
   --orange-light: #ffb74d;
   --orange-glow: rgba(255, 152, 0, 0.25);
-  --blue: #29b6f6;
+  --blue: #43c7d8;
   --purple: #9b72cb;
   --green: #00e676;
   --text: #f4f4f5;
@@ -41,15 +41,27 @@ a { color: inherit; text-decoration: none; }
 .container { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
 
 /* Navbar */
-header { padding: 24px 0 20px; }
-.nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; }
-.brand-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--orange), #e65100);
-  display: grid; place-items: center; color: #fff; font-size: 1rem;
-  box-shadow: 0 4px 12px var(--orange-glow);
+header { padding: 18px 0 24px; }
+.nav-bar {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
+  padding: 10px 14px 10px 18px; border: 1px solid var(--card-border); border-radius: 20px;
+  background: rgba(17, 18, 21, 0.72); backdrop-filter: blur(18px);
 }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.22rem; }
+.brand-mark {
+  width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center;
+  perspective: 700px; background: linear-gradient(145deg, #29231b, #171719);
+  border: 1px solid rgba(255, 183, 77, 0.24); box-shadow: 0 5px 18px var(--orange-glow);
+}
+.brand-spin {
+  position: relative; width: 34px; height: 34px;
+  transform-style: preserve-3d; animation: spin-y 7s linear infinite;
+}
+.brand-face {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  backface-visibility: hidden; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.42));
+}
+.brand-face.back { transform: rotateY(180deg); }
 .nav-links { display: flex; gap: 16px; align-items: center; }
 .gh-link {
   display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
@@ -60,15 +72,37 @@ header { padding: 24px 0 20px; }
 .gh-link:hover { border-color: var(--orange); color: var(--orange-light); transform: translateY(-2px); }
 
 /* Hero */
-.hero { text-align: center; padding: 20px 0 40px; }
-.logo-container {
-  width: 140px; height: 140px; margin: 0 auto 24px;
-  position: relative; display: grid; place-items: center;
+.hero {
+  position: relative; isolation: isolate; overflow: hidden; text-align: center; padding: 34px 24px 42px;
+  border: 1px solid rgba(255, 255, 255, 0.075); border-radius: 32px;
+  background: linear-gradient(145deg, rgba(25, 23, 20, 0.76), rgba(14, 17, 20, 0.86));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
 }
-.logo-container img {
-  width: 130px; height: 130px; object-fit: contain;
-  filter: drop-shadow(0 8px 24px var(--orange-glow));
-  animation: float 4s ease-in-out infinite;
+.hero::before {
+  content: ""; position: absolute; z-index: -1; inset: -22%; pointer-events: none;
+  background: radial-gradient(circle at 50% 12%, rgba(255, 152, 0, 0.15), transparent 36%),
+              radial-gradient(circle at 82% 72%, rgba(67, 199, 216, 0.08), transparent 32%);
+}
+.logo-container {
+  width: 148px; height: 148px; margin: 0 auto 22px; position: relative;
+  display: grid; place-items: center; perspective: 900px;
+  animation: float 4.8s ease-in-out infinite;
+}
+.logo-container::before {
+  content: ""; position: absolute; inset: 10px; border: 1px solid rgba(255, 183, 77, 0.2);
+  border-radius: 50%; box-shadow: 0 0 36px rgba(255, 152, 0, 0.11), inset 0 0 24px rgba(255, 152, 0, 0.06);
+}
+.logo-rotator {
+  position: relative; width: 128px; height: 128px;
+  transform-style: preserve-3d; animation: spin-y 9s linear infinite;
+}
+.logo-face {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  backface-visibility: hidden; filter: drop-shadow(0 8px 24px var(--orange-glow));
+}
+.logo-face.back { transform: rotateY(180deg); }
+@keyframes spin-y {
+  to { transform: rotateY(360deg); }
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -94,9 +128,9 @@ header { padding: 24px 0 20px; }
 /* Centered Announcement Headline */
 .v2-headline-banner {
   max-width: 820px; margin: 0 auto 36px; padding: 18px 24px;
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.12), rgba(41, 182, 246, 0.08));
-  border: 1.5px solid rgba(255, 152, 0, 0.35); border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(110deg, rgba(255, 152, 0, 0.13), rgba(67, 199, 216, 0.08));
+  border: 1px solid rgba(255, 183, 77, 0.32); border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28), inset 0 1px rgba(255, 255, 255, 0.04);
   display: flex; align-items: center; justify-content: center; gap: 12px;
   text-align: center;
 }
@@ -140,17 +174,17 @@ header { padding: 24px 0 20px; }
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
 }
 .card {
-  background: var(--card); border: 1px solid var(--card-border);
-  border-radius: 20px; padding: 26px; box-shadow: var(--shadow);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 58%), var(--card);
+  border: 1px solid var(--card-border); border-radius: 22px; padding: 26px; box-shadow: var(--shadow);
   transition: all 0.3s ease; position: relative; overflow: hidden;
 }
-.card:hover { border-color: rgba(255, 152, 0, 0.3); transform: translateY(-4px); }
+.card:hover { border-color: rgba(255, 152, 0, 0.32); transform: translateY(-4px); box-shadow: 0 20px 42px rgba(0, 0, 0, 0.46); }
 .card-icon {
   width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
   display: grid; place-items: center; font-size: 1.35rem;
 }
 .icon-orange { background: rgba(255, 152, 0, 0.12); color: var(--orange); }
-.icon-blue { background: rgba(41, 182, 246, 0.12); color: var(--blue); }
+.icon-blue { background: rgba(67, 199, 216, 0.12); color: var(--blue); }
 .icon-purple { background: rgba(155, 114, 203, 0.12); color: var(--purple); }
 .icon-green { background: rgba(0, 230, 118, 0.12); color: var(--green); }
 
@@ -169,9 +203,9 @@ header { padding: 24px 0 20px; }
 
 /* Downloads Section */
 .download-card {
-  text-align: center; padding: 40px 24px; margin: 40px 0;
-  background: linear-gradient(145deg, #18181b, #101012);
-  border: 1px solid rgba(255, 152, 0, 0.25); border-radius: 24px;
+  position: relative; overflow: hidden; text-align: center; padding: 44px 24px; margin: 44px 0;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 152, 0, 0.12), transparent 58%), linear-gradient(145deg, #17191d, #101215);
+  border: 1px solid rgba(255, 152, 0, 0.25); border-radius: 28px;
 }
 .download-card h2 { font-size: 2rem; margin-bottom: 12px; font-weight: 900; }
 .download-card p { color: var(--text-muted); max-width: 600px; margin: 0 auto 28px; }
@@ -204,12 +238,30 @@ footer {
 footer strong { color: var(--orange-light); }
 
 @media (max-width: 860px) {
-  .grid-3 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid-2 { grid-template-columns: 1fr; }
   .v2-headline-banner { flex-direction: column; text-align: center; }
 }
+@media (max-width: 600px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .hero { padding: 28px 16px 34px; border-radius: 26px; }
+  .logo-container { width: 132px; height: 132px; }
+  .logo-rotator { width: 112px; height: 112px; }
+  .nav-bar { padding: 8px 10px 8px 14px; }
+}
 @media (max-width: 480px) {
   .btn { width: 100%; }
+  .container { width: min(100% - 28px, 1120px); }
+  .brand { font-size: 1.08rem; }
+  .brand-mark { width: 42px; height: 42px; }
+  .gh-link { padding: 7px 11px; font-size: 0.78rem; }
+  .section-title { font-size: 1.35rem; }
+  .card { padding: 22px; }
+  .download-card { padding: 34px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 </style>
 </head>
@@ -219,7 +271,12 @@ footer strong { color: var(--orange-light); }
   <div class="container">
     <nav class="nav-bar">
       <div class="brand">
-        <div class="brand-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="brand-mark" aria-hidden="true">
+          <div class="brand-spin">
+            <img class="brand-face front" src="https://raw.githubusercontent.com/aishervin/Xrayng/main/app/src/main/ic_launcher-web.png" alt="">
+            <img class="brand-face back" src="https://raw.githubusercontent.com/aishervin/Xrayng/main/app/src/main/ic_launcher-web.png" alt="">
+          </div>
+        </div>
         <span>Xrayng</span>
       </div>
       <div class="nav-links">
@@ -230,11 +287,14 @@ footer strong { color: var(--orange-light); }
     </nav>
 
     <section class="hero">
-      <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/aishervin/Xrayng/main/app/src/main/ic_launcher-web.png" alt="لوگوی Xrayng">
+      <div class="logo-container" role="img" aria-label="لوگوی Xrayng">
+        <div class="logo-rotator" aria-hidden="true">
+          <img class="logo-face front" src="https://raw.githubusercontent.com/aishervin/Xrayng/main/app/src/main/ic_launcher-web.png" alt="">
+          <img class="logo-face back" src="https://raw.githubusercontent.com/aishervin/Xrayng/main/app/src/main/ic_launcher-web.png" alt="">
+        </div>
       </div>
       <div class="release-pill">
-        <i class="fa-solid fa-code-branch"></i> نسخه نهایی ۲.۰.۰ • اندروید
+        <i class="fa-solid fa-code-branch"></i> نسخهٔ پایدار ۲.۱.۱ • اندروید
       </div>
       <h1>Xray<span>ng</span></h1>
       <p class="hero-desc">
@@ -244,7 +304,7 @@ footer strong { color: var(--orange-light); }
       <!-- Centered Announcement Headline -->
       <div class="v2-headline-banner">
         <span class="pulse-tag">نسخه جدید</span>
-        <h2>نسخه ی v2.0.0 هم اکنون در دسترس قرار گرفت</h2>
+        <h2>نسخهٔ v2.1.1 اکنون در دسترس است</h2>
       </div>
 
       <div class="hero-actions">
@@ -331,7 +391,7 @@ footer strong { color: var(--orange-light); }
 
   <!-- Technical Details & Architecture -->
   <section>
-    <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> دسته‌بندی و منابع پیش‌فرض نسخه ۲.۰.۰</h2>
+    <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> دسته‌بندی و منابع پیش‌فرض نسخه ۲.۱.۱</h2>
     <div class="grid-2">
       <div class="card">
         <h3>مخازن کانفیگ درون‌برنامه‌ای</h3>
@@ -359,7 +419,7 @@ footer strong { color: var(--orange-light); }
 
   <!-- Download Center -->
   <section class="download-card">
-    <h2>دریافت نسخه رسمی v2.0.0</h2>
+    <h2>دریافت نسخهٔ رسمی v2.1.1</h2>
     <p>بسته به نوع پردازنده دستگاه خود، نسخه اختصاصی یا نسخه عمومی (Universal) را دریافت و نصب کنید.</p>
 
     <div class="arch-grid">
