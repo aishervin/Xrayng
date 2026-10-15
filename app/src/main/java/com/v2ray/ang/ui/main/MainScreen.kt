@@ -29,8 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -260,9 +262,10 @@ fun MainScreen(
                         )
                     }
 
-                    // Bottom Test Action Bar: 2/3 Real Delay, 1/3 Gemini pass
+                    // Bottom Test Action Bar: 2/3 Real Delay (with embedded delete invalid), 1/3 Gemini pass
                     MainTestBottomBar(
                         onRealDelayClick = { onAction(MainAction.TestRealAllServers) },
+                        onDeleteInvalidClick = { onAction(MainAction.RemoveInvalidServers) },
                         onGeminiClick = { onAction(MainAction.TestGeminiServers) }
                     )
                 }
@@ -274,6 +277,7 @@ fun MainScreen(
 @Composable
 private fun MainTestBottomBar(
     onRealDelayClick: () -> Unit,
+    onDeleteInvalidClick: () -> Unit,
     onGeminiClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -289,12 +293,11 @@ private fun MainTestBottomBar(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 2/3 width for Real delay (URL test)
+            // 2/3 width for Real delay (URL test) with embedded Delete Invalid trash button
             Surface(
                 modifier = Modifier
                     .weight(2f)
-                    .height(44.dp)
-                    .clickable(onClick = onRealDelayClick),
+                    .height(44.dp),
                 shape = RoundedCornerShape(12.dp),
                 color = MaterialTheme.colorScheme.surfaceContainerHigh,
                 border = androidx.compose.foundation.BorderStroke(
@@ -305,24 +308,55 @@ private fun MainTestBottomBar(
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                        .padding(start = 12.dp, end = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_speed_24dp),
-                        contentDescription = stringResource(R.string.action_real_delay),
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(R.string.action_real_delay),
-                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    // Main clickable area for Real delay test
+                    Row(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .clickable(onClick = onRealDelayClick),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_speed_24dp),
+                            contentDescription = stringResource(R.string.action_real_delay),
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = stringResource(R.string.action_real_delay),
+                            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+                    // Embedded small square delete invalid button with trash icon
+                    Surface(
+                        modifier = Modifier
+                            .size(34.dp)
+                            .clickable(onClick = onDeleteInvalidClick),
+                        shape = RoundedCornerShape(8.dp),
+                        color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.2f),
+                        border = androidx.compose.foundation.BorderStroke(
+                            0.8.dp,
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.35f)
+                        )
+                    ) {
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_delete_24dp),
+                                contentDescription = stringResource(R.string.title_del_invalid_config),
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(17.dp)
+                            )
+                        }
+                    }
                 }
             }
 

@@ -741,13 +741,8 @@ class MainViewModel(
             return
         }
 
-        val targetServers = servers.filter { it.testDelayMillis in 1..499 }
-        if (targetServers.isEmpty()) {
-            _uiState.update { it.copy(isTesting = false) }
-            toast(R.string.toast_gemini_test_requirement)
-            return
-        }
-
+        val respondedServers = servers.filter { it.testDelayMillis > 0 }
+        val targetServers = respondedServers.ifEmpty { servers }
         val serverGuids = targetServers.map { it.guid }
         
         testingGroupId = groupId

@@ -101,9 +101,13 @@ class CoreTestService : Service() {
         // the normal URL test are eligible. Successful Gemini results are retained
         // and skipped on subsequent runs, so the test can be resumed safely.
         val guidsList = if (isGeminiTest) {
-            allGuids.filter { guid ->
+            val passed = allGuids.filter { guid ->
                 val aff = MmkvManager.decodeServerAffiliationInfo(guid)
                 (aff?.testDelayMillis ?: 0L) > 0L && aff?.geminiPassed != true
+            }
+            if (passed.isNotEmpty()) passed else allGuids.filter { guid ->
+                val aff = MmkvManager.decodeServerAffiliationInfo(guid)
+                aff?.geminiPassed != true
             }
         } else {
             allGuids

@@ -46,7 +46,7 @@ object SocksFmt : FmtBase() {
             config.serverPort = port.toString()
             config.username = queryParam["user"] ?: queryParam["username"]
             config.password = queryParam["pass"] ?: queryParam["password"]
-            config.remarks = Utils.decodeURIComponent(uri.fragment.orEmpty()).ifEmpty { "socks-$server:$port" }
+            config.remarks = Utils.decodeURIComponent(uri.fragment.orEmpty()).ifEmpty { "TG-Socks: $server:$port" }
             return config
         } catch (e: Exception) {
             return null

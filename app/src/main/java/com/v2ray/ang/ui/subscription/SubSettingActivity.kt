@@ -3,6 +3,7 @@ package com.v2ray.ang.ui.subscription
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -33,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -43,6 +46,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.extension.toast
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.handler.MmkvManager.rememberMmkvBool
+import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.ui.base.BaseComponentActivity
 import com.v2ray.ang.ui.compose.AppTopBar
 import com.v2ray.ang.ui.compose.DeleteConfirmDialog
@@ -157,6 +161,8 @@ fun SubSettingScreen(
                 key = { _, item -> item.guid }
             ) { _, subCache ->
                 ReorderableItem(reorderableState, key = subCache.guid) { isDragging ->
+                    val isProtected = SettingsManager.isProRestricted(subCache.guid)
+                    val context = LocalContext.current
                     ReorderableListItem(
                         scope = this,
                         isDragging = isDragging
@@ -177,7 +183,7 @@ fun SubSettingScreen(
                                 if (subCache.subscription.url.isNotEmpty()) {
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
-                                        text = subCache.subscription.url,
+                                        text = if (isProtected) "••••••••••••••••••••••••" else subCache.subscription.url,
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         maxLines = 1,
@@ -199,18 +205,30 @@ fun SubSettingScreen(
                                 Row {
                                     if (subCache.subscription.url.isNotEmpty()) {
                                         IconButton(onClick = {
-                                            shareTarget = Pair(subCache.guid, subCache.subscription.url)
+                                            if (isProtected) {
+                                                Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                                            } else {
+                                                shareTarget = Pair(subCache.guid, subCache.subscription.url)
+                                            }
                                         }) {
                                             Icon(
                                                 painter = painterResource(R.drawable.ic_share_24dp),
-                                                contentDescription = stringResource(R.string.acc_share_subscription)
+                                                contentDescription = stringResource(R.string.acc_share_subscription),
+                                                tint = if (isProtected) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current
                                             )
                                         }
                                     }
-                                    IconButton(onClick = { onEditSub(subCache.guid) }) {
+                                    IconButton(onClick = {
+                                        if (isProtected) {
+                                            Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            onEditSub(subCache.guid)
+                                        }
+                                    }) {
                                         Icon(
                                             painter = painterResource(R.drawable.ic_edit_24dp),
-                                            contentDescription = stringResource(R.string.acc_edit)
+                                            contentDescription = stringResource(R.string.acc_edit),
+                                            tint = if (isProtected) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current
                                         )
                                     }
                                     IconButton(onClick = {

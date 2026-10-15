@@ -374,45 +374,38 @@ private fun ServerListItem(
                         )
                     }
                 } else {
-                    Box(contentAlignment = Alignment.TopEnd) {
-                        IconButton(
-                            onClick = {
-                                if (row.isProRestricted) {
-                                    Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
-                                } else {
-                                    actions.share(row.guid, row.profile)
-                                }
-                            },
-                            modifier = Modifier.size(36.dp)
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.ic_share_24dp),
-                                stringResource(R.string.title_configuration_share),
-                                tint = if (row.isProRestricted) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
-                        if (row.isProRestricted) {
-                            Surface(
-                                color = Color(0xFFFF9800),
-                                shape = RoundedCornerShape(3.dp),
-                                modifier = Modifier.padding(top = 2.dp, end = 2.dp)
-                            ) {
-                                Text(
-                                    text = "PRO",
-                                    color = Color.White,
-                                    fontSize = 7.5.sp,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    modifier = Modifier.padding(horizontal = 2.5.dp, vertical = 0.5.dp)
-                                )
+                    IconButton(
+                        onClick = {
+                            if (row.isProRestricted) {
+                                Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                            } else {
+                                actions.share(row.guid, row.profile)
                             }
-                        }
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_share_24dp),
+                            stringResource(R.string.title_configuration_share),
+                            tint = if (row.isProRestricted) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
+                            modifier = Modifier.size(24.dp)
+                        )
                     }
-                    IconButton(onClick = { actions.edit(row.guid, row.profile) }, Modifier.size(36.dp)) {
+                    IconButton(
+                        onClick = {
+                            if (row.isProRestricted) {
+                                Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                            } else {
+                                actions.edit(row.guid, row.profile)
+                            }
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
                         Icon(
                             painterResource(R.drawable.ic_edit_24dp),
                             stringResource(R.string.acc_edit),
-                            Modifier.size(24.dp)
+                            tint = if (row.isProRestricted) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                     IconButton(onClick = { actions.remove(row.guid) }, Modifier.size(36.dp)) {

@@ -1,6 +1,10 @@
 # Ignore data and key store files
 *.dat
 *.jks
+*.keystore
+*.keystore.*
+keystore/
+app/build/
 
 # Ignore output JSON file
 V2rayNG/app/release/output.json

@@ -55,6 +55,12 @@ class SubEditActivity : BaseComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (SettingsManager.isProRestricted(editSubId)) {
+            toast(R.string.pro_share_restriction_notice)
+            finish()
+            return
+        }
+
         suggestions = SettingsManager.getProfileRemarks(
             excludeConfigTypes = setOf(
                 EConfigType.CUSTOM,

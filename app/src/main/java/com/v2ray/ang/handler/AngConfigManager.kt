@@ -184,6 +184,20 @@ object AngConfigManager {
         try {
             val config = MmkvManager.decodeServerConfig(guid) ?: return ""
 
+            val sub = if (config.subscriptionId.isNotEmpty()) MmkvManager.decodeSubscription(config.subscriptionId) else null
+            val isTgSub = sub?.remarks?.contains("telegram", ignoreCase = true) == true
+            val isTgNamed = config.remarks.startsWith("TG-", ignoreCase = true) || config.remarks.contains("telegram", ignoreCase = true)
+
+            if (isTgSub || isTgNamed) {
+                if (!config.password.isNullOrEmpty() && (config.remarks.contains("mtproto", ignoreCase = true) || isTgSub)) {
+                    return "https://t.me/proxy?server=${config.server}&port=${config.serverPort}&secret=${config.password}"
+                } else if (config.configType == EConfigType.SOCKS || isTgSub) {
+                    val userPart = if (!config.username.isNullOrEmpty()) "&user=${config.username}" else ""
+                    val passPart = if (!config.password.isNullOrEmpty()) "&pass=${config.password}" else ""
+                    return "https://t.me/socks?server=${config.server}&port=${config.serverPort}$userPart$passPart"
+                }
+            }
+
             return config.configType.protocolScheme + when (config.configType) {
                 EConfigType.VMESS -> VmessFmt.toUri(config)
                 EConfigType.SHADOWSOCKS -> ShadowsocksFmt.toUri(config)

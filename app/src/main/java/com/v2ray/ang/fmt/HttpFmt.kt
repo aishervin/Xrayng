@@ -43,12 +43,14 @@ object HttpFmt : FmtBase() {
             val port = queryParam["port"]?.toIntOrNull() ?: return null
             if (port <= 0 || port > 65535) return null
 
-            val config = ProfileItem.create(EConfigType.HTTP)
+            val secret = queryParam["secret"]
+            val config = ProfileItem.create(if (secret != null) EConfigType.SOCKS else EConfigType.HTTP)
             config.server = server
             config.serverPort = port.toString()
             config.username = queryParam["user"] ?: queryParam["username"]
-            config.password = queryParam["pass"] ?: queryParam["password"]
-            config.remarks = Utils.decodeURIComponent(uri.fragment.orEmpty()).ifEmpty { "http-$server:$port" }
+            config.password = secret ?: queryParam["pass"] ?: queryParam["password"]
+            val prefix = if (secret != null) "TG-MTProto" else "TG-Proxy"
+            config.remarks = Utils.decodeURIComponent(uri.fragment.orEmpty()).ifEmpty { "$prefix: $server:$port" }
             return config
         } catch (e: Exception) {
             return null

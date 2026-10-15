@@ -114,6 +114,18 @@ class RealPingWorkerService(
         val retFailure = -1L
 
         val config = MmkvManager.decodeServerConfig(guid) ?: return retFailure
+        val sub = if (config.subscriptionId.isNotEmpty()) MmkvManager.decodeSubscription(config.subscriptionId) else null
+        val isTgProxy = sub?.remarks?.contains("telegram", ignoreCase = true) == true
+            || config.remarks.startsWith("TG-", ignoreCase = true)
+            || config.remarks.contains("mtproto", ignoreCase = true)
+
+        // For MTProto telegram proxies: measure real socket connection latency directly to the proxy port
+        if (isTgProxy && !config.password.isNullOrEmpty() && (config.remarks.contains("mtproto", ignoreCase = true) || isTgProxy)) {
+            val url = config.server.orEmpty()
+            val port = config.serverPort?.toIntOrNull() ?: return retFailure
+            return SpeedtestManager.socketConnectTime(url, port, 1500)
+        }
+
         if (!config.configType.isComplexType()
             && config.configType != EConfigType.HYSTERIA2
             && config.configType != EConfigType.WIREGUARD
@@ -130,10 +142,16 @@ class RealPingWorkerService(
 
         if (stopRequested.get()) return -2L
         val configResult = CoreConfigManager.getV2rayConfig4Speedtest(context, guid)
-        if (!configResult.status) return retFailure
+        if (!configResult.status) {
+            if (isTgProxy && config.server.isNotNullEmpty() && config.serverPort?.toIntOrNull() != null) {
+                return SpeedtestManager.socketConnectTime(config.server.orEmpty(), config.serverPort!!.toInt(), 1500)
+            }
+            return retFailure
+        }
         if (stopRequested.get()) return -2L
+        val testUrl = if (isTgProxy) "https://api.telegram.org/" else (customUrl ?: SettingsManager.getDelayTestUrl())
         return RealPingExecutionLimiter.run(config.configType) {
-            CoreNativeManager.measureOutboundDelay(configResult.content, customUrl ?: SettingsManager.getDelayTestUrl())
+            CoreNativeManager.measureOutboundDelay(configResult.content, testUrl)
         }
     }
 

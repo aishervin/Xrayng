@@ -567,9 +567,14 @@ object SettingsManager {
         val url = sub.url.trim()
         return remarks.equals(AppConfig.BUILTIN_SUB_XRAY_REMARKS, ignoreCase = true)
             || remarks.equals(AppConfig.BUILTIN_SUB_WIREGUARD_REMARKS, ignoreCase = true)
+            || remarks.equals(AppConfig.BUILTIN_SUB_HTTPSUCKS_REMARKS, ignoreCase = true)
+            || remarks.equals(AppConfig.BUILTIN_SUB_TGPROXY_REMARKS, ignoreCase = true)
             || remarks.equals("SHΞN VLESS", ignoreCase = true)
+            || remarks.equals("SHΞN ProxyNG", ignoreCase = true)
             || url.equals(AppConfig.BUILTIN_SUB_XRAY_URL, ignoreCase = true)
             || url.equals(AppConfig.BUILTIN_SUB_WIREGUARD_URL, ignoreCase = true)
+            || url.equals(AppConfig.BUILTIN_SUB_HTTPSUCKS_URL, ignoreCase = true)
+            || url.equals(AppConfig.BUILTIN_SUB_TGPROXY_URL, ignoreCase = true)
             || url.equals("https://subshen.pages.dev", ignoreCase = true)
     }
 
