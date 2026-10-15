@@ -1,0 +1,6 @@
+{
+  "summary": "Comprehensive implementation plan for XrayNG v2.0.0 redesign, featuring bottom test bar (2/3 Real Delay, 1/3 Gemini Pass with real Gemini logo), WireGuard multiple-config subscription parser, Xray and Https/Sucks default sources, Iranian community Telegram proxy integration with blue Telegram pass badge, Galaxy format conversion for SOCKS5 proxies, PRO sharing restriction on built-in configs, 1-hour auto-update intervals, and ABI-split release builds.",
+  "updatedAt": "2026-10-15T09:19:16.043892798Z",
+  "requestFeedback": true,
+  "userFacing": true
+}
