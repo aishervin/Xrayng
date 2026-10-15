@@ -31,7 +31,11 @@ class ServerMenuActionsTest {
     @Test
     fun nonTelegramMenuKeepsTheExistingProtectedActions() {
         assertEquals(
-            listOf(ServerMenuAction.ShareQRCode, ServerMenuAction.ShareClipboard),
+            listOf(
+                ServerMenuAction.ShareQRCode,
+                ServerMenuAction.ShareClipboard,
+                ServerMenuAction.ShareFullContent,
+            ),
             serverMenuActions(
                 isComplexProfile = false,
                 includeManagementActions = false,
