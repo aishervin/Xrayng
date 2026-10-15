@@ -1,0 +1,888 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.aistudio.shenbypass.kvrwsp"
+4    android:versionCode="3"
+5    android:versionName="2.0.0" >
+6
+7    <uses-sdk
+7-->INJECTED
+8        android:minSdkVersion="24"
+8-->INJECTED
+9        android:targetSdkVersion="37" />
+9-->INJECTED
+10
+11    <supports-screens
+11-->/app/applet/app/src/main/AndroidManifest.xml:6:5-11:40
+12        android:anyDensity="true"
+12-->/app/applet/app/src/main/AndroidManifest.xml:7:9-34
+13        android:largeScreens="true"
+13-->/app/applet/app/src/main/AndroidManifest.xml:8:9-36
+14        android:normalScreens="true"
+14-->/app/applet/app/src/main/AndroidManifest.xml:9:9-37
+15        android:smallScreens="true"
+15-->/app/applet/app/src/main/AndroidManifest.xml:10:9-36
+16        android:xlargeScreens="true" />
+16-->/app/applet/app/src/main/AndroidManifest.xml:11:9-37
+17
+18    <!-- https://developer.android.com/about/versions/11/privacy/package-visibility -->
+19    <uses-feature
+19-->/app/applet/app/src/main/AndroidManifest.xml:14:5-85
+20        android:name="android.hardware.camera"
+20-->/app/applet/app/src/main/AndroidManifest.xml:14:19-57
+21        android:required="false" />
+21-->/app/applet/app/src/main/AndroidManifest.xml:14:58-82
+22    <uses-feature
+22-->/app/applet/app/src/main/AndroidManifest.xml:15:5-95
+23        android:name="android.hardware.camera.autofocus"
+23-->/app/applet/app/src/main/AndroidManifest.xml:15:19-67
+24        android:required="false" />
+24-->/app/applet/app/src/main/AndroidManifest.xml:15:68-92
+25    <uses-feature
+25-->/app/applet/app/src/main/AndroidManifest.xml:16:5-87
+26        android:name="android.software.leanback"
+26-->/app/applet/app/src/main/AndroidManifest.xml:16:19-59
+27        android:required="false" />
+27-->/app/applet/app/src/main/AndroidManifest.xml:16:60-84
+28    <uses-feature
+28-->/app/applet/app/src/main/AndroidManifest.xml:17:5-90
+29        android:name="android.hardware.touchscreen"
+29-->/app/applet/app/src/main/AndroidManifest.xml:17:19-62
+30        android:required="false" />
+30-->/app/applet/app/src/main/AndroidManifest.xml:17:63-87
+31
+32    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+32-->/app/applet/app/src/main/AndroidManifest.xml:19:5-143
+32-->/app/applet/app/src/main/AndroidManifest.xml:19:22-74
+33    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+33-->/app/applet/app/src/main/AndroidManifest.xml:20:5-79
+33-->/app/applet/app/src/main/AndroidManifest.xml:20:22-76
+34    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+34-->/app/applet/app/src/main/AndroidManifest.xml:21:5-79
+34-->/app/applet/app/src/main/AndroidManifest.xml:21:22-76
+35    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+35-->/app/applet/app/src/main/AndroidManifest.xml:22:5-79
+35-->/app/applet/app/src/main/AndroidManifest.xml:22:22-76
+36    <uses-permission android:name="android.permission.INTERNET" />
+36-->/app/applet/app/src/main/AndroidManifest.xml:23:5-67
+36-->/app/applet/app/src/main/AndroidManifest.xml:23:22-64
+37    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+37-->/app/applet/app/src/main/AndroidManifest.xml:24:5-83
+37-->/app/applet/app/src/main/AndroidManifest.xml:24:22-80
+38    <uses-permission android:name="android.permission.CAMERA" />
+38-->/app/applet/app/src/main/AndroidManifest.xml:25:5-65
+38-->/app/applet/app/src/main/AndroidManifest.xml:25:22-62
+39    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+39-->/app/applet/app/src/main/AndroidManifest.xml:26:5-117
+39-->/app/applet/app/src/main/AndroidManifest.xml:26:22-74
+40    <uses-permission
+40-->/app/applet/app/src/main/AndroidManifest.xml:27:5-116
+41        android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+41-->/app/applet/app/src/main/AndroidManifest.xml:27:22-86
+42        android:minSdkVersion="34" />
+42-->/app/applet/app/src/main/AndroidManifest.xml:27:87-113
+43    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+43-->/app/applet/app/src/main/AndroidManifest.xml:28:5-77
+43-->/app/applet/app/src/main/AndroidManifest.xml:28:22-74
+44    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+44-->/app/applet/app/src/main/AndroidManifest.xml:29:5-81
+44-->/app/applet/app/src/main/AndroidManifest.xml:29:22-78
+45    <uses-permission android:name="android.permission.WAKE_LOCK" />
+45-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:23:5-68
+45-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:23:22-65
+46
+47    <permission
+47-->[androidx.core:core:1.19.0] /opt/gradle/.gradle/caches/9.3.1/transforms/9ce24a40384ffa0508d97851589f922e/transformed/core-1.19.0/AndroidManifest.xml:22:5-24:47
+48        android:name="com.aistudio.shenbypass.kvrwsp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+48-->[androidx.core:core:1.19.0] /opt/gradle/.gradle/caches/9.3.1/transforms/9ce24a40384ffa0508d97851589f922e/transformed/core-1.19.0/AndroidManifest.xml:23:9-81
+49        android:protectionLevel="signature" />
+49-->[androidx.core:core:1.19.0] /opt/gradle/.gradle/caches/9.3.1/transforms/9ce24a40384ffa0508d97851589f922e/transformed/core-1.19.0/AndroidManifest.xml:24:9-44
+50
+51    <uses-permission android:name="com.aistudio.shenbypass.kvrwsp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+51-->[androidx.core:core:1.19.0] /opt/gradle/.gradle/caches/9.3.1/transforms/9ce24a40384ffa0508d97851589f922e/transformed/core-1.19.0/AndroidManifest.xml:26:5-97
+51-->[androidx.core:core:1.19.0] /opt/gradle/.gradle/caches/9.3.1/transforms/9ce24a40384ffa0508d97851589f922e/transformed/core-1.19.0/AndroidManifest.xml:26:22-94
+52
+53    <application
+53-->/app/applet/app/src/main/AndroidManifest.xml:31:5-159:19
+54        android:name="com.v2ray.ang.AngApplication"
+54-->/app/applet/app/src/main/AndroidManifest.xml:32:9-39
+55        android:allowBackup="true"
+55-->/app/applet/app/src/main/AndroidManifest.xml:33:9-35
+56        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+56-->[androidx.core:core:1.19.0] /opt/gradle/.gradle/caches/9.3.1/transforms/9ce24a40384ffa0508d97851589f922e/transformed/core-1.19.0/AndroidManifest.xml:28:18-86
+57        android:banner="@mipmap/ic_banner"
+57-->/app/applet/app/src/main/AndroidManifest.xml:34:9-43
+58        android:debuggable="true"
+59        android:extractNativeLibs="false"
+59-->INJECTED
+60        android:icon="@mipmap/ic_launcher"
+60-->/app/applet/app/src/main/AndroidManifest.xml:35:9-43
+61        android:label="Xrayng"
+61-->/app/applet/app/src/main/AndroidManifest.xml:37:9-31
+62        android:networkSecurityConfig="@xml/network_security_config"
+62-->/app/applet/app/src/main/AndroidManifest.xml:38:9-69
+63        android:roundIcon="@mipmap/ic_launcher_round"
+63-->/app/applet/app/src/main/AndroidManifest.xml:36:9-54
+64        android:supportsRtl="true"
+64-->/app/applet/app/src/main/AndroidManifest.xml:39:9-35
+65        android:theme="@style/AppThemeDayNight.NoActionBar"
+65-->/app/applet/app/src/main/AndroidManifest.xml:40:9-60
+66        android:usesCleartextTraffic="true" >
+66-->/app/applet/app/src/main/AndroidManifest.xml:41:9-44
+67        <service
+67-->/app/applet/app/src/main/AndroidManifest.xml:43:9-45:19
+68            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+68-->/app/applet/app/src/main/AndroidManifest.xml:43:18-87
+69            android:enabled="false"
+69-->/app/applet/app/src/main/AndroidManifest.xml:43:88-111
+70            android:exported="false" >
+70-->/app/applet/app/src/main/AndroidManifest.xml:43:112-136
+71            <meta-data
+71-->/app/applet/app/src/main/AndroidManifest.xml:44:13-79
+72                android:name="autoStoreLocales"
+72-->/app/applet/app/src/main/AndroidManifest.xml:44:24-55
+73                android:value="true" />
+73-->/app/applet/app/src/main/AndroidManifest.xml:44:56-76
+74        </service>
+75
+76        <activity
+76-->/app/applet/app/src/main/AndroidManifest.xml:47:9-57:20
+77            android:name="com.v2ray.ang.ui.main.MainActivity"
+77-->/app/applet/app/src/main/AndroidManifest.xml:47:19-55
+78            android:exported="true"
+78-->/app/applet/app/src/main/AndroidManifest.xml:47:56-79
+79            android:launchMode="singleTask" >
+79-->/app/applet/app/src/main/AndroidManifest.xml:47:80-111
+80            <intent-filter>
+80-->/app/applet/app/src/main/AndroidManifest.xml:48:13-52:29
+81                <action android:name="android.intent.action.MAIN" />
+81-->/app/applet/app/src/main/AndroidManifest.xml:49:17-69
+81-->/app/applet/app/src/main/AndroidManifest.xml:49:25-66
+82
+83                <category android:name="android.intent.category.LAUNCHER" />
+83-->/app/applet/app/src/main/AndroidManifest.xml:50:17-77
+83-->/app/applet/app/src/main/AndroidManifest.xml:50:27-74
+84                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+84-->/app/applet/app/src/main/AndroidManifest.xml:51:17-86
+84-->/app/applet/app/src/main/AndroidManifest.xml:51:27-83
+85            </intent-filter>
+86            <intent-filter>
+86-->/app/applet/app/src/main/AndroidManifest.xml:53:13-55:29
+87                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+87-->/app/applet/app/src/main/AndroidManifest.xml:54:17-99
+87-->/app/applet/app/src/main/AndroidManifest.xml:54:25-96
+88            </intent-filter>
+89
+90            <meta-data
+90-->/app/applet/app/src/main/AndroidManifest.xml:56:13-97
+91                android:name="android.app.shortcuts"
+91-->/app/applet/app/src/main/AndroidManifest.xml:56:24-60
+92                android:resource="@xml/shortcuts" />
+92-->/app/applet/app/src/main/AndroidManifest.xml:56:61-94
+93        </activity>
+94        <activity
+94-->/app/applet/app/src/main/AndroidManifest.xml:59:9-150
+95            android:name="com.v2ray.ang.ui.server.ServerVmessActivity"
+95-->/app/applet/app/src/main/AndroidManifest.xml:59:19-64
+96            android:exported="false"
+96-->/app/applet/app/src/main/AndroidManifest.xml:59:65-89
+97            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+97-->/app/applet/app/src/main/AndroidManifest.xml:59:90-147
+98        <activity
+98-->/app/applet/app/src/main/AndroidManifest.xml:60:9-150
+99            android:name="com.v2ray.ang.ui.server.ServerVlessActivity"
+99-->/app/applet/app/src/main/AndroidManifest.xml:60:19-64
+100            android:exported="false"
+100-->/app/applet/app/src/main/AndroidManifest.xml:60:65-89
+101            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+101-->/app/applet/app/src/main/AndroidManifest.xml:60:90-147
+102        <activity
+102-->/app/applet/app/src/main/AndroidManifest.xml:61:9-156
+103            android:name="com.v2ray.ang.ui.server.ServerShadowsocksActivity"
+103-->/app/applet/app/src/main/AndroidManifest.xml:61:19-70
+104            android:exported="false"
+104-->/app/applet/app/src/main/AndroidManifest.xml:61:71-95
+105            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+105-->/app/applet/app/src/main/AndroidManifest.xml:61:96-153
+106        <activity
+106-->/app/applet/app/src/main/AndroidManifest.xml:62:9-150
+107            android:name="com.v2ray.ang.ui.server.ServerSocksActivity"
+107-->/app/applet/app/src/main/AndroidManifest.xml:62:19-64
+108            android:exported="false"
+108-->/app/applet/app/src/main/AndroidManifest.xml:62:65-89
+109            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+109-->/app/applet/app/src/main/AndroidManifest.xml:62:90-147
+110        <activity
+110-->/app/applet/app/src/main/AndroidManifest.xml:63:9-149
+111            android:name="com.v2ray.ang.ui.server.ServerHttpActivity"
+111-->/app/applet/app/src/main/AndroidManifest.xml:63:19-63
+112            android:exported="false"
+112-->/app/applet/app/src/main/AndroidManifest.xml:63:64-88
+113            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+113-->/app/applet/app/src/main/AndroidManifest.xml:63:89-146
+114        <activity
+114-->/app/applet/app/src/main/AndroidManifest.xml:64:9-151
+115            android:name="com.v2ray.ang.ui.server.ServerTrojanActivity"
+115-->/app/applet/app/src/main/AndroidManifest.xml:64:19-65
+116            android:exported="false"
+116-->/app/applet/app/src/main/AndroidManifest.xml:64:66-90
+117            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+117-->/app/applet/app/src/main/AndroidManifest.xml:64:91-148
+118        <activity
+118-->/app/applet/app/src/main/AndroidManifest.xml:65:9-154
+119            android:name="com.v2ray.ang.ui.server.ServerWireguardActivity"
+119-->/app/applet/app/src/main/AndroidManifest.xml:65:19-68
+120            android:exported="false"
+120-->/app/applet/app/src/main/AndroidManifest.xml:65:69-93
+121            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+121-->/app/applet/app/src/main/AndroidManifest.xml:65:94-151
+122        <activity
+122-->/app/applet/app/src/main/AndroidManifest.xml:66:9-154
+123            android:name="com.v2ray.ang.ui.server.ServerHysteria2Activity"
+123-->/app/applet/app/src/main/AndroidManifest.xml:66:19-68
+124            android:exported="false"
+124-->/app/applet/app/src/main/AndroidManifest.xml:66:69-93
+125            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+125-->/app/applet/app/src/main/AndroidManifest.xml:66:94-151
+126        <activity
+126-->/app/applet/app/src/main/AndroidManifest.xml:67:9-157
+127            android:name="com.v2ray.ang.ui.server.ServerCustomConfigActivity"
+127-->/app/applet/app/src/main/AndroidManifest.xml:67:19-71
+128            android:exported="false"
+128-->/app/applet/app/src/main/AndroidManifest.xml:67:72-96
+129            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+129-->/app/applet/app/src/main/AndroidManifest.xml:67:97-154
+130        <activity
+130-->/app/applet/app/src/main/AndroidManifest.xml:68:9-150
+131            android:name="com.v2ray.ang.ui.server.ServerGroupActivity"
+131-->/app/applet/app/src/main/AndroidManifest.xml:68:19-64
+132            android:exported="false"
+132-->/app/applet/app/src/main/AndroidManifest.xml:68:65-89
+133            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+133-->/app/applet/app/src/main/AndroidManifest.xml:68:90-147
+134        <activity
+134-->/app/applet/app/src/main/AndroidManifest.xml:69:9-155
+135            android:name="com.v2ray.ang.ui.server.ServerProxyChainActivity"
+135-->/app/applet/app/src/main/AndroidManifest.xml:69:19-69
+136            android:exported="false"
+136-->/app/applet/app/src/main/AndroidManifest.xml:69:70-94
+137            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+137-->/app/applet/app/src/main/AndroidManifest.xml:69:95-152
+138        <activity
+138-->/app/applet/app/src/main/AndroidManifest.xml:70:9-91
+139            android:name="com.v2ray.ang.ui.settings.SettingsActivity"
+139-->/app/applet/app/src/main/AndroidManifest.xml:70:19-63
+140            android:exported="false" />
+140-->/app/applet/app/src/main/AndroidManifest.xml:70:64-88
+141        <activity
+141-->/app/applet/app/src/main/AndroidManifest.xml:71:9-97
+142            android:name="com.v2ray.ang.ui.perappproxy.PerAppProxyActivity"
+142-->/app/applet/app/src/main/AndroidManifest.xml:71:19-69
+143            android:exported="false" />
+143-->/app/applet/app/src/main/AndroidManifest.xml:71:70-94
+144        <activity
+144-->/app/applet/app/src/main/AndroidManifest.xml:72:9-93
+145            android:name="com.v2ray.ang.ui.apppicker.AppPickerActivity"
+145-->/app/applet/app/src/main/AndroidManifest.xml:72:19-65
+146            android:exported="false" />
+146-->/app/applet/app/src/main/AndroidManifest.xml:72:66-90
+147        <activity
+147-->/app/applet/app/src/main/AndroidManifest.xml:73:9-81
+148            android:name="com.v2ray.ang.ui.ScannerActivity"
+148-->/app/applet/app/src/main/AndroidManifest.xml:73:19-53
+149            android:exported="false" />
+149-->/app/applet/app/src/main/AndroidManifest.xml:73:54-78
+150        <activity
+150-->/app/applet/app/src/main/AndroidManifest.xml:74:9-87
+151            android:name="com.v2ray.ang.ui.logcat.LogcatActivity"
+151-->/app/applet/app/src/main/AndroidManifest.xml:74:19-59
+152            android:exported="false" />
+152-->/app/applet/app/src/main/AndroidManifest.xml:74:60-84
+153        <activity
+153-->/app/applet/app/src/main/AndroidManifest.xml:75:9-96
+154            android:name="com.v2ray.ang.ui.routing.RoutingSettingActivity"
+154-->/app/applet/app/src/main/AndroidManifest.xml:75:19-68
+155            android:exported="false" />
+155-->/app/applet/app/src/main/AndroidManifest.xml:75:69-93
+156        <activity
+156-->/app/applet/app/src/main/AndroidManifest.xml:76:9-151
+157            android:name="com.v2ray.ang.ui.routing.RoutingEditActivity"
+157-->/app/applet/app/src/main/AndroidManifest.xml:76:19-65
+158            android:exported="false"
+158-->/app/applet/app/src/main/AndroidManifest.xml:76:124-148
+159            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+159-->/app/applet/app/src/main/AndroidManifest.xml:76:66-123
+160        <activity
+160-->/app/applet/app/src/main/AndroidManifest.xml:77:9-97
+161            android:name="com.v2ray.ang.ui.subscription.SubSettingActivity"
+161-->/app/applet/app/src/main/AndroidManifest.xml:77:19-69
+162            android:exported="false" />
+162-->/app/applet/app/src/main/AndroidManifest.xml:77:70-94
+163        <activity
+163-->/app/applet/app/src/main/AndroidManifest.xml:78:9-93
+164            android:name="com.v2ray.ang.ui.userasset.UserAssetActivity"
+164-->/app/applet/app/src/main/AndroidManifest.xml:78:19-65
+165            android:exported="false" />
+165-->/app/applet/app/src/main/AndroidManifest.xml:78:66-90
+166        <activity
+166-->/app/applet/app/src/main/AndroidManifest.xml:79:9-96
+167            android:name="com.v2ray.ang.ui.userasset.UserAssetUrlActivity"
+167-->/app/applet/app/src/main/AndroidManifest.xml:79:19-68
+168            android:exported="false" />
+168-->/app/applet/app/src/main/AndroidManifest.xml:79:69-93
+169        <activity
+169-->/app/applet/app/src/main/AndroidManifest.xml:80:9-152
+170            android:name="com.v2ray.ang.ui.subscription.SubEditActivity"
+170-->/app/applet/app/src/main/AndroidManifest.xml:80:19-66
+171            android:exported="false"
+171-->/app/applet/app/src/main/AndroidManifest.xml:80:125-149
+172            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+172-->/app/applet/app/src/main/AndroidManifest.xml:80:67-124
+173        <activity
+173-->/app/applet/app/src/main/AndroidManifest.xml:81:9-92
+174            android:name="com.v2ray.ang.ui.shortcut.ScScannerActivity"
+174-->/app/applet/app/src/main/AndroidManifest.xml:81:19-64
+175            android:exported="false" />
+175-->/app/applet/app/src/main/AndroidManifest.xml:81:65-89
+176        <activity
+176-->/app/applet/app/src/main/AndroidManifest.xml:82:9-215
+177            android:name="com.v2ray.ang.ui.shortcut.ScSwitchActivity"
+177-->/app/applet/app/src/main/AndroidManifest.xml:82:19-63
+178            android:excludeFromRecents="true"
+178-->/app/applet/app/src/main/AndroidManifest.xml:82:64-97
+179            android:exported="false"
+179-->/app/applet/app/src/main/AndroidManifest.xml:82:98-122
+180            android:process=":daemon"
+180-->/app/applet/app/src/main/AndroidManifest.xml:82:123-148
+181            android:theme="@style/AppThemeDayNight.NoActionBar.Translucent" />
+181-->/app/applet/app/src/main/AndroidManifest.xml:82:149-212
+182        <activity
+182-->/app/applet/app/src/main/AndroidManifest.xml:83:9-214
+183            android:name="com.v2ray.ang.ui.shortcut.ScStartActivity"
+183-->/app/applet/app/src/main/AndroidManifest.xml:83:19-62
+184            android:excludeFromRecents="true"
+184-->/app/applet/app/src/main/AndroidManifest.xml:83:63-96
+185            android:exported="false"
+185-->/app/applet/app/src/main/AndroidManifest.xml:83:97-121
+186            android:process=":daemon"
+186-->/app/applet/app/src/main/AndroidManifest.xml:83:122-147
+187            android:theme="@style/AppThemeDayNight.NoActionBar.Translucent" />
+187-->/app/applet/app/src/main/AndroidManifest.xml:83:148-211
+188        <activity
+188-->/app/applet/app/src/main/AndroidManifest.xml:84:9-213
+189            android:name="com.v2ray.ang.ui.shortcut.ScStopActivity"
+189-->/app/applet/app/src/main/AndroidManifest.xml:84:19-61
+190            android:excludeFromRecents="true"
+190-->/app/applet/app/src/main/AndroidManifest.xml:84:62-95
+191            android:exported="false"
+191-->/app/applet/app/src/main/AndroidManifest.xml:84:96-120
+192            android:process=":daemon"
+192-->/app/applet/app/src/main/AndroidManifest.xml:84:121-146
+193            android:theme="@style/AppThemeDayNight.NoActionBar.Translucent" />
+193-->/app/applet/app/src/main/AndroidManifest.xml:84:147-210
+194        <activity
+194-->/app/applet/app/src/main/AndroidManifest.xml:86:9-100:20
+195            android:name="com.v2ray.ang.ui.UrlSchemeActivity"
+195-->/app/applet/app/src/main/AndroidManifest.xml:86:19-55
+196            android:exported="true" >
+196-->/app/applet/app/src/main/AndroidManifest.xml:86:56-79
+197            <intent-filter>
+197-->/app/applet/app/src/main/AndroidManifest.xml:87:13-91:29
+198                <action android:name="android.intent.action.SEND" />
+198-->/app/applet/app/src/main/AndroidManifest.xml:88:17-69
+198-->/app/applet/app/src/main/AndroidManifest.xml:88:25-66
+199
+200                <category android:name="android.intent.category.DEFAULT" />
+200-->/app/applet/app/src/main/AndroidManifest.xml:89:17-76
+200-->/app/applet/app/src/main/AndroidManifest.xml:89:27-73
+201
+202                <data android:mimeType="text/plain" />
+202-->/app/applet/app/src/main/AndroidManifest.xml:90:17-55
+202-->/app/applet/app/src/main/AndroidManifest.xml:90:23-52
+203            </intent-filter>
+204            <intent-filter>
+204-->/app/applet/app/src/main/AndroidManifest.xml:92:13-99:29
+205                <action android:name="android.intent.action.VIEW" />
+205-->/app/applet/app/src/main/AndroidManifest.xml:93:17-69
+205-->/app/applet/app/src/main/AndroidManifest.xml:93:25-66
+206
+207                <category android:name="android.intent.category.BROWSABLE" />
+207-->/app/applet/app/src/main/AndroidManifest.xml:94:17-78
+207-->/app/applet/app/src/main/AndroidManifest.xml:94:27-75
+208                <category android:name="android.intent.category.DEFAULT" />
+208-->/app/applet/app/src/main/AndroidManifest.xml:89:17-76
+208-->/app/applet/app/src/main/AndroidManifest.xml:89:27-73
+209
+210                <data android:scheme="v2rayng" />
+210-->/app/applet/app/src/main/AndroidManifest.xml:90:17-55
+210-->/app/applet/app/src/main/AndroidManifest.xml:96:23-47
+211                <data android:host="install-config" />
+211-->/app/applet/app/src/main/AndroidManifest.xml:90:17-55
+211-->/app/applet/app/src/main/AndroidManifest.xml:97:23-52
+212                <data android:host="install-sub" />
+212-->/app/applet/app/src/main/AndroidManifest.xml:90:17-55
+212-->/app/applet/app/src/main/AndroidManifest.xml:97:23-52
+213            </intent-filter>
+214        </activity>
+215        <activity
+215-->/app/applet/app/src/main/AndroidManifest.xml:101:9-97
+216            android:name="com.v2ray.ang.ui.checkupdate.CheckUpdateActivity"
+216-->/app/applet/app/src/main/AndroidManifest.xml:101:19-69
+217            android:exported="false" />
+217-->/app/applet/app/src/main/AndroidManifest.xml:101:70-94
+218        <activity
+218-->/app/applet/app/src/main/AndroidManifest.xml:102:9-87
+219            android:name="com.v2ray.ang.ui.backup.BackupActivity"
+219-->/app/applet/app/src/main/AndroidManifest.xml:102:19-59
+220            android:exported="false" />
+220-->/app/applet/app/src/main/AndroidManifest.xml:102:60-84
+221        <activity
+221-->/app/applet/app/src/main/AndroidManifest.xml:103:9-79
+222            android:name="com.v2ray.ang.ui.AboutActivity"
+222-->/app/applet/app/src/main/AndroidManifest.xml:103:19-51
+223            android:exported="false" />
+223-->/app/applet/app/src/main/AndroidManifest.xml:103:52-76
+224        <activity
+224-->/app/applet/app/src/main/AndroidManifest.xml:104:9-85
+225            android:name="com.v2ray.ang.ui.TranslatorsActivity"
+225-->/app/applet/app/src/main/AndroidManifest.xml:104:19-57
+226            android:exported="false" />
+226-->/app/applet/app/src/main/AndroidManifest.xml:104:58-82
+227
+228        <service
+228-->/app/applet/app/src/main/AndroidManifest.xml:106:9-110:19
+229            android:name="com.v2ray.ang.service.CoreVpnService"
+229-->/app/applet/app/src/main/AndroidManifest.xml:106:18-56
+230            android:enabled="true"
+230-->/app/applet/app/src/main/AndroidManifest.xml:106:57-79
+231            android:exported="false"
+231-->/app/applet/app/src/main/AndroidManifest.xml:106:80-104
+232            android:foregroundServiceType="specialUse"
+232-->/app/applet/app/src/main/AndroidManifest.xml:106:105-147
+233            android:label="@string/app_name"
+233-->/app/applet/app/src/main/AndroidManifest.xml:106:148-180
+234            android:permission="android.permission.BIND_VPN_SERVICE"
+234-->/app/applet/app/src/main/AndroidManifest.xml:106:181-237
+235            android:process=":daemon" >
+235-->/app/applet/app/src/main/AndroidManifest.xml:106:238-263
+236            <intent-filter>
+236-->/app/applet/app/src/main/AndroidManifest.xml:107:13-92
+237                <action android:name="android.net.VpnService" />
+237-->/app/applet/app/src/main/AndroidManifest.xml:107:28-76
+237-->/app/applet/app/src/main/AndroidManifest.xml:107:36-73
+238            </intent-filter>
+239
+240            <meta-data
+240-->/app/applet/app/src/main/AndroidManifest.xml:108:13-104
+241                android:name="android.net.VpnService.SUPPORTS_ALWAYS_ON"
+241-->/app/applet/app/src/main/AndroidManifest.xml:108:24-80
+242                android:value="true" />
+242-->/app/applet/app/src/main/AndroidManifest.xml:108:81-101
+243
+244            <property
+244-->/app/applet/app/src/main/AndroidManifest.xml:109:13-105
+245                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+245-->/app/applet/app/src/main/AndroidManifest.xml:109:23-82
+246                android:value="vpn" />
+246-->/app/applet/app/src/main/AndroidManifest.xml:109:83-102
+247        </service>
+248        <service
+248-->/app/applet/app/src/main/AndroidManifest.xml:111:9-113:19
+249            android:name="com.v2ray.ang.service.CoreProxyOnlyService"
+249-->/app/applet/app/src/main/AndroidManifest.xml:111:18-62
+250            android:exported="false"
+250-->/app/applet/app/src/main/AndroidManifest.xml:111:63-87
+251            android:foregroundServiceType="specialUse"
+251-->/app/applet/app/src/main/AndroidManifest.xml:111:88-130
+252            android:label="@string/app_name"
+252-->/app/applet/app/src/main/AndroidManifest.xml:111:131-163
+253            android:process=":daemon" >
+253-->/app/applet/app/src/main/AndroidManifest.xml:111:164-189
+254            <property
+254-->/app/applet/app/src/main/AndroidManifest.xml:109:13-105
+255                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+255-->/app/applet/app/src/main/AndroidManifest.xml:109:23-82
+256                android:value="proxy" />
+256-->/app/applet/app/src/main/AndroidManifest.xml:109:83-102
+257        </service>
+258        <service
+258-->/app/applet/app/src/main/AndroidManifest.xml:114:9-116:19
+259            android:name="com.v2ray.ang.service.CoreRootService"
+259-->/app/applet/app/src/main/AndroidManifest.xml:114:18-57
+260            android:exported="false"
+260-->/app/applet/app/src/main/AndroidManifest.xml:114:58-82
+261            android:foregroundServiceType="specialUse"
+261-->/app/applet/app/src/main/AndroidManifest.xml:114:83-125
+262            android:label="@string/app_name"
+262-->/app/applet/app/src/main/AndroidManifest.xml:114:126-158
+263            android:process=":daemon" >
+263-->/app/applet/app/src/main/AndroidManifest.xml:114:159-184
+264            <property
+264-->/app/applet/app/src/main/AndroidManifest.xml:109:13-105
+265                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+265-->/app/applet/app/src/main/AndroidManifest.xml:109:23-82
+266                android:value="proxy" />
+266-->/app/applet/app/src/main/AndroidManifest.xml:109:83-102
+267        </service>
+268        <service
+268-->/app/applet/app/src/main/AndroidManifest.xml:117:9-119:19
+269            android:name="com.v2ray.ang.service.CoreTestService"
+269-->/app/applet/app/src/main/AndroidManifest.xml:117:18-57
+270            android:exported="false"
+270-->/app/applet/app/src/main/AndroidManifest.xml:117:58-82
+271            android:foregroundServiceType="specialUse"
+271-->/app/applet/app/src/main/AndroidManifest.xml:117:83-125
+272            android:process=":tasks" >
+272-->/app/applet/app/src/main/AndroidManifest.xml:117:126-150
+273            <property
+273-->/app/applet/app/src/main/AndroidManifest.xml:109:13-105
+274                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+274-->/app/applet/app/src/main/AndroidManifest.xml:109:23-82
+275                android:value="test" />
+275-->/app/applet/app/src/main/AndroidManifest.xml:109:83-102
+276        </service>
+277        <service
+277-->/app/applet/app/src/main/AndroidManifest.xml:120:9-122:19
+278            android:name="com.v2ray.ang.service.SubscriptionUpdateService"
+278-->/app/applet/app/src/main/AndroidManifest.xml:120:18-67
+279            android:exported="false"
+279-->/app/applet/app/src/main/AndroidManifest.xml:120:68-92
+280            android:foregroundServiceType="specialUse"
+280-->/app/applet/app/src/main/AndroidManifest.xml:120:93-135
+281            android:process=":tasks" >
+281-->/app/applet/app/src/main/AndroidManifest.xml:120:136-160
+282            <property
+282-->/app/applet/app/src/main/AndroidManifest.xml:109:13-105
+283                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+283-->/app/applet/app/src/main/AndroidManifest.xml:109:23-82
+284                android:value="test" />
+284-->/app/applet/app/src/main/AndroidManifest.xml:109:83-102
+285        </service>
+286
+287        <receiver
+287-->/app/applet/app/src/main/AndroidManifest.xml:124:9-131:20
+288            android:name="com.v2ray.ang.receiver.WidgetProvider"
+288-->/app/applet/app/src/main/AndroidManifest.xml:124:19-58
+289            android:exported="true"
+289-->/app/applet/app/src/main/AndroidManifest.xml:124:59-82
+290            android:process=":daemon" >
+290-->/app/applet/app/src/main/AndroidManifest.xml:124:83-108
+291            <meta-data
+291-->/app/applet/app/src/main/AndroidManifest.xml:125:13-112
+292                android:name="android.appwidget.provider"
+292-->/app/applet/app/src/main/AndroidManifest.xml:125:24-65
+293                android:resource="@xml/app_widget_provider" />
+293-->/app/applet/app/src/main/AndroidManifest.xml:125:66-109
+294
+295            <intent-filter>
+295-->/app/applet/app/src/main/AndroidManifest.xml:126:13-130:29
+296                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+296-->/app/applet/app/src/main/AndroidManifest.xml:127:17-84
+296-->/app/applet/app/src/main/AndroidManifest.xml:127:25-81
+297                <action android:name="com.aistudio.shenbypass.kvrwsp.action.widget.click" />
+297-->INJECTED
+297-->INJECTED
+298                <action android:name="com.aistudio.shenbypass.kvrwsp.action.activity" />
+298-->INJECTED
+298-->INJECTED
+299            </intent-filter>
+300        </receiver>
+301        <receiver
+301-->/app/applet/app/src/main/AndroidManifest.xml:132:9-138:20
+302            android:name="com.v2ray.ang.receiver.BootReceiver"
+302-->/app/applet/app/src/main/AndroidManifest.xml:132:19-56
+303            android:exported="true"
+303-->/app/applet/app/src/main/AndroidManifest.xml:132:57-80
+304            android:label="BootReceiver" >
+304-->/app/applet/app/src/main/AndroidManifest.xml:132:81-109
+305            <intent-filter>
+305-->/app/applet/app/src/main/AndroidManifest.xml:133:13-137:29
+306                <action android:name="android.intent.action.BOOT_COMPLETED" />
+306-->/app/applet/app/src/main/AndroidManifest.xml:134:17-79
+306-->/app/applet/app/src/main/AndroidManifest.xml:134:25-76
+307                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+307-->/app/applet/app/src/main/AndroidManifest.xml:135:17-86
+307-->/app/applet/app/src/main/AndroidManifest.xml:135:25-83
+308                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+308-->/app/applet/app/src/main/AndroidManifest.xml:136:17-84
+308-->/app/applet/app/src/main/AndroidManifest.xml:136:25-81
+309            </intent-filter>
+310        </receiver>
+311
+312        <service
+312-->/app/applet/app/src/main/AndroidManifest.xml:140:9-143:19
+313            android:name="com.v2ray.ang.service.QSTileService"
+313-->/app/applet/app/src/main/AndroidManifest.xml:140:18-55
+314            android:exported="true"
+314-->/app/applet/app/src/main/AndroidManifest.xml:140:56-79
+315            android:foregroundServiceType="specialUse"
+315-->/app/applet/app/src/main/AndroidManifest.xml:140:80-122
+316            android:icon="@drawable/ic_stat_name"
+316-->/app/applet/app/src/main/AndroidManifest.xml:140:123-160
+317            android:label="@string/app_tile_name"
+317-->/app/applet/app/src/main/AndroidManifest.xml:140:161-198
+318            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+318-->/app/applet/app/src/main/AndroidManifest.xml:140:199-263
+319            android:process=":daemon" >
+319-->/app/applet/app/src/main/AndroidManifest.xml:140:264-289
+320            <intent-filter>
+320-->/app/applet/app/src/main/AndroidManifest.xml:141:13-114
+321                <action android:name="android.service.quicksettings.action.QS_TILE" />
+321-->/app/applet/app/src/main/AndroidManifest.xml:141:28-98
+321-->/app/applet/app/src/main/AndroidManifest.xml:141:36-95
+322            </intent-filter>
+323
+324            <property
+324-->/app/applet/app/src/main/AndroidManifest.xml:109:13-105
+325                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+325-->/app/applet/app/src/main/AndroidManifest.xml:109:23-82
+326                android:value="tile" />
+326-->/app/applet/app/src/main/AndroidManifest.xml:109:83-102
+327        </service>
+328
+329        <activity
+329-->/app/applet/app/src/main/AndroidManifest.xml:145:9-147:20
+330            android:name="com.v2ray.ang.ui.shortcut.TaskerActivity"
+330-->/app/applet/app/src/main/AndroidManifest.xml:145:19-61
+331            android:exported="true"
+331-->/app/applet/app/src/main/AndroidManifest.xml:145:62-85
+332            android:icon="@mipmap/ic_launcher" >
+332-->/app/applet/app/src/main/AndroidManifest.xml:145:86-120
+333            <intent-filter>
+333-->/app/applet/app/src/main/AndroidManifest.xml:146:13-122
+334                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+334-->/app/applet/app/src/main/AndroidManifest.xml:146:28-106
+334-->/app/applet/app/src/main/AndroidManifest.xml:146:36-103
+335            </intent-filter>
+336        </activity>
+337
+338        <receiver
+338-->/app/applet/app/src/main/AndroidManifest.xml:148:9-150:20
+339            android:name="com.v2ray.ang.receiver.TaskerReceiver"
+339-->/app/applet/app/src/main/AndroidManifest.xml:148:19-58
+340            android:exported="true"
+340-->/app/applet/app/src/main/AndroidManifest.xml:148:59-82
+341            android:process=":daemon" >
+341-->/app/applet/app/src/main/AndroidManifest.xml:148:83-108
+342            <intent-filter>
+342-->/app/applet/app/src/main/AndroidManifest.xml:149:13-122
+343                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
+343-->/app/applet/app/src/main/AndroidManifest.xml:149:28-106
+343-->/app/applet/app/src/main/AndroidManifest.xml:149:36-103
+344            </intent-filter>
+345        </receiver>
+346
+347        <provider
+347-->INJECTED
+348            android:name="androidx.startup.InitializationProvider"
+348-->/app/applet/app/src/main/AndroidManifest.xml:152:19-73
+349            android:authorities="com.aistudio.shenbypass.kvrwsp.androidx-startup"
+349-->INJECTED
+350            android:exported="false" >
+350-->/app/applet/app/src/main/AndroidManifest.xml:152:130-154
+351            <meta-data
+351-->[androidx.emoji2:emoji2:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/6858ca675fbec4259882df0a34e99814/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
+352                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+352-->[androidx.emoji2:emoji2:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/6858ca675fbec4259882df0a34e99814/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
+353                android:value="androidx.startup" />
+353-->[androidx.emoji2:emoji2:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/6858ca675fbec4259882df0a34e99814/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
+354            <meta-data
+354-->[androidx.lifecycle:lifecycle-process:2.11.0] /opt/gradle/.gradle/caches/9.3.1/transforms/2ad9a4801ff576b4e778e9e482011092/transformed/lifecycle-process-2.11.0/AndroidManifest.xml:29:13-31:52
+355                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+355-->[androidx.lifecycle:lifecycle-process:2.11.0] /opt/gradle/.gradle/caches/9.3.1/transforms/2ad9a4801ff576b4e778e9e482011092/transformed/lifecycle-process-2.11.0/AndroidManifest.xml:30:17-78
+356                android:value="androidx.startup" />
+356-->[androidx.lifecycle:lifecycle-process:2.11.0] /opt/gradle/.gradle/caches/9.3.1/transforms/2ad9a4801ff576b4e778e9e482011092/transformed/lifecycle-process-2.11.0/AndroidManifest.xml:31:17-49
+357            <meta-data
+357-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+358                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+358-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+359                android:value="androidx.startup" />
+359-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+360            <meta-data
+360-->[com.squareup.okhttp3:okhttp-android:5.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/959a942f4d38e6238a4c7df573b37926/transformed/okhttp/AndroidManifest.xml:16:13-18:52
+361                android:name="okhttp3.internal.platform.PlatformInitializer"
+361-->[com.squareup.okhttp3:okhttp-android:5.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/959a942f4d38e6238a4c7df573b37926/transformed/okhttp/AndroidManifest.xml:17:17-77
+362                android:value="androidx.startup" />
+362-->[com.squareup.okhttp3:okhttp-android:5.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/959a942f4d38e6238a4c7df573b37926/transformed/okhttp/AndroidManifest.xml:18:17-49
+363        </provider>
+364
+365        <service
+365-->/app/applet/app/src/main/AndroidManifest.xml:155:9-134
+366            android:name="androidx.work.multiprocess.RemoteWorkManagerService"
+366-->/app/applet/app/src/main/AndroidManifest.xml:155:18-84
+367            android:exported="false"
+367-->/app/applet/app/src/main/AndroidManifest.xml:155:85-109
+368            android:process=":bg" />
+368-->/app/applet/app/src/main/AndroidManifest.xml:155:110-131
+369
+370        <provider
+370-->INJECTED
+371            android:name="androidx.core.content.FileProvider"
+371-->/app/applet/app/src/main/AndroidManifest.xml:156:19-68
+372            android:authorities="com.aistudio.shenbypass.kvrwsp.cache"
+372-->INJECTED
+373            android:exported="false"
+373-->/app/applet/app/src/main/AndroidManifest.xml:156:114-138
+374            android:grantUriPermissions="true" >
+374-->/app/applet/app/src/main/AndroidManifest.xml:156:139-173
+375            <meta-data
+375-->/app/applet/app/src/main/AndroidManifest.xml:157:13-113
+376                android:name="android.support.FILE_PROVIDER_PATHS"
+376-->/app/applet/app/src/main/AndroidManifest.xml:157:24-74
+377                android:resource="@xml/cache_paths" />
+377-->/app/applet/app/src/main/AndroidManifest.xml:157:75-110
+378        </provider>
+379
+380        <service
+380-->[androidx.camera:camera-camera2:1.6.1] /opt/gradle/.gradle/caches/9.3.1/transforms/14176fbe7a8da042190270bc4d7d855e/transformed/camera-camera2-1.6.1/AndroidManifest.xml:24:9-33:19
+381            android:name="androidx.camera.core.impl.MetadataHolderService"
+381-->[androidx.camera:camera-camera2:1.6.1] /opt/gradle/.gradle/caches/9.3.1/transforms/14176fbe7a8da042190270bc4d7d855e/transformed/camera-camera2-1.6.1/AndroidManifest.xml:25:13-75
+382            android:enabled="false"
+382-->[androidx.camera:camera-camera2:1.6.1] /opt/gradle/.gradle/caches/9.3.1/transforms/14176fbe7a8da042190270bc4d7d855e/transformed/camera-camera2-1.6.1/AndroidManifest.xml:26:13-36
+383            android:exported="false" >
+383-->[androidx.camera:camera-camera2:1.6.1] /opt/gradle/.gradle/caches/9.3.1/transforms/14176fbe7a8da042190270bc4d7d855e/transformed/camera-camera2-1.6.1/AndroidManifest.xml:27:13-37
+384            <meta-data
+384-->[androidx.camera:camera-camera2:1.6.1] /opt/gradle/.gradle/caches/9.3.1/transforms/14176fbe7a8da042190270bc4d7d855e/transformed/camera-camera2-1.6.1/AndroidManifest.xml:30:13-32:89
+385                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+385-->[androidx.camera:camera-camera2:1.6.1] /opt/gradle/.gradle/caches/9.3.1/transforms/14176fbe7a8da042190270bc4d7d855e/transformed/camera-camera2-1.6.1/AndroidManifest.xml:31:17-103
+386                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+386-->[androidx.camera:camera-camera2:1.6.1] /opt/gradle/.gradle/caches/9.3.1/transforms/14176fbe7a8da042190270bc4d7d855e/transformed/camera-camera2-1.6.1/AndroidManifest.xml:32:17-86
+387        </service>
+388        <service
+388-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:39:9-45:35
+389            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+389-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:40:13-84
+390            android:directBootAware="false"
+390-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:41:13-44
+391            android:enabled="@bool/enable_system_job_service_default"
+391-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:42:13-70
+392            android:exported="true"
+392-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:43:13-36
+393            android:permission="android.permission.BIND_JOB_SERVICE" />
+393-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:44:13-69
+394        <service
+394-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:46:9-52:35
+395            android:name="androidx.work.impl.foreground.SystemForegroundService"
+395-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:47:13-81
+396            android:directBootAware="false"
+396-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:48:13-44
+397            android:enabled="@bool/enable_system_foreground_service_default"
+397-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:49:13-77
+398            android:exported="false" />
+398-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:50:13-37
+399
+400        <receiver
+400-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:54:9-59:35
+401            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+401-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:55:13-88
+402            android:directBootAware="false"
+402-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:56:13-44
+403            android:enabled="true"
+403-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:57:13-35
+404            android:exported="false" />
+404-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:58:13-37
+405        <receiver
+405-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:60:9-69:20
+406            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+406-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:61:13-88
+407            android:directBootAware="false"
+407-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:62:13-44
+408            android:enabled="false"
+408-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:63:13-36
+409            android:exported="false" >
+409-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:64:13-37
+410            <intent-filter>
+410-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:66:13-68:29
+411                <action android:name="android.intent.action.BOOT_COMPLETED" />
+411-->/app/applet/app/src/main/AndroidManifest.xml:134:17-79
+411-->/app/applet/app/src/main/AndroidManifest.xml:134:25-76
+412            </intent-filter>
+413        </receiver>
+414        <receiver
+414-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:70:9-80:20
+415            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+415-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:71:13-78
+416            android:directBootAware="false"
+416-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:72:13-44
+417            android:enabled="true"
+417-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:73:13-35
+418            android:exported="true"
+418-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:74:13-36
+419            android:permission="android.permission.DUMP" >
+419-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:75:13-57
+420            <intent-filter>
+420-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:77:13-79:29
+421                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+421-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:78:17-88
+421-->[androidx.work:work-runtime:2.11.2] /opt/gradle/.gradle/caches/9.3.1/transforms/4fc521bd86d5ca9c60b2a3df58e2c145/transformed/work-runtime-2.11.2/AndroidManifest.xml:78:25-85
+422            </intent-filter>
+423        </receiver>
+424
+425        <activity
+425-->[androidx.compose.ui:ui-tooling-android:1.11.4] /opt/gradle/.gradle/caches/9.3.1/transforms/42e4bef8d2bd8d27b2fa94faadcb1900/transformed/ui-tooling/AndroidManifest.xml:23:9-25:39
+426            android:name="androidx.compose.ui.tooling.PreviewActivity"
+426-->[androidx.compose.ui:ui-tooling-android:1.11.4] /opt/gradle/.gradle/caches/9.3.1/transforms/42e4bef8d2bd8d27b2fa94faadcb1900/transformed/ui-tooling/AndroidManifest.xml:24:13-71
+427            android:exported="true" />
+427-->[androidx.compose.ui:ui-tooling-android:1.11.4] /opt/gradle/.gradle/caches/9.3.1/transforms/42e4bef8d2bd8d27b2fa94faadcb1900/transformed/ui-tooling/AndroidManifest.xml:25:13-36
+428
+429        <uses-library
+429-->[androidx.window:window:1.5.0] /opt/gradle/.gradle/caches/9.3.1/transforms/8de09b69604ff6134329b5fd74b0e39d/transformed/window-1.5.0/AndroidManifest.xml:23:9-25:40
+430            android:name="androidx.window.extensions"
+430-->[androidx.window:window:1.5.0] /opt/gradle/.gradle/caches/9.3.1/transforms/8de09b69604ff6134329b5fd74b0e39d/transformed/window-1.5.0/AndroidManifest.xml:24:13-54
+431            android:required="false" />
+431-->[androidx.window:window:1.5.0] /opt/gradle/.gradle/caches/9.3.1/transforms/8de09b69604ff6134329b5fd74b0e39d/transformed/window-1.5.0/AndroidManifest.xml:25:13-37
+432        <uses-library
+432-->[androidx.window:window:1.5.0] /opt/gradle/.gradle/caches/9.3.1/transforms/8de09b69604ff6134329b5fd74b0e39d/transformed/window-1.5.0/AndroidManifest.xml:26:9-28:40
+433            android:name="androidx.window.sidecar"
+433-->[androidx.window:window:1.5.0] /opt/gradle/.gradle/caches/9.3.1/transforms/8de09b69604ff6134329b5fd74b0e39d/transformed/window-1.5.0/AndroidManifest.xml:27:13-51
+434            android:required="false" />
+434-->[androidx.window:window:1.5.0] /opt/gradle/.gradle/caches/9.3.1/transforms/8de09b69604ff6134329b5fd74b0e39d/transformed/window-1.5.0/AndroidManifest.xml:28:13-37
+435
+436        <receiver
+436-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+437            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+437-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+438            android:directBootAware="false"
+438-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+439            android:enabled="true"
+439-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+440            android:exported="true"
+440-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+441            android:permission="android.permission.DUMP" >
+441-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+442            <intent-filter>
+442-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+443                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+443-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+443-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+444            </intent-filter>
+445            <intent-filter>
+445-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+446                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+446-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+446-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+447            </intent-filter>
+448            <intent-filter>
+448-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+449                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+449-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+449-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+450            </intent-filter>
+451            <intent-filter>
+451-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+452                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+452-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+452-->[androidx.profileinstaller:profileinstaller:1.4.0] /opt/gradle/.gradle/caches/9.3.1/transforms/988dff832bd6feca925428842c1ce202/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+453            </intent-filter>
+454        </receiver>
+455
+456        <service
+456-->[androidx.room:room-runtime-android:2.7.0] /opt/gradle/.gradle/caches/9.3.1/transforms/fef0844448ae6f6b849bbfa599c97ea3/transformed/room-runtime-release/AndroidManifest.xml:24:9-28:63
+457            android:name="androidx.room.MultiInstanceInvalidationService"
+457-->[androidx.room:room-runtime-android:2.7.0] /opt/gradle/.gradle/caches/9.3.1/transforms/fef0844448ae6f6b849bbfa599c97ea3/transformed/room-runtime-release/AndroidManifest.xml:25:13-74
+458            android:directBootAware="true"
+458-->[androidx.room:room-runtime-android:2.7.0] /opt/gradle/.gradle/caches/9.3.1/transforms/fef0844448ae6f6b849bbfa599c97ea3/transformed/room-runtime-release/AndroidManifest.xml:26:13-43
+459            android:exported="false" />
+459-->[androidx.room:room-runtime-android:2.7.0] /opt/gradle/.gradle/caches/9.3.1/transforms/fef0844448ae6f6b849bbfa599c97ea3/transformed/room-runtime-release/AndroidManifest.xml:27:13-37
+460    </application>
+461
+462</manifest>

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.v2ray.ang.app-mergeDebugResources-2:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "/opt/gradle/.gradle/caches/9.3.1/transforms/9139fba5c4a834ff59c935f71c2a8d0f/transformed/material3/res/values-v30/values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}
