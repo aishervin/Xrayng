@@ -57,16 +57,7 @@ class RealPingWorkerService(
     private val totalCount = AtomicInteger(0)
 
     fun start() {
-        // A custom URL is the second-stage Gemini check. Its candidates have already
-        // passed the normal URL test, so do not discard them for having a positive delay.
-        val pendingGuids = if (customUrl != null) {
-            guids
-        } else {
-            guids.filter { guid ->
-                (MmkvManager.decodeServerAffiliationInfo(guid)?.testDelayMillis ?: 0L) <= 0L
-            }
-        }
-        val jobs = pendingGuids.map { guid ->
+        val jobs = guids.map { guid ->
             totalCount.incrementAndGet()
             scope.launch {
                 if (stopRequested.get()) {

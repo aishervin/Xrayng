@@ -10,35 +10,46 @@ import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.ui.compose.AppDropdownMenuItems
 import com.v2ray.ang.ui.compose.SelectListDialog
 
-private enum class ImportMenuAction(@StringRes val labelRes: Int, val action: MainAction) {
-    QRCode(R.string.menu_item_import_config_qrcode, MainAction.ImportQRcode),
-    Clipboard(R.string.menu_item_import_config_clipboard, MainAction.ImportClipboard),
-    LocalFile(R.string.menu_item_import_config_local, MainAction.ImportConfigLocal),
-    PolicyGroup(R.string.menu_item_import_config_policy_group, MainAction.ImportManually(EConfigType.POLICYGROUP.value)),
-    ProxyChain(R.string.menu_item_import_config_proxy_chain, MainAction.ImportManually(EConfigType.PROXYCHAIN.value)),
-    Vmess(R.string.menu_item_import_config_manually_vmess, MainAction.ImportManually(EConfigType.VMESS.value)),
-    Vless(R.string.menu_item_import_config_manually_vless, MainAction.ImportManually(EConfigType.VLESS.value)),
-    Shadowsocks(R.string.menu_item_import_config_manually_ss, MainAction.ImportManually(EConfigType.SHADOWSOCKS.value)),
-    Socks(R.string.menu_item_import_config_manually_socks, MainAction.ImportManually(EConfigType.SOCKS.value)),
-    Http(R.string.menu_item_import_config_manually_http, MainAction.ImportManually(EConfigType.HTTP.value)),
-    Trojan(R.string.menu_item_import_config_manually_trojan, MainAction.ImportManually(EConfigType.TROJAN.value)),
-    WireGuard(R.string.menu_item_import_config_manually_wireguard, MainAction.ImportManually(EConfigType.WIREGUARD.value)),
-    Hysteria2(R.string.menu_item_import_config_manually_hysteria2, MainAction.ImportManually(EConfigType.HYSTERIA2.value))
+import androidx.annotation.DrawableRes
+
+private enum class ImportMenuAction(
+    @StringRes val labelRes: Int,
+    val action: MainAction,
+    @DrawableRes val iconRes: Int
+) {
+    QRCode(R.string.menu_item_import_config_qrcode, MainAction.ImportQRcode, R.drawable.ic_scan_24dp),
+    Clipboard(R.string.menu_item_import_config_clipboard, MainAction.ImportClipboard, R.drawable.ic_copy),
+    LocalFile(R.string.menu_item_import_config_local, MainAction.ImportConfigLocal, R.drawable.ic_file_24dp),
+    PolicyGroup(R.string.menu_item_import_config_policy_group, MainAction.ImportManually(EConfigType.POLICYGROUP.value), R.drawable.ic_add_24dp),
+    ProxyChain(R.string.menu_item_import_config_proxy_chain, MainAction.ImportManually(EConfigType.PROXYCHAIN.value), R.drawable.ic_add_24dp),
+    Vmess(R.string.menu_item_import_config_manually_vmess, MainAction.ImportManually(EConfigType.VMESS.value), R.drawable.ic_add_24dp),
+    Vless(R.string.menu_item_import_config_manually_vless, MainAction.ImportManually(EConfigType.VLESS.value), R.drawable.ic_add_24dp),
+    Shadowsocks(R.string.menu_item_import_config_manually_ss, MainAction.ImportManually(EConfigType.SHADOWSOCKS.value), R.drawable.ic_add_24dp),
+    Socks(R.string.menu_item_import_config_manually_socks, MainAction.ImportManually(EConfigType.SOCKS.value), R.drawable.ic_add_24dp),
+    Http(R.string.menu_item_import_config_manually_http, MainAction.ImportManually(EConfigType.HTTP.value), R.drawable.ic_add_24dp),
+    Trojan(R.string.menu_item_import_config_manually_trojan, MainAction.ImportManually(EConfigType.TROJAN.value), R.drawable.ic_add_24dp),
+    WireGuard(R.string.menu_item_import_config_manually_wireguard, MainAction.ImportManually(EConfigType.WIREGUARD.value), R.drawable.ic_add_24dp),
+    Hysteria2(R.string.menu_item_import_config_manually_hysteria2, MainAction.ImportManually(EConfigType.HYSTERIA2.value), R.drawable.ic_add_24dp)
 }
 
-enum class MainMoreMenuAction(@StringRes val labelRes: Int) {
-    RestartService(R.string.title_service_restart),
-    DeleteAll(R.string.title_del_all_config),
-    DeleteDuplicate(R.string.title_del_duplicate_config),
-    DeleteInvalid(R.string.title_del_invalid_config),
-    ExportAll(R.string.title_export_all),
-    ExportTested(R.string.title_export_tested),
-    LocateSelected(R.string.title_locate_selected_config),
-    SortByTestResults(R.string.title_sort_by_test_results),
-    TestAll(R.string.title_ping_all_server),
-    TestAllRealPing(R.string.title_real_ping_all_server),
-    TestGemini(R.string.title_test_gemini),
-    UpdateSubscriptions(R.string.title_sub_update)
+enum class MainMoreMenuAction(
+    @StringRes val labelRes: Int,
+    @DrawableRes val iconRes: Int,
+    val isPrimary: Boolean = false,
+    val badge: String? = null
+) {
+    TestAllRealPing(R.string.title_real_ping_all_server, R.drawable.ic_speed_24dp, isPrimary = true, badge = "URL"),
+    TestGemini(R.string.title_test_gemini, R.drawable.ic_sparkle_24dp, isPrimary = true, badge = "AI"),
+    TestAll(R.string.title_ping_all_server, R.drawable.ic_flash_on_24dp),
+    UpdateSubscriptions(R.string.title_sub_update, R.drawable.ic_cloud_download_24dp),
+    SortByTestResults(R.string.title_sort_by_test_results, R.drawable.ic_outline_filter_alt_24),
+    LocateSelected(R.string.title_locate_selected_config, R.drawable.ic_search_24dp),
+    ExportTested(R.string.title_export_tested, R.drawable.ic_share_24dp),
+    ExportAll(R.string.title_export_all, R.drawable.ic_copy),
+    RestartService(R.string.title_service_restart, R.drawable.ic_restore_24dp),
+    DeleteInvalid(R.string.title_del_invalid_config, R.drawable.ic_delete_24dp),
+    DeleteDuplicate(R.string.title_del_duplicate_config, R.drawable.ic_delete_24dp),
+    DeleteAll(R.string.title_del_all_config, R.drawable.ic_delete_24dp)
 }
 
 internal enum class ServerMenuAction(
@@ -64,6 +75,7 @@ internal fun serverMenuActions(
 fun ImportMenuContent(onAction: (MainAction) -> Unit) = AppDropdownMenuItems(
     items = ImportMenuAction.entries,
     labelRes = { it.labelRes },
+    iconRes = { it.iconRes },
     onSelected = { onAction(it.action) }
 )
 
@@ -71,6 +83,9 @@ fun ImportMenuContent(onAction: (MainAction) -> Unit) = AppDropdownMenuItems(
 fun MoreMenuContent(onSelected: (MainMoreMenuAction) -> Unit) = AppDropdownMenuItems(
     items = MainMoreMenuAction.entries,
     labelRes = { it.labelRes },
+    iconRes = { it.iconRes },
+    isPrimary = { it.isPrimary },
+    badgeText = { it.badge },
     onSelected = onSelected
 )
 

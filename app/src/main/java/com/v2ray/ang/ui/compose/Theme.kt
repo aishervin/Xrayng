@@ -27,96 +27,113 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+import androidx.compose.ui.graphics.Brush
+
 private val LightColor = lightColorScheme(
-    primary = Color(0xFFFF6600), // Neon Orange
+    primary = Color(0xFFFF6600), // Fiery Neon Orange
     onPrimary = Color(0xFFFFFFFF), // White
-    primaryContainer = Color(0xFFF0F0F5), // Light Silver Gray
-    onPrimaryContainer = Color(0xFF18181B), // Dark Charcoal
-    secondary = Color(0xFFFF7A00), // Orange
+    primaryContainer = Color(0xFFF0F2F7), // Light Silver Gray
+    onPrimaryContainer = Color(0xFF16181F), // Dark Charcoal
+    secondary = Color(0xFFFF7A00), // Electric Orange
     onSecondary = Color(0xFFFFFFFF), // White
-    secondaryContainer = Color(0xFFFFEAD6), // Pale Orange
-    onSecondaryContainer = Color(0xFF3B1800), // Dark Brown
-    tertiary = Color(0xFF009966), // Green
+    secondaryContainer = Color(0xFFE6E9F0), // Cool Silver Slate
+    onSecondaryContainer = Color(0xFF14161D), // Dark Charcoal
+    tertiary = Color(0xFF00C853), // Neon Emerald Green
     onTertiary = Color(0xFFFFFFFF), // White
-    tertiaryContainer = Color(0xFFA0F2D0), // Light Green
-    onTertiaryContainer = Color(0xFF00201A), // Dark Teal
+    tertiaryContainer = Color(0xFFD7F9E4), // Light Green
+    onTertiaryContainer = Color(0xFF003816), // Dark Green
     error = Color(0xFFBA1A1A), // Red
     errorContainer = Color(0xFFFFDAD6), // Light Red
     onError = Color(0xFFFFFFFF), // White
     onErrorContainer = Color(0xFF410002), // Dark Red
-    background = Color(0xFFF7F7FA), // Soft Silver White
-    onBackground = Color(0xFF16161B), // Near Black
+    background = Color(0xFFF6F7FA), // Soft Silver White
+    onBackground = Color(0xFF121419), // Near Black
     surface = Color(0xFFFFFFFF), // White
-    onSurface = Color(0xFF16161B), // Near Black
-    surfaceVariant = Color(0xFFECECF2), // Light Silver Slate
-    onSurfaceVariant = Color(0xFF484854), // Dark Slate Gray
+    onSurface = Color(0xFF121419), // Near Black
+    surfaceVariant = Color(0xFFE8EAF2), // Light Silver Slate
+    onSurfaceVariant = Color(0xFF464956), // Dark Slate Gray
     outline = Color(0x55FF7A00), // Delicate Neon Orange
     outlineVariant = Color(0x28FF7A00), // Soft Neon Orange
-    inverseSurface = Color(0xFF282830), // Dark Charcoal
+    inverseSurface = Color(0xFF1E2129), // Dark Charcoal
     inverseOnSurface = Color(0xFFF4EFF4), // Very Light Gray
     inversePrimary = Color(0xFFFF9433), // Light Neon Orange
     scrim = Color(0xFF000000), // Black
     surfaceTint = Color(0xFFFF6600), // Orange
     surfaceContainerLowest = Color(0xFFFFFFFF), // White
-    surfaceContainerLow = Color(0xFFF7F7FA), // Very Light Gray
-    surfaceContainer = Color(0xFFF0F0F5), // Light Gray
-    surfaceContainerHigh = Color(0xFFE8E8EE), // Silver Gray
-    surfaceContainerHighest = Color(0xFFDFDFE6), // Light Gray
+    surfaceContainerLow = Color(0xFFF6F7FA), // Very Light Gray
+    surfaceContainer = Color(0xFFECEEF5), // Light Gray
+    surfaceContainerHigh = Color(0xFFE3E6EE), // Silver Gray
+    surfaceContainerHighest = Color(0xFFD9DDE6), // Light Gray
 )
 
 private val DarkColor = darkColorScheme(
-    primary = Color(0xFFFF7A00), // Neon Orange
-    onPrimary = Color(0xFF000000), // Black
-    primaryContainer = Color(0xFF26262F), // Sleek Charcoal Silver
-    onPrimaryContainer = Color(0xFFFFB366), // Soft Neon Peach
-    secondary = Color(0xFFFF6600), // Electric Orange
+    primary = Color(0xFFFF7A00), // Fiery Neon Orange
+    onPrimary = Color(0xFF000000), // Crisp Contrast
+    primaryContainer = Color(0xFF261A10), // Charcoal with Fiery Ember Glow
+    onPrimaryContainer = Color(0xFFFFB677), // Soft Neon Peach
+    secondary = Color(0xFFFF8C1A), // Electric Flame Orange
     onSecondary = Color(0xFFFFFFFF), // White
-    secondaryContainer = Color(0xFF381F06), // Deep Amber Charcoal
-    onSecondaryContainer = Color(0xFFFFCCA3), // Pale Orange
-    tertiary = Color(0xFF83D6B5), // Mint Green
-    onTertiary = Color(0xFF00382E), // Dark Teal
-    tertiaryContainer = Color(0xFF005143), // Teal
-    onTertiaryContainer = Color(0xFFA0F2D0), // Light Green
-    error = Color(0xFFFFB4AB), // Light Red
-    errorContainer = Color(0xFF93000A), // Dark Red
-    onError = Color(0xFF690005), // Deep Red
+    secondaryContainer = Color(0xFF1E212A), // Cool Charcoal Slate
+    onSecondaryContainer = Color(0xFFE2E6F0), // Silver Metallic Accent
+    tertiary = Color(0xFF00E676), // Bright Emerald Neon
+    onTertiary = Color(0xFF003818), // Dark Green
+    tertiaryContainer = Color(0xFF004D22), // Deep Green Slate
+    onTertiaryContainer = Color(0xFFA0F8CA), // Light Emerald
+    error = Color(0xFFFF4855), // Bright Neon Red
+    errorContainer = Color(0xFF5C0E14), // Dark Burgundy
+    onError = Color(0xFFFFFFFF), // White
     onErrorContainer = Color(0xFFFFDAD6), // Light Red
-    background = Color(0xFF101014), // Deep Black Charcoal
-    onBackground = Color(0xFFF2F2F7), // Silver White
-    surface = Color(0xFF16161B), // Dark Slate
-    onSurface = Color(0xFFF2F2F7), // Silver White
-    surfaceVariant = Color(0xFF22222A), // Charcoal Slate
-    onSurfaceVariant = Color(0xFFBCBCC8), // Silver Gray
-    outline = Color(0x66FF7A00), // Delicate Neon Orange border
-    outlineVariant = Color(0x33FF7A00), // Subtle Neon Orange glow
-    inverseSurface = Color(0xFFE6E1E5), // Light Gray
-    inverseOnSurface = Color(0xFF16161B), // Near Black
-    inversePrimary = Color(0xFFFF7A00), // Orange
+    background = Color(0xFF0D0E12), // Deep Matte Charcoal
+    onBackground = Color(0xFFF2F4F8), // Silver Crisp White
+    surface = Color(0xFF13151A), // Charcoal Slate
+    onSurface = Color(0xFFECEFF5), // Silver White
+    surfaceVariant = Color(0xFF1C1E26), // Elevated Cool Graphite
+    onSurfaceVariant = Color(0xFFA2A8BA), // Refined Silver-Slate Muted Text
+    outline = Color(0x66FF7A00), // Delicate Fiery Neon Orange Border
+    outlineVariant = Color(0x28FF7A00), // Subtle Neon Ember Line
+    inverseSurface = Color(0xFFE4E7EE), // Light Silver
+    inverseOnSurface = Color(0xFF13151A), // Charcoal Slate
+    inversePrimary = Color(0xFFFF7A00), // Neon Orange
     scrim = Color(0xFF000000), // Black
     surfaceTint = Color(0xFFFF7A00), // Neon Orange
-    surfaceContainerLowest = Color(0xFF0C0C0F), // Deep Black
-    surfaceContainerLow = Color(0xFF131317), // Very Dark Slate
-    surfaceContainer = Color(0xFF1A1A20), // Dark Slate Gray
-    surfaceContainerHigh = Color(0xFF23232C), // Silver Dark Gray
-    surfaceContainerHighest = Color(0xFF2E2E39), // Charcoal Slate
+    surfaceContainerLowest = Color(0xFF08090C), // Pure Deep Charcoal
+    surfaceContainerLow = Color(0xFF101216), // Very Dark Slate
+    surfaceContainer = Color(0xFF16181F), // Dark Charcoal Surface
+    surfaceContainerHigh = Color(0xFF1F222B), // Silver-Tinted Charcoal
+    surfaceContainerHighest = Color(0xFF282C37), // Charcoal Slate Border
+)
+
+// Gradients & Shimmer Brushes
+val NeonOrangeBrush = Brush.linearGradient(
+    listOf(Color(0xFFFFA040), Color(0xFFFF6600), Color(0xFFFF4500))
+)
+val SilverMetallicBrush = Brush.linearGradient(
+    listOf(Color(0xFFFFFFFF), Color(0xFFD6DAE5), Color(0xFFA0A6B8))
+)
+val FieryGlowBrush = Brush.horizontalGradient(
+    listOf(Color(0xFFFF8C1A), Color(0xFFFF5500), Color(0xFFFFA533))
+)
+val CharcoalCardGradient = Brush.verticalGradient(
+    listOf(Color(0xFF1B1D25), Color(0xFF121419))
 )
 
 // Semantic Colors
-val colorPing = Color(0xFF009966) // Green
-val colorPingRed = Color(0xFFFF0099) // Pink Red
-val colorConfigType = Color(0xFFFF7A00) // Neon Orange
+val colorPing = Color(0xFF00E676) // Bright Emerald Neon
+val colorPingAmber = Color(0xFFFFD600) // Neon Amber
+val colorPingRed = Color(0xFFFF334B) // Neon Red
+val colorConfigType = Color(0xFFFF851B) // Sleek Neon Orange
 val colorFabActive = Color(0xFFFF7A00) // Neon Orange
-val colorFabInactiveLight = Color(0xFF9C9CA6) // Silver Gray
-val colorFabInactiveDark = Color(0xFF4A4A58) // Charcoal Dark Gray
-val dividerColorLight = Color(0x29FF7A00) // Subtle Neon Orange
-val dividerColorDark = Color(0x40FF7A00) // Subtle Neon Orange
+val colorFabInactiveLight = Color(0xFF8E93A4) // Silver Slate
+val colorFabInactiveDark = Color(0xFF383C48) // Charcoal Dark Slate
+val dividerColorLight = Color(0x24FF7A00) // Subtle Neon Orange
+val dividerColorDark = Color(0x38FF7A00) // Delicate Neon Orange Border
 
 // Toast Colors 70%
-val toastNormalBgLight = Color(0xB3353A3E) // Dark Gray
-val toastNormalBgDark = Color(0xB34A4F54) // Darker Gray
-val toastSuccessBg = Color(0xB3388E3C) // Green
-val toastErrorBg = Color(0xB3D50000) // Red
-val toastInfoBg = Color(0xB33F51B5) // Indigo Blue
+val toastNormalBgLight = Color(0xB32C2F38) // Charcoal Gray
+val toastNormalBgDark = Color(0xB31C1E26) // Deep Charcoal
+val toastSuccessBg = Color(0xB300A84D) // Emerald
+val toastErrorBg = Color(0xB3D50028) // Red
+val toastInfoBg = Color(0xB3FF6600) // Fiery Orange
 val toastIconCircleBg = Color(0x33FFFFFF) // Semi-transparent White
 val toastTextColor = Color.White // White
 
@@ -127,7 +144,7 @@ object ThemeManager {
     val themeMode: StateFlow<String> = _themeMode.asStateFlow()
 
     private val _dynamicColorEnabled = MutableStateFlow(
-        MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, true)
+        MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
     )
     val dynamicColorEnabled: StateFlow<Boolean> = _dynamicColorEnabled.asStateFlow()
 
@@ -145,7 +162,7 @@ object ThemeManager {
         _themeMode.value =
             MmkvManager.decodeSettingsString(AppConfig.PREF_UI_MODE_NIGHT, "0") ?: "0"
         _dynamicColorEnabled.value =
-            MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, true)
+            MmkvManager.decodeSettingsBool(AppConfig.PREF_DYNAMIC_COLOR, false)
     }
 }
 

@@ -5,9 +5,11 @@ import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -46,6 +48,12 @@ import androidx.compose.ui.unit.sp
 import com.v2ray.ang.R
 import com.v2ray.ang.ui.compose.AppDivider
 import com.v2ray.ang.ui.compose.verticalScrollbar
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.TextStyle
+import com.v2ray.ang.ui.compose.NeonOrangeBrush
+import com.v2ray.ang.ui.compose.SilverMetallicBrush
+
 
 enum class MainDestination(@DrawableRes val iconRes: Int, @StringRes val labelRes: Int) {
     Subscriptions(R.drawable.ic_subscriptions_24dp, R.string.title_sub_setting),
@@ -74,6 +82,8 @@ private val drawerItems = primaryDrawerItems + listOf(
     MainDestination.About
 )
 
+
+
 @Composable
 fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) -> Unit) {
     val drawerScrollState = rememberScrollState()
@@ -82,8 +92,12 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
     ModalDrawerSheet(
         drawerState = drawerState,
         modifier = Modifier
-            .fillMaxWidth(0.78f)
-            .border(0.8.dp, Color(0x38FF7A00), RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)),
+            .fillMaxWidth(0.80f)
+            .border(
+                1.dp,
+                Brush.verticalGradient(listOf(Color(0x88FF7A00), Color(0x33A2A8BA), Color(0x22FF7A00))),
+                RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp)
+            ),
         drawerContainerColor = MaterialTheme.colorScheme.surface
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -93,47 +107,82 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                     .verticalScroll(drawerScrollState)
                     .verticalScrollbar(drawerScrollState)
             ) {
-                Surface(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(185.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainer
+                        .background(
+                            Brush.verticalGradient(
+                                listOf(Color(0xFF1F222C), Color(0xFF14161E), Color(0xFF0F1116))
+                            )
+                        )
+                        .padding(vertical = 24.dp, horizontal = 16.dp),
+                    contentAlignment = Alignment.Center
                 ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.shen_brand_icon),
-                            contentDescription = null,
-                            modifier = Modifier.size(86.dp)
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Box(
+                            modifier = Modifier
+                                .size(92.dp)
+                                .background(Color(0x22FF7A00), CircleShape)
+                                .border(
+                                    1.2.dp,
+                                    Brush.linearGradient(
+                                        listOf(Color(0xFFFF7A00), Color(0x44A2A8BA), Color(0xFFFF9100))
+                                    ),
+                                    CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.shen_brand_icon),
+                                contentDescription = null,
+                                modifier = Modifier.size(76.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
                         Text(
                             text = "Xrayng",
-                            style = MaterialTheme.typography.titleLarge.copy(
+                            style = TextStyle(
+                                brush = SilverMetallicBrush,
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                letterSpacing = 1.2.sp
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "SHΞN™ PRO CORE",
+                            style = TextStyle(
+                                brush = NeonOrangeBrush,
+                                fontSize = 10.5.sp,
                                 fontWeight = FontWeight.Bold,
-                                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
-                                letterSpacing = 1.sp
-                            ),
-                            color = MaterialTheme.colorScheme.onSurface
+                                letterSpacing = 2.sp
+                            )
                         )
                     }
                 }
                 drawerItems.forEachIndexed { index, item ->
                     if (index == primaryDrawerItems.size) AppDivider()
                     NavigationDrawerItem(
-                        label = { Text(stringResource(item.labelRes)) },
+                        label = {
+                            Text(
+                                stringResource(item.labelRes),
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    fontWeight = FontWeight.Medium,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            )
+                        },
                         selected = false,
                         onClick = { onNavigate(item) },
                         icon = {
                             Icon(
                                 painter = painterResource(item.iconRes),
                                 contentDescription = null,
-                                tint = Color(0xFFFF7A00)
+                                tint = Color(0xFFFF7A00),
+                                modifier = Modifier.size(22.dp)
                             )
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
@@ -170,10 +219,11 @@ fun MainDrawerContent(drawerState: DrawerState, onNavigate: (MainDestination) ->
                 ) {
                     Text(
                         text = footerText,
-                        color = Color(0xFFFF7A00),
-                        style = MaterialTheme.typography.labelLarge.copy(
+                        style = TextStyle(
+                            brush = NeonOrangeBrush,
+                            fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
-                            letterSpacing = 0.5.sp
+                            letterSpacing = 0.8.sp
                         )
                     )
                 }

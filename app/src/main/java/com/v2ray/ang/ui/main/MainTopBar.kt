@@ -87,7 +87,13 @@ fun MainTopBar(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     modifier = Modifier
                         .heightIn(max = maxMenuHeight)
-                        .border(0.8.dp, Color(0x66FF7A00), RoundedCornerShape(12.dp))
+                        .border(
+                            1.dp,
+                            androidx.compose.ui.graphics.Brush.verticalGradient(
+                                listOf(Color(0xFFFF7A00), Color(0x33A2A8BA), Color(0x22FF7A00))
+                            ),
+                            RoundedCornerShape(16.dp)
+                        )
                         .verticalScrollbar(importMenuScrollState)
                 ) {
                     ImportMenuContent(
@@ -109,7 +115,13 @@ fun MainTopBar(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     modifier = Modifier
                         .heightIn(max = maxMenuHeight)
-                        .border(0.8.dp, Color(0x66FF7A00), RoundedCornerShape(12.dp))
+                        .border(
+                            1.dp,
+                            androidx.compose.ui.graphics.Brush.verticalGradient(
+                                listOf(Color(0xFFFF7A00), Color(0x33A2A8BA), Color(0x22FF7A00))
+                            ),
+                            RoundedCornerShape(16.dp)
+                        )
                         .verticalScrollbar(moreMenuScrollState)
                 ) {
                     MoreMenuContent { action ->

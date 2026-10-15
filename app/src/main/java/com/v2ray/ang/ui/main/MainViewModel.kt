@@ -778,11 +778,7 @@ class MainViewModel(
             return
         }
 
-        // IMPORTANT: do not clear persisted testDelayMillis here.
-        // Successful URL-test results are the checkpoint used by the worker to
-        // skip already-tested configs. This makes starting the test again act as
-        // Resume: completed successes remain visible/exportable and only pending
-        // (or failed) configs are tested.
+        // When starting test, process all selected configs
         val serverGuids = servers.map { it.guid }
         testingGroupId = groupId
         _uiState.update {
@@ -797,7 +793,7 @@ class MainViewModel(
                 TestServiceMessage(
                     key = AppConfig.MSG_MEASURE_CONFIG_START,
                     subscriptionId = groupId,
-                    serverGuids = if (keywordFilter.isNotEmpty()) serverGuids else emptyList(),
+                    serverGuids = serverGuids,
                     onlyTcp = onlyTcp
                 )
             )
