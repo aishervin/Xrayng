@@ -2,12 +2,12 @@
 
 <img src="app/src/main/ic_launcher-web.png" width="160" alt="Xrayng Logo">
 
-# Xrayng™ (v2.0.0)
+# Xrayng™ (v2.1.1)
 
 <img src="https://readme-typing-svg.demolab.com?font=Vazirmatn&weight=800&size=40&pause=1200&color=FFA500&center=true&vCenter=true&width=750&lines=Xrayng+v2.0.0+Released;Next-Gen+Android+Network+Client;Fast,+Modern,+Material+3" alt="Xrayng animated title">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-v2.0.0-FFA500?style=for-the-badge&logo=android&logoColor=121212" alt="Version">
+  <img src="https://img.shields.io/badge/Version-v2.1.1-FFA500?style=for-the-badge&logo=android&logoColor=121212" alt="Version">
   <img src="https://img.shields.io/badge/Kotlin-2.4-121212?style=for-the-badge&logo=kotlin&logoColor=FFA500" alt="Kotlin">
   <img src="https://img.shields.io/badge/Jetpack_Compose-M3-121212?style=for-the-badge&logo=jetpackcompose&logoColor=FFA500" alt="Compose">
   <img src="https://img.shields.io/badge/License-GPLv3-121212?style=for-the-badge&logo=github&logoColor=FFA500" alt="License">
@@ -23,7 +23,7 @@
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/━━━━━━━━━━☬+Xrayng+v2.0.0+Features+☬━━━━━━━━━━-FFA500?style=flat-square" alt="divider">
+<img src="https://img.shields.io/badge/━━━━━━━━━━☬+Xrayng+v2.1.1+Features+☬━━━━━━━━━━-FFA500?style=flat-square" alt="divider">
 
 <div align="right" dir="rtl">
 
