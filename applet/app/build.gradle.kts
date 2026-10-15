@@ -1,0 +1,135 @@
+import org.gradle.api.tasks.Copy
+
+val appVersionName = (project.findProperty("VERSION_NAME") as? String) ?: "2.0.0"
+
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
+}
+
+val brandIconSource = rootProject.file("Picsart_26-08-07_19-36-12-944.png")
+val brandIconResDir = layout.buildDirectory.dir("generated/res/brand/main")
+val prepareBrandIcon = tasks.register<Copy>("prepareBrandIcon") {
+    from(brandIconSource)
+    into(brandIconResDir.map { it.dir("drawable") })
+    rename { "shen_brand_icon.png" }
+}
+
+android {
+    namespace = "com.v2ray.ang"
+    compileSdk = 37
+
+    defaultConfig {
+        applicationId = "com.aistudio.shenbypass.kvrwsp"
+        minSdk = 24
+        targetSdk = 37
+        versionCode = maxOf(3, System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 3)
+        versionName = appVersionName
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "DISTRIBUTION", "\"Standard\"")
+    }
+
+    // AGP 9 rejects Provider instances passed directly to Android SourceSet.
+    // Resolve the generated directory here; preBuild below explicitly depends on its producer.
+    sourceSets["main"].res.srcDir(brandIconResDir.get().asFile)
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("../keystore/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
+    buildTypes {
+        debug {
+            isMinifyEnabled = false
+        }
+        release {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
+
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            isUniversalApk = true
+        }
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+tasks.named("preBuild").configure {
+    dependsOn(prepareBrandIcon)
+}
+
+base {
+    archivesName.set("Xrayng-${appVersionName}")
+}
+
+dependencies {
+    implementation(files("libs/classes.jar"))
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.coil.compose)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.mmkv.static)
+    implementation(libs.gson)
+    implementation(libs.okhttp)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.compose)
+    implementation(libs.core)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.work.runtime.ktx)
+    implementation(libs.work.multiprocess)
+    implementation(libs.reorderable)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    testImplementation(libs.org.mockito.mockito.inline)
+    testImplementation(libs.mockito.kotlin)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+}
