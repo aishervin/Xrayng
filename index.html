@@ -4,33 +4,403 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090909">
-<meta name="description" content="Xrayng (SHΞN™) — کلاینت اختصاصی و بهینه‌شده بر پایه v2rayNG">
-<title>Xrayng (SHΞN™) | Exclusive SHΞN™ made</title>
+<meta name="description" content="Xrayng (SHΞN™) v2.0.0 — کلاینت پیشرفته، پرسرعت و بهینه‌شده اندروید بر پایه هسته قدرتمند Xray">
+<title>Xrayng (SHΞN™) v2.0.0 | کلاینت پیشرفته اندروید</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-:root{--bg:#090909;--card:#151517;--card2:#1b1b1e;--orange:#ff9800;--orange2:#ffb52e;--text:#f7f7f7;--muted:#a4a4aa;--green:#39d98a;--red:#ff6060;--blue:#27a7df;--line:rgba(255,255,255,.07);--deep:14px 18px 34px rgba(0,0,0,.72),-8px -8px 24px rgba(255,255,255,.025)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;background:radial-gradient(circle at 50% -10%,rgba(255,152,0,.12),transparent 32rem),radial-gradient(circle at 0 60%,rgba(255,152,0,.045),transparent 28rem),var(--bg);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:radial-gradient(rgba(255,255,255,.35) .55px,transparent .55px);background-size:5px 5px}a{color:inherit;text-decoration:none}.container{width:min(1080px,calc(100% - 30px));margin:auto}
-header{padding:28px 0 62px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:62px}.brand{font-weight:800}.brand i{color:var(--orange);margin-left:8px}.gh{color:#8d8d95;transition:.25s}.gh:hover{color:var(--orange2)}
-.hero{text-align:center;perspective:900px}.logo-stage{width:150px;height:150px;margin:0 auto 24px;display:grid;place-items:center;perspective:900px}.logo-stage img{width:138px;height:138px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(255,152,0,.28)) drop-shadow(12px 18px 20px rgba(0,0,0,.65));transform-style:preserve-3d;animation:spin3d 5.5s ease-in-out infinite;will-change:transform}@keyframes spin3d{0%,12%{transform:rotateY(0deg)}42%{transform:rotateY(180deg)}58%{transform:rotateY(180deg)}88%,100%{transform:rotateY(360deg)}}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;color:var(--orange2);background:rgba(255,152,0,.08);border:1px solid rgba(255,152,0,.15);box-shadow:inset 3px 3px 8px rgba(0,0,0,.5);font-size:.76rem;font-weight:800}h1{margin:16px 0 12px;font-size:clamp(2.5rem,7vw,5.4rem);line-height:1;font-weight:900;letter-spacing:-2px;text-shadow:0 0 26px rgba(255,152,0,.25),0 10px 30px #000}h1 span{color:var(--orange)}h1 small{font-size:.42em;color:#ddd;letter-spacing:0}.hero>p{max-width:720px;margin:auto;color:var(--muted);line-height:2.1;font-size:1.06rem}.hero strong{color:#fff}.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:13px;margin-top:30px}.btn{min-height:52px;padding:0 24px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:800;transition:.25s;box-shadow:var(--deep)}.primary{color:#15100a;background:linear-gradient(135deg,var(--orange2),var(--orange));box-shadow:8px 10px 22px rgba(0,0,0,.65),0 0 26px rgba(255,152,0,.15)}.ghost{background:linear-gradient(145deg,#1b1b1f,#101012);border:1px solid var(--line)}.btn:hover{transform:translateY(-3px)}
-main{padding-bottom:70px}.section{margin-top:25px}.title{display:flex;align-items:center;gap:10px;margin:0 0 15px;font-size:1.35rem}.title i{color:var(--orange)}.card{position:relative;overflow:hidden;border-radius:26px;padding:29px;background:linear-gradient(145deg,rgba(28,28,31,.97),rgba(13,13,15,.99));border:1px solid var(--line);box-shadow:var(--deep)}.card:after{content:"";position:absolute;width:230px;height:230px;left:-100px;top:-120px;border-radius:50%;background:rgba(255,152,0,.045);filter:blur(35px);pointer-events:none}.intro p{margin:0;color:var(--muted);line-height:2.2;text-align:justify}
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.feature{min-height:225px;padding:24px;border-radius:21px;background:linear-gradient(145deg,#1b1b1e,#111113);border:1px solid rgba(255,255,255,.055);box-shadow:inset 6px 6px 13px rgba(0,0,0,.58),inset -5px -5px 12px rgba(255,255,255,.025),8px 12px 24px rgba(0,0,0,.42);transition:.25s}.feature:hover{transform:translateY(-4px);border-color:rgba(255,152,0,.2)}.icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:rgba(255,152,0,.07);color:var(--orange);box-shadow:inset 4px 4px 9px rgba(0,0,0,.5);font-size:1.2rem;margin-bottom:17px}.feature h3{margin:0 0 10px;font-size:1rem}.feature p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.95}.check{color:var(--green);font-size:.75rem;margin-right:5px}
-.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.road{min-height:210px}.road i{font-size:1.6rem;color:var(--orange);margin-bottom:17px}.road:nth-child(2) i{color:var(--blue)}.road:nth-child(3) i{color:var(--green)}.road h3{margin:0 0 10px}.road p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.95}.warning{border-color:rgba(255,96,96,.18)}.warning .title{color:#ff8585}.warning p{margin:0;color:var(--muted);line-height:2}.notice{padding:18px;border-radius:17px;margin-top:16px;background:rgba(255,255,255,.025);border-right:3px solid}.notice strong{display:block;margin-bottom:6px}.danger{border-color:var(--red)}.danger strong{color:#ff8585}.success{border-color:var(--green)}.success strong{color:#70e7a6}.audit{margin-top:22px;padding-top:22px;border-top:1px solid var(--line);text-align:center}.audit p{font-size:.88rem}.audit-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.audit-btn{min-height:46px;padding:0 20px;border-radius:14px;font-weight:800;display:inline-flex;align-items:center;gap:9px;transition:.2s}.audit-btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.chatgpt{background:#10a37f}.deepseek{background:#405de6}.download{text-align:center}.download p{color:var(--muted);margin-bottom:18px}
-footer{padding:27px 0 35px;border-top:1px solid var(--line);text-align:center;color:#777;font-size:.82rem}footer strong{color:var(--orange)}
-@media(max-width:780px){.feature-grid,.roadmap{grid-template-columns:1fr}.feature{min-height:auto}.top{margin-bottom:45px}.card{padding:23px;border-radius:22px}.logo-stage{width:130px;height:130px}.logo-stage img{width:122px;height:122px}}@media(max-width:440px){.container{width:calc(100% - 20px)}h1{letter-spacing:-1px}.btn{width:100%}.actions{gap:9px}.audit-btn{width:100%;justify-content:center}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.logo-stage img{animation:none}.btn,.feature{transition:none}}
+:root {
+  --bg: #09090b;
+  --card: #141417;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --orange: #ff9800;
+  --orange-light: #ffb74d;
+  --orange-glow: rgba(255, 152, 0, 0.25);
+  --blue: #29b6f6;
+  --purple: #9b72cb;
+  --green: #00e676;
+  --text: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, Tahoma, sans-serif;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 152, 0, 0.12), transparent 45rem),
+              radial-gradient(circle at 100% 60%, rgba(41, 182, 246, 0.05), transparent 35rem),
+              var(--bg);
+  overflow-x: hidden;
+  line-height: 1.8;
+}
+a { color: inherit; text-decoration: none; }
+.container { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+
+/* Navbar */
+header { padding: 24px 0 20px; }
+.nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; }
+.brand-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--orange), #e65100);
+  display: grid; place-items: center; color: #fff; font-size: 1rem;
+  box-shadow: 0 4px 12px var(--orange-glow);
+}
+.nav-links { display: flex; gap: 16px; align-items: center; }
+.gh-link {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
+  border-radius: 999px; background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border); color: #d4d4d8; font-size: 0.9rem;
+  font-weight: 600; transition: all 0.25s ease;
+}
+.gh-link:hover { border-color: var(--orange); color: var(--orange-light); transform: translateY(-2px); }
+
+/* Hero */
+.hero { text-align: center; padding: 20px 0 40px; }
+.logo-container {
+  width: 140px; height: 140px; margin: 0 auto 24px;
+  position: relative; display: grid; place-items: center;
+}
+.logo-container img {
+  width: 130px; height: 130px; object-fit: contain;
+  filter: drop-shadow(0 8px 24px var(--orange-glow));
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.release-pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
+  border-radius: 999px; background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3); color: var(--orange-light);
+  font-size: 0.85rem; font-weight: 700; margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 900;
+  letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 16px;
+}
+.hero h1 span { color: var(--orange); }
+.hero-desc {
+  max-width: 760px; margin: 0 auto 28px; color: var(--text-muted);
+  font-size: 1.12rem; line-height: 2;
+}
+
+/* Centered Announcement Headline */
+.v2-headline-banner {
+  max-width: 820px; margin: 0 auto 36px; padding: 18px 24px;
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.12), rgba(41, 182, 246, 0.08));
+  border: 1.5px solid rgba(255, 152, 0, 0.35); border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  text-align: center;
+}
+.v2-headline-banner .pulse-tag {
+  background: var(--orange); color: #121212; padding: 4px 10px;
+  border-radius: 8px; font-weight: 900; font-size: 0.82rem;
+}
+.v2-headline-banner h2 {
+  font-size: 1.18rem; font-weight: 800; color: #fff;
+}
+
+/* Action Buttons */
+.hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 40px; }
+.btn {
+  min-height: 52px; padding: 0 28px; border-radius: 14px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-weight: 700; font-size: 1rem; transition: all 0.25s ease;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #ffb300, #ff8f00);
+  color: #141416; box-shadow: 0 6px 20px rgba(255, 152, 0, 0.35);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(255, 152, 0, 0.5); }
+.btn-secondary {
+  background: var(--card); border: 1px solid var(--card-border);
+  color: var(--text);
+}
+.btn-secondary:hover { border-color: rgba(255, 255, 255, 0.2); transform: translateY(-3px); }
+
+/* Feature Matrix Section */
+.section-title {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1.6rem; font-weight: 800; margin: 40px 0 20px;
+}
+.section-title i { color: var(--orange); }
+
+.grid-3 {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.grid-2 {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+.card {
+  background: var(--card); border: 1px solid var(--card-border);
+  border-radius: 20px; padding: 26px; box-shadow: var(--shadow);
+  transition: all 0.3s ease; position: relative; overflow: hidden;
+}
+.card:hover { border-color: rgba(255, 152, 0, 0.3); transform: translateY(-4px); }
+.card-icon {
+  width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
+  display: grid; place-items: center; font-size: 1.35rem;
+}
+.icon-orange { background: rgba(255, 152, 0, 0.12); color: var(--orange); }
+.icon-blue { background: rgba(41, 182, 246, 0.12); color: var(--blue); }
+.icon-purple { background: rgba(155, 114, 203, 0.12); color: var(--purple); }
+.icon-green { background: rgba(0, 230, 118, 0.12); color: var(--green); }
+
+.card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; color: #fff; }
+.card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.9; }
+
+/* Specs Pill Grid */
+.specs-list {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
+}
+.spec-pill {
+  padding: 6px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.82rem; font-weight: 600;
+  color: #e4e4e7;
+}
+
+/* Downloads Section */
+.download-card {
+  text-align: center; padding: 40px 24px; margin: 40px 0;
+  background: linear-gradient(145deg, #18181b, #101012);
+  border: 1px solid rgba(255, 152, 0, 0.25); border-radius: 24px;
+}
+.download-card h2 { font-size: 2rem; margin-bottom: 12px; font-weight: 900; }
+.download-card p { color: var(--text-muted); max-width: 600px; margin: 0 auto 28px; }
+.arch-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px; max-width: 860px; margin: 0 auto 24px;
+}
+.arch-btn {
+  padding: 14px 18px; border-radius: 14px; background: #1f1f23;
+  border: 1px solid var(--card-border); text-align: center; transition: 0.2s ease;
+}
+.arch-btn:hover { border-color: var(--orange); background: #26262b; transform: translateY(-2px); }
+.arch-btn strong { display: block; color: #fff; font-size: 0.95rem; margin-bottom: 4px; }
+.arch-btn span { color: var(--text-muted); font-size: 0.8rem; }
+
+/* Security & Verification Card */
+.security-card {
+  padding: 28px; border-radius: 20px; background: #131316;
+  border: 1px solid var(--card-border); margin-top: 30px;
+}
+.security-card h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.security-card h3 i { color: var(--green); }
+.security-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 2; margin-bottom: 16px; }
+
+/* Footer */
+footer {
+  margin-top: 60px; padding: 36px 0; border-top: 1px solid var(--card-border);
+  text-align: center; color: var(--text-muted); font-size: 0.9rem;
+}
+footer strong { color: var(--orange-light); }
+
+@media (max-width: 860px) {
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .v2-headline-banner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 480px) {
+  .btn { width: 100%; }
+}
 </style>
 </head>
 <body>
-<header><div class="container"><nav class="top"><div class="brand"><i class="fa-solid fa-bolt"></i>Xrayng</div><a class="gh" href="https://github.com/aishervin/Xrayng" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a></nav>
-<section class="hero"><div class="logo-stage"><img src="https://raw.githubusercontent.com/aishervin/Xrayng/main/app/src/main/ic_launcher-web.png" alt="لوگوی Xrayng"></div><div class="badge"><i class="fa-solid fa-bolt"></i> OPEN SOURCE • ANDROID</div><h1>Xray<span>ng</span> <small>(SHΞN™)</small></h1><p>کلاینت اختصاصی، ارتقا یافته و بهینه‌شده بر پایه <strong>v2rayNG</strong>؛ با تمرکز روی تجربه کاربری بهتر، امکانات کاربردی و دسترسی سریع‌تر.</p><div class="actions"><a class="btn primary" href="https://github.com/aishervin/Xrayng/releases/latest"><i class="fa-brands fa-android"></i> دانلود آخرین نسخه</a><a class="btn ghost" href="https://github.com/aishervin/Xrayng" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> مشاهده سورس</a></div></section></div></header>
+
+<header>
+  <div class="container">
+    <nav class="nav-bar">
+      <div class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-bolt"></i></div>
+        <span>Xrayng</span>
+      </div>
+      <div class="nav-links">
+        <a class="gh-link" href="https://github.com/aishervin/Xrayng" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> گیت‌هاب پروژه
+        </a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="logo-container">
+        <img src="https://raw.githubusercontent.com/aishervin/Xrayng/main/app/src/main/ic_launcher-web.png" alt="لوگوی Xrayng">
+      </div>
+      <div class="release-pill">
+        <i class="fa-solid fa-code-branch"></i> نسخه نهایی ۲.۰.۰ • اندروید
+      </div>
+      <h1>Xray<span>ng</span></h1>
+      <p class="hero-desc">
+        کلاینت مدرن، پایدار و ارتقایافته اندروید بر پایه هسته قدرتمند Xray؛ با امکانات اتصال هوشمند، آزمون تأخیر موازی و رابط کاربری چشم‌نواز Material 3.
+      </p>
+
+      <!-- Centered Announcement Headline -->
+      <div class="v2-headline-banner">
+        <span class="pulse-tag">نسخه جدید</span>
+        <h2>نسخه ی v2.0.0 هم اکنون در دسترس قرار گرفت</h2>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/aishervin/Xrayng/releases/latest">
+          <i class="fa-brands fa-android"></i> دانلود مستقیم آخرین نسخه
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/aishervin/Xrayng" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> مشاهده کدهای پروژه
+        </a>
+      </div>
+    </section>
+  </div>
+</header>
+
 <main class="container">
-<section class="section"><h2 class="title"><i class="fa-solid fa-star"></i> معرفی پروژه</h2><div class="card intro"><p>پروژه <strong style="color:#fff">Xrayng</strong> یک نسخه ارتقا یافته و سفارشی‌سازی شده از کلاینت محبوب <code>v2rayNG</code> است. هدف پروژه رفع محدودیت‌ها، بهبود رابط کاربری و اضافه کردن قابلیت‌های کاربردی است که جای خالی آن‌ها در نسخه اصلی حس می‌شد.</p></div></section>
-<section class="section"><h2 class="title"><i class="fa-solid fa-rocket"></i> فاز اول — امکانات فعلی</h2><div class="feature-grid"><article class="feature"><div class="icon"><i class="fa-solid fa-arrows-turn-to-dots"></i></div><h3>حل مشکل پراکسی‌های HTTP و SOCKS</h3><p><span class="check">●</span> انتقال و ایمپورت دسته‌ای (Batch Import) پراکسی‌های HTTP و SOCKS که در نسخه اصلی با مشکل مواجه بود، کاملاً برطرف شده است.</p></article><article class="feature"><div class="icon"><i class="fa-solid fa-layer-group"></i></div><h3>۲ منبع پیش‌فرض غنی</h3><p><span class="check">●</span> اضافه شدن دو مخزن (Subscription) قدرتمند و غنی به‌صورت درون‌برنامه‌ای تا کاربر بدون جستجو به سرورهای باکیفیت دسترسی داشته باشد.</p></article><article class="feature"><div class="icon"><i class="fa-solid fa-gauge-high"></i></div><h3>  تست پینگ پارالل وسازگاری با مدل های هوش گوگل جمینای ، فلو ، گرویتی</h3><p><span class="check">●</span> افزایش ۲ برابری سرعت تست URL کانفیگ‌ها با استفاده از استراتژی اختصاصی و اجرای موازی تست‌ها.</p></article></div></section>
-<section class="section"><h2 class="title"><i class="fa-solid fa-map-location-dot"></i> فاز دوم — نقشه‌راه</h2><div class="roadmap"><article class="card road"><i class="fa-solid fa-magnifying-glass"></i><h3>دریافت و تست سلامت</h3><p>استخراج پروکسی‌های MTProto از منابع معتبر و تست سلامت و پینگ آن‌ها به‌صورت خودکار.</p></article><article class="card road"><i class="fa-brands fa-telegram"></i><h3>پراکسی مستقیم تلگرام</h3><p>اعمال پراکسی‌های سالم به‌صورت مستقیم روی کلاینت تلگرام از داخل خود برنامه.</p></article><article class="card road"><i class="fa-solid fa-share-nodes"></i><h3>اشتراک‌گذاری هوشمند</h3><p>ارسال و اشتراک‌گذاری مستقیم لیست پراکسی‌های سالم در محیط تلگرام برای سایرین.</p></article></div></section>
-<section class="section"><div class="card warning"><h2 class="title"><i class="fa-solid fa-shield-halved"></i> امنیت و هشدار Google Play Protect</h2><p>ممکن است هنگام نصب APK با خطای <strong style="color:#ff8585">"Unsafe App"</strong> یا مسدودسازی موقت توسط Google Play Protect مواجه شوید. این هشدار به این دلیل نمایش داده می‌شود که اپلیکیشن هنوز در Google Play منتشر نشده و با کلید توسعه‌دهنده اختصاصی بیلد و امضا شده است.</p><div class="notice danger"><strong>چرا این هشدار نمایش داده می‌شود؟</strong><p>برنامه‌های خارج از استور که با کلید توسعه‌دهنده اختصاصی امضا شده‌اند ممکن است برای Play Protect ناشناس باشند.</p></div><div class="notice success"><strong>آیا پروژه قابل بررسی است؟</strong><p>بله. Xrayng منبع‌باز است و سورس آن در GitHub قرار دارد؛ بنابراین هر کسی می‌تواند کد پروژه را بررسی کند.</p></div><div class="audit"><strong>🤖 بررسی امنیت سورس توسط هوش مصنوعی</strong><p>برای بررسی پروژه می‌توانید آن را مستقیماً به ابزارهای هوش مصنوعی بسپارید.</p><div class="audit-buttons"><a class="audit-btn chatgpt" href="https://chatgpt.com/?q=Please+analyze+this+open-source+GitHub+repository+for+any+malicious+code,+backdoors,+or+security+threats:+https://github.com/aishervin/xrayng" target="_blank" rel="noopener"><i class="fa-solid fa-robot"></i> بررسی با ChatGPT</a><a class="audit-btn deepseek" href="https://chat.deepseek.com/" target="_blank" rel="noopener"><i class="fa-solid fa-magnifying-glass-chart"></i> بررسی با DeepSeek</a></div></div></div></section>
-<section class="section"><div class="card download"><h2 class="title" style="justify-content:center"><i class="fa-solid fa-download"></i> دانلود و نصب</h2><p>آخرین نسخه منتشرشده Xrayng را از صفحه Releases دریافت کنید.</p><a class="btn primary" href="https://github.com/aishervin/Xrayng/releases/latest"><i class="fa-brands fa-android"></i> Download Latest APK</a></div></section>
-</main><footer><strong>Exclusive SHΞN™ made☬</strong></footer>
-</body></html>
+
+  <!-- Core Capabilities Section -->
+  <section>
+    <h2 class="section-title"><i class="fa-solid fa-cubes"></i> قابلیت‌های کلیدی و برجسته</h2>
+    <div class="grid-3">
+
+      <article class="card">
+        <div class="card-icon icon-orange">
+          <i class="fa-solid fa-gauge-high"></i>
+        </div>
+        <h3>نوار آزمون سریع و ارگونومیک</h3>
+        <p>
+          دسترسی فوری به آزمون تأخیر واقعی (Real delay) و سنجش دسترسی هوش مصنوعی Google Gemini (Gemini pass) در پایین فهرست سرورها بدون نیاز به پیمایش منوهای تودرتو.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon icon-blue">
+          <i class="fa-brands fa-telegram"></i>
+        </div>
+        <h3>پروکسی‌های زنده تلگرام (Telegram pass)</h3>
+        <p>
+          یکپارچه‌سازی مخزن اختصاصی پروکسی‌های فعال جامعه تلگرام؛ همراه با موتور سنجش اتصال زنده و برچسب آبی‌رنگ Telegram pass برای سرورهای پاسخ‌دهنده.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon icon-purple">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3>پشتیبانی وایرگارد چندکانفیگی</h3>
+        <p>
+          پشتیبانی بومی از اشتراک‌ها و فایل‌های WireGuard چندکانفیگی با تفکیک و گروه‌بندی خودکار تنظیمات شبکه برای تجربه اتصالی سریع و سبک.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon icon-green">
+          <i class="fa-solid fa-arrows-spin"></i>
+        </div>
+        <h3>همگام‌سازی و بروزرسانی خودکار</h3>
+        <p>
+          بروزرسانی خودکار دوره‌ای برای مخازن پیش‌فرض برنامه در بازه‌های منظم یک‌ساعته جهت دسترسی دائمی به سالم‌ترین سرورهای اتصال.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon icon-orange">
+          <i class="fa-solid fa-network-wired"></i>
+        </div>
+        <h3>پشتیبانی همه‌جانبه از پروتکل‌ها</h3>
+        <p>
+          سازگاری کامل با پروتکل‌های مدرن شامل VLESS, VMess, Shadowsocks, Trojan, WireGuard, Hysteria2 و پروکسی‌های پرسرعت HTTP و SOCKS5.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon icon-blue">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <h3>بیلد اختصاصی بر پایه معماری پردازنده</h3>
+        <p>
+          انتشار APKهای اختصاصی به تفکیک معماری‌های پردازنده (ARM64, ARMv7, x86_64, x86) برای افزایش کارایی، مصرف باتری بهینه و کاهش حجم دانلودی برنامه.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Technical Details & Architecture -->
+  <section>
+    <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> دسته‌بندی و منابع پیش‌فرض نسخه ۲.۰.۰</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>مخازن کانفیگ درون‌برنامه‌ای</h3>
+        <p>برنامه مجهز به ۴ گروه اشتراک پیش‌فرض و مرتب است:</p>
+        <div class="specs-list">
+          <span class="spec-pill">Xray (کانفیگ‌های منتخب VLESS)</span>
+          <span class="spec-pill">Wireguard (شبکه امن و کم‌مصرف)</span>
+          <span class="spec-pill">Https/Sucks (پروکسی‌های پایدار)</span>
+          <span class="spec-pill">Telegram proxy (پروکسی‌های فعال تلگرام)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>تجربه کاربری و مهندسی نرم‌افزار</h3>
+        <p>توسعه‌یافته بر اساس استانداردهای مدرن اندروید:</p>
+        <div class="specs-list">
+          <span class="spec-pill">Jetpack Compose & Material 3</span>
+          <span class="spec-pill">طراحی تمام‌صفحه Edge-to-Edge</span>
+          <span class="spec-pill">مدیریت بهینه حافظه با MMKV</span>
+          <span class="spec-pill">سنجش موازی پینگ بدون وقفه در رابط کاربری</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Center -->
+  <section class="download-card">
+    <h2>دریافت نسخه رسمی v2.0.0</h2>
+    <p>بسته به نوع پردازنده دستگاه خود، نسخه اختصاصی یا نسخه عمومی (Universal) را دریافت و نصب کنید.</p>
+
+    <div class="arch-grid">
+      <a class="arch-btn" href="https://github.com/aishervin/Xrayng/releases/latest">
+        <strong>ARM64-v8a</strong>
+        <span>گوشی‌های مدرن و ۶۴ بیتی</span>
+      </a>
+      <a class="arch-btn" href="https://github.com/aishervin/Xrayng/releases/latest">
+        <strong>ARMeabi-v7a</strong>
+        <span>گوشی‌های ۳۲ بیتی و قدیمی‌تر</span>
+      </a>
+      <a class="arch-btn" href="https://github.com/aishervin/Xrayng/releases/latest">
+        <strong>x86_64 & x86</strong>
+        <span>شبیه‌سازها و دستگاه‌های اینتل</span>
+      </a>
+      <a class="arch-btn" href="https://github.com/aishervin/Xrayng/releases/latest">
+        <strong>Universal APK</strong>
+        <span>سازگار با تمام دستگاه‌ها</span>
+      </a>
+    </div>
+
+    <a class="btn btn-primary" href="https://github.com/aishervin/Xrayng/releases/latest">
+      <i class="fa-solid fa-download"></i> مشاهده صفحه دانلود در گیت‌هاب (Releases)
+    </a>
+  </section>
+
+  <!-- Security & Transparency -->
+  <section class="security-card">
+    <h3><i class="fa-solid fa-circle-check"></i> شفافیت و متن‌باز بودن</h3>
+    <p>
+      تمامی کدهای این پروژه به صورت کاملاً متن‌باز (Open Source) در گیت‌هاب در دسترس عموم قرار دارند. هنگام نصب فایل‌های APK خارج از فروشگاه رسمی، نمایش پیام Google Play Protect به دلیل امضای با کلید توسعه‌دهنده طبیعی است و می‌توانید با انتخاب گزینه Install anyway نصب را نهایی کنید.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p><strong>Xrayng™ (SHΞN™)</strong> • کلاینت متن‌باز و مدرن شبکه برای اندروید</p>
+  </div>
+</footer>
+
+</body>
+</html>
