@@ -19,93 +19,22 @@
 
 </div>
 
-<div align="right" dir="rtl">
 
-## 🌟 معرفی پروژه Xrayng
-
-**Xrayng** یک کلاینت پیشرفته، سبک و بهینه‌شده برای سیستم‌عامل اندروید است که بر پایه معماری مدرن هسته قدرتمند Xray و رابط کاربری چشم‌نواز **Material Design 3** توسعه یافته است. هدف این پروژه ارائه تجربه کاربری روان، دسترسی سریع‌تر به سرورهای باکیفیت و ابزارهای عیب‌یابی و تست دقیق اتصال شبکه است.
-
-</div>
 
 <div align="center">
 
 <img src="https://img.shields.io/badge/━━━━━━━━━━☬+Xrayng+v2.0.0+Features+☬━━━━━━━━━━-FFA500?style=flat-square" alt="divider">
 
-</div>
-
 <div align="right" dir="rtl">
 
-## 🚀 امکانات و قابلیت‌های نسخه v2.0.0
+## 🌟 درباره‌ی Xrayng
 
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### ⚡ نوار آزمون سریع، حذف Invalid و نشان Gemini
-نوار دسترسی سریع افقی در پایین صفحه فهرست سرورها با تقسیم‌بندی بهینه:
-- **۲/۳ عرض:** دکمه **Real delay** برای آزمون واقعی تأخیر شبکه با یک لمس، همراه با کلید درون‌برنامه‌ای حذف سریع کانکشن‌های بدون پاسخ (Invalid).
-- **۱/۳ عرض:** دکمه اختصاصی **Gemini pass** با لوگوی رسمی Google Gemini جهت سنجش دقیق دسترسی به مدل‌های هوش مصنوعی بدون محدودیت پینگ.
-
-</td>
-<td width="50%" valign="top">
-
-### 💡 دکمه اتصال نئونی هوشمند
-- دکمه اتصال تعبیه‌شده در نوار وضعیت با حاشیه نئونی مدرن و بازخورد رنگی ۳ حالته (سبز = متصل، زرد = در حال اتصال، قرمز = قطع).
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### ✈️ پروکسی‌های واقعی و تست‌شده تلگرام
-یکپارچه‌سازی کامل با مخازن زنده‌ی پروکسی‌های تلگرام (MTProto & SOCKS5):
-- ارزیابی زنده سلامت سرورها با نشانگر اختصاصی **Telegram pass** به رنگ آبی.
-- کپی مستقیم و استاندارد به صورت لینک‌های رسمی تلگرام (`t.me/proxy` و `t.me/socks`) با امکان پیست و اتصال مستقیم در پیام‌رسان تلگرام.
-
-</td>
-<td width="50%" valign="top">
-
-### 🛡️ وایرگارد چندکانفیگی (Multi-Config)
-- پشتیبانی کامل بومی از اشتراک‌ها و فایل‌های تنظیمات WireGuard حاوی چندین کانفیگ مجزا با جداسازی خودکار `[Interface]` و نمایش ساختاریافته در تب اختصاصی.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 🔄 مخازن ۴‌گانه و همگام‌سازی خودکار
-برنامه مجهز به ۴ گروه اشتراک پیش‌فرض و تفکیک‌شده است:
-- **Xray:** سرورهای گلچین‌شده پروتکل VLESS
-- **Wireguard:** شبکه‌سازی رمزنگاری‌شده و سریع
-- **Https/Sucks:** پروکسی‌های پایدار HTTP و SOCKS
-- **Telegram proxy:** پروکسی‌های فعال پیام‌رسان تلگرام
-- **بروزرسانی خودکار:** همگام‌سازی منظم دوره‌ای ۱ ساعته.
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 🌐 پروتکل‌های متنوع شبکه
-پشتیبانی کامل از پروتکل‌های مطرح شامل:
-- VLESS, VMess, Shadowsocks, Trojan
-- WireGuard, Hysteria2, SOCKS4/5, HTTP/HTTPS
-
-</td>
-<td width="50%" valign="top">
-
-### 📦 بیلد تفکیک‌شده معماری (Split APKs)
-تولید بسته‌های نصبی اختصاصی بر اساس نوع پردازنده دستگاه:
-- `arm64-v8a` (گوشی‌های مدرن)
-- `armeabi-v7a` (دستگاه‌های ۳۲ بیتی)
-- `x86_64` و `x86` (امولاتورها و اینتل)
-- `universal` (سازگار با تمامی پلتفرم‌ها)
-
-</td>
-</tr>
-</table>
+**Xrayng** یک کلاینت سبک، سریع و مدرن برای اندروید است که بر پایه‌ی هسته‌ی Xray و با رابط کاربری **Material Design 3** ساخته شده است. تمرکز این پروژه روی سه چیز است: **سرعت اتصال**، **سادگی استفاده** و **ابزارهای دقیق سنجش کیفیت شبکه**.
 
 </div>
+
+
+
 
 <div align="center">
 
@@ -127,8 +56,27 @@
 
 ## 🛡️ شفافیت و امنیت
 
-- پروژه Xrayng کاملاً متن‌باز (Open Source) است و تمامی کدها به صورت شفاف در این مخزن نگهداری می‌شوند.
+- Xrayng کاملاً **متن‌باز** است و تمام کدها در همین مخزن قابل مشاهده و بررسی هستند.
 - در صورتی که هنگام نصب APK با پیام Play Protect مواجه شدید، به دلیل بیلد مستقیم با کلید اختصاصی توسعه‌دهنده در GitHub Actions است و با تایید گزینه *Install anyway* برنامه بدون مشکل نصب می‌گردد.
+- برای بررسی فیلتر نبودن دسترسی به سرویس‌های هوش مصنوعی، از دکمه **Gemini pass** در نوار آزمون سریع استفاده کنید.
+- برای اطمینان از سالم و بدون بدافزار بودن فایل نصبی، می‌توانید با کلیک روی دکمه‌های زیر، لینک مخزن را به‌صورت خودکار به مدل‌های هوش مصنوعی بفرستید و از آن‌ها بخواهید امنیت پروژه را تحلیل کنند:
+
+</div>
+
+<div align="center">
+
+<a href="https://chatgpt.com/?q=%D9%84%D8%B7%D9%81%D8%A7%20%D9%85%D8%AE%D8%B2%D9%86%20GitHub%20%D8%B2%DB%8C%D8%B1%20%D8%B1%D8%A7%20%D8%A7%D8%B2%20%D9%86%D8%B8%D8%B1%20%D8%A7%D9%85%D9%86%DB%8C%D8%AA%DB%8C%20%D9%88%20%D8%A8%D8%AF%D8%A7%D9%81%D8%B2%D8%A7%D8%B1%20%D8%A8%D9%88%D8%AF%D9%86%20%D8%AA%D8%AD%D9%84%DB%8C%D9%84%20%DA%A9%D9%86%20%D9%88%20%D8%A8%DA%AF%D9%88%20%D8%A2%DB%8C%D8%A7%20%D8%A7%D9%85%D9%86%20%D8%A7%D8%B3%D8%AA%20%DB%8C%D8%A7%20%D9%86%D9%87%3A%20https%3A%2F%2Fgithub.com%2Faishervin%2FXrayng">
+<img src="https://img.shields.io/badge/بررسی_با_ChatGPT-121212?style=for-the-badge&logo=openai&logoColor=FFA500" alt="Check with ChatGPT">
+</a>
+<a href="https://gemini.google.com/app">
+<img src="https://img.shields.io/badge/بررسی_با_Gemini-121212?style=for-the-badge&logo=googlegemini&logoColor=FFA500" alt="Check with Gemini">
+</a>
+<a href="https://chat.deepseek.com/">
+<img src="https://img.shields.io/badge/بررسی_با_DeepSeek-121212?style=for-the-badge&logo=deepseek&logoColor=FFA500" alt="Check with DeepSeek">
+</a>
+<a href="https://www.virustotal.com/gui/url/https://github.com/aishervin/Xrayng">
+<img src="https://img.shields.io/badge/بررسی_با_VirusTotal-121212?style=for-the-badge&logo=virustotal&logoColor=FFA500" alt="Check with VirusTotal">
+</a>
 
 </div>
 
