@@ -342,6 +342,7 @@
     <string name="title_sub_update">更新订阅</string>
     <string name="title_ping_all_server">测试 TCP 延迟（TCPing）</string>
     <string name="title_real_ping_all_server">测试真连接延迟</string>
+    <string name="toast_test_requires_disconnected">扫描代理前请先断开连接。</string>
     <string name="title_user_asset_setting">资源文件</string>
     <string name="title_sort_by_test_results">按测试结果排序</string>
     <string name="title_filter_config">过滤配置</string>

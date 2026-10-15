@@ -342,6 +342,7 @@
     <string name="title_sub_update">ورۊ کردن اشتراک بونکۊ سکویی</string>
     <string name="title_ping_all_server">آزمایش تئخیر TCP (TCPing)</string>
     <string name="title_real_ping_all_server">آزمایش تئخیر واقعی</string>
+    <string name="toast_test_requires_disconnected">سی اسکن پروکسیل، اول اتصال ن قطع کۊنین.</string>
     <string name="title_user_asset_setting">فایلا بونچک جغرافیایی</string>
     <string name="title_sort_by_test_results">ترتیب و ری نتیجه یل پینگ</string>
     <string name="title_filter_config">فیلتر کردن کانفیگا</string>

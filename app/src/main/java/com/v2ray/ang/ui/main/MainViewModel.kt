@@ -8,6 +8,8 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.dto.ConnectionTestResult
 import com.v2ray.ang.dto.GroupMapItem
+import com.v2ray.ang.dto.isGeminiBaseConfig
+import com.v2ray.ang.dto.isGeminiTestEligible
 import com.v2ray.ang.dto.LocateTarget
 import com.v2ray.ang.dto.TestServiceMessage
 import com.v2ray.ang.dto.entities.ProfileItem
@@ -265,11 +267,22 @@ class MainViewModel(
             currentCoroutineContext().ensureActive()
             val profile = dataSource.decodeServerConfig(guid) ?: return@mapNotNull null
             val affiliation = dataSource.decodeAffiliationInfo(guid)
+            val subscriptionRemarks = profile.subscriptionId
+                .takeIf { it.isNotEmpty() }
+                ?.let { dataSource.getSubscriptionItem(it)?.remarks }
+            val testDelayMillis = affiliation?.testDelayMillis ?: 0L
             ServersCache(
                 guid = guid,
                 profile = profile.copy(),
-                testDelayMillis = affiliation?.testDelayMillis ?: 0L,
-                geminiPassed = affiliation?.geminiPassed ?: false,
+                testDelayMillis = testDelayMillis,
+                geminiPassed = affiliation?.geminiPassed == true &&
+                        isGeminiBaseConfig(profile, subscriptionRemarks),
+                geminiEligible = isGeminiTestEligible(
+                    profile,
+                    subscriptionRemarks,
+                    testDelayMillis,
+                    affiliation?.geminiPassed == true
+                ),
                 telegramPassed = affiliation?.telegramPassed ?: false
             )
         }
@@ -721,6 +734,12 @@ class MainViewModel(
     }
 
     // ---------- Testing ----------
+    private fun isBatchScanBlocked(): Boolean {
+        if (canStartBatchScan(uiState.value.isRunning)) return false
+        toast(R.string.toast_test_requires_disconnected)
+        return true
+    }
+
     fun cancelAllPing() {
         dataSource.cancelAllPing()
         testingGroupId = null
@@ -733,7 +752,7 @@ class MainViewModel(
     }
 
     fun testGeminiAccess() {
-        dataSource.cancelAllPing()
+        if (isBatchScanBlocked()) return
         val groupId = uiState.value.selectedGroupId
         val servers = currentServers()
         if (servers.isEmpty()) {
@@ -741,8 +760,13 @@ class MainViewModel(
             return
         }
 
-        val respondedServers = servers.filter { it.testDelayMillis > 0 }
-        val targetServers = respondedServers.ifEmpty { servers }
+        val targetServers = servers.filter { it.geminiEligible }
+        if (targetServers.isEmpty()) {
+            toast(R.string.toast_gemini_test_requirement)
+            return
+        }
+
+        dataSource.cancelAllPing()
         val serverGuids = targetServers.map { it.guid }
         
         testingGroupId = groupId
@@ -766,6 +790,7 @@ class MainViewModel(
     }
 
     fun testAllRealPing(onlyTcp: Boolean = false) {
+        if (isBatchScanBlocked()) return
         dataSource.cancelAllPing()
         val groupId = uiState.value.selectedGroupId
         val servers = currentServers()

@@ -62,3 +62,5 @@ sealed interface MainAction {
     data class ImportBatchConfig(val configText: String) : MainAction
     data object LocateHandled : MainAction
 }
+
+internal fun canStartBatchScan(isConnected: Boolean): Boolean = !isConnected

@@ -11,6 +11,7 @@ import com.v2ray.ang.R
 import com.v2ray.ang.core.CoreNativeManager
 import com.v2ray.ang.dto.RealPingEvent
 import com.v2ray.ang.dto.TestServiceMessage
+import com.v2ray.ang.dto.isGeminiTestEligible
 import com.v2ray.ang.enums.NotificationChannelType
 import com.v2ray.ang.extension.serializable
 import com.v2ray.ang.handler.AngConfigManager
@@ -79,7 +80,7 @@ class CoreTestService : Service() {
         when (message.key) {
             AppConfig.MSG_MEASURE_CONFIG_START -> handleMeasureStart(message, startId, false)
             AppConfig.MSG_MEASURE_GEMINI_START -> handleMeasureStart(message, startId, true)
-            AppConfig.MSG_MEASURE_CONFIG_CANCEL -> handleMeasureCancel()
+            AppConfig.MSG_MEASURE_CONFIG_CANCEL -> handleMeasureCancel(startId)
             else -> {
                 NotificationHelper.stopForeground(this)
                 stopSelf(startId)
@@ -94,20 +95,25 @@ class CoreTestService : Service() {
         val allGuids = when {
             message.serverGuids.isNotEmpty() -> message.serverGuids
             message.subscriptionId.isNotEmpty() -> MmkvManager.decodeServerList(message.subscriptionId)
+            isGeminiTest -> emptyList()
             else -> MmkvManager.decodeAllServerList()
         }
 
-        // Gemini is a second-stage test: only configurations that already passed
-        // the normal URL test are eligible. Successful Gemini results are retained
-        // and skipped on subsequent runs, so the test can be resumed safely.
+        // Recheck Gemini eligibility in the service so an empty or stale UI selection
+        // cannot turn into a scan of every stored profile.
         val guidsList = if (isGeminiTest) {
-            val passed = allGuids.filter { guid ->
+            allGuids.filter { guid ->
+                val profile = MmkvManager.decodeServerConfig(guid) ?: return@filter false
+                val subscriptionRemarks = profile.subscriptionId
+                    .takeIf { it.isNotEmpty() }
+                    ?.let { MmkvManager.decodeSubscription(it)?.remarks }
                 val aff = MmkvManager.decodeServerAffiliationInfo(guid)
-                (aff?.testDelayMillis ?: 0L) > 0L && aff?.geminiPassed != true
-            }
-            if (passed.isNotEmpty()) passed else allGuids.filter { guid ->
-                val aff = MmkvManager.decodeServerAffiliationInfo(guid)
-                aff?.geminiPassed != true
+                isGeminiTestEligible(
+                    profile,
+                    subscriptionRemarks,
+                    aff?.testDelayMillis ?: 0L,
+                    aff?.geminiPassed == true
+                )
             }
         } else {
             allGuids
@@ -204,17 +210,19 @@ class CoreTestService : Service() {
         }
     }
 
-    private fun handleMeasureCancel() {
-        LogUtil.i(AppConfig.TAG, "CoreTestService received pause message, requesting ${activeWorkers.size} active workers to stop")
+    private fun handleMeasureCancel(startId: Int) {
+        LogUtil.i(AppConfig.TAG, "CoreTestService cancelling ${activeWorkers.size} active test workers")
         val snapshot = ArrayList(activeWorkers)
         if (snapshot.isEmpty()) {
             MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_FINISH, "PAUSED")
             NotificationHelper.stopForeground(this)
-            stopSelf()
+            stopSelf(startId)
             return
         }
-        snapshot.forEach { it.requestStop() }
-        // Do not clear workers or stop the service here. Active native probes must
-        // finish and publish their results before the service is torn down.
+        snapshot.forEach { it.cancel() }
+        activeWorkers.clear()
+        MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_FINISH, "PAUSED")
+        NotificationHelper.stopForeground(this)
+        stopSelf(startId)
     }
 }

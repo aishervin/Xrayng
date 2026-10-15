@@ -342,6 +342,7 @@
     <string name="title_sub_update">Update subscription</string>
     <string name="title_ping_all_server">Test TCP delays (TCPing)</string>
     <string name="title_real_ping_all_server">Test real delays</string>
+    <string name="toast_test_requires_disconnected">Disconnect before scanning proxies.</string>
     <string name="title_test_gemini">✨ Gemini\'s Access Test</string>
     <string name="toast_gemini_test_requirement">Please run URL test first (Runs on configs with ping &lt; 500ms)</string>
     <string name="pro_share_restriction_notice">امکان بازنشر کانفیگهای درون‌برنامه‌ای در نسخه ی Xrayng PRO در دسترس خواهد بود</string>

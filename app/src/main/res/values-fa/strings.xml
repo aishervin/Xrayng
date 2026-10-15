@@ -342,6 +342,7 @@
     <string name="title_sub_update">به‌روزرسانی گروه فعلی اشتراک</string>
     <string name="title_ping_all_server">آزمایش تأخیر TCP (TCPing)</string>
     <string name="title_real_ping_all_server">آزمایش تأخیر واقعی</string>
+    <string name="toast_test_requires_disconnected">برای اسکن پروکسی‌ها، ابتدا اتصال را قطع کنید.</string>
     <string name="title_test_gemini">✨ Gemini\'s Access Test</string>
     <string name="toast_gemini_test_requirement">ابتدا تست url را انجام دهید سپس اقدام به تست اتصال جمینای نمایید ، ( صرفا روی کانفیگهایی با پینگ زیر ۵۰۰ اجرا خواهد شد )</string>
     <string name="pro_share_restriction_notice">امکان بازنشر کانفیگهای درون‌برنامه‌ای در نسخه ی Xrayng PRO در دسترس خواهد بود</string>

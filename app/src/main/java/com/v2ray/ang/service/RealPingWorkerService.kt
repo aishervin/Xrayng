@@ -14,6 +14,8 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
@@ -36,9 +38,8 @@ internal object RealPingExecutionLimiter {
 }
 
 /**
- * Worker for a real-ping batch.
- * A stop request is a cooperative pause: already-running native probes are
- * allowed to finish so their results are persisted, while queued probes do not start.
+ * Worker for a real-ping batch. Cancellation drops queued work and results from
+ * active probes; a synchronous native probe can only leave its thread when it returns.
  */
 class RealPingWorkerService(
     private val context: Context,
@@ -69,6 +70,8 @@ class RealPingWorkerService(
                 try {
                     if (stopRequested.get()) return@launch
                     val result = if (onlyTcp) startTcping(guid) else startRealPing(guid)
+                    currentCoroutineContext().ensureActive()
+                    if (stopRequested.get()) return@launch
                     if (result != -2L) {
                         onEvent(RealPingEvent.Result(guid, result))
                     }
@@ -87,18 +90,16 @@ class RealPingWorkerService(
         scope.launch {
             joinAll(*jobs.toTypedArray())
             if (isActive) {
-                onEvent(RealPingEvent.Finish(if (stopRequested.get()) "PAUSED" else "0"))
+                onEvent(RealPingEvent.Finish("0"))
             }
             close()
         }
     }
 
-    fun requestStop() {
-        stopRequested.set(true)
-    }
-
     fun cancel() {
-        requestStop()
+        stopRequested.set(true)
+        job.cancel()
+        close()
     }
 
     private fun close() {

@@ -444,7 +444,16 @@ private fun ServerListItem(
                     Text(row.typeDescription, style = MaterialTheme.typography.bodySmall, color = colorConfigType, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     if (row.geminiPassed) {
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("✨ Gemini passed", style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.primary, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(
+                            text = "✨ ${stringResource(R.string.action_gemini_pass)}",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                fontWeight = FontWeight.Bold,
+                                brush = Brush.horizontalGradient(listOf(Color.Red, Color.Green, Color.Blue))
+                            ),
+                            color = Color.Unspecified,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                     if (row.telegramPassed) {
                         Spacer(modifier = Modifier.width(6.dp))

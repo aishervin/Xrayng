@@ -342,6 +342,7 @@
     <string name="title_sub_update">更新訂閱</string>
     <string name="title_ping_all_server">測試 TCP 延遲（TCPing）</string>
     <string name="title_real_ping_all_server">測試真連接延遲</string>
+    <string name="toast_test_requires_disconnected">掃描代理前請先中斷連線。</string>
     <string name="title_user_asset_setting">資源檔案</string>
     <string name="title_sort_by_test_results">依測試結果排序</string>
     <string name="title_filter_config">篩選設定</string>

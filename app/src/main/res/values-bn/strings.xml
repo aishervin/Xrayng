@@ -342,6 +342,7 @@
     <string name="title_sub_update">সাবস্ক্রিপশন আপডেট</string>
     <string name="title_ping_all_server">TCP বিলম্ব পরীক্ষা করুন (TCPing)</string>
     <string name="title_real_ping_all_server">প্রকৃত বিলম্ব পরীক্ষা করুন</string>
+    <string name="toast_test_requires_disconnected">প্রক্সি স্ক্যান করার আগে সংযোগ বিচ্ছিন্ন করুন।</string>
     <string name="title_user_asset_setting">অ্যাসেট ফাইল</string>
     <string name="title_sort_by_test_results">টেস্ট ফলাফল দ্বারা সাজানো</string>
     <string name="title_filter_config">কনফিগারেশন ফাইল ফিল্টার করুন</string>

@@ -342,6 +342,7 @@
     <string name="title_sub_update">Обновить подписку</string>
     <string name="title_ping_all_server">Проверить TCP-задержку (TCPing)</string>
     <string name="title_real_ping_all_server">Проверить реальную задержку</string>
+    <string name="toast_test_requires_disconnected">Отключитесь перед проверкой прокси.</string>
     <string name="title_user_asset_setting">Файлы ресурсов</string>
     <string name="title_sort_by_test_results">Сортировать по результатам теста</string>
     <string name="title_filter_config">Фильтр профилей</string>

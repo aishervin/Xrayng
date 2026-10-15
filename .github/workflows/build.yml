@@ -45,64 +45,23 @@ jobs:
         set -euo pipefail
         mkdir -p keystore
 
-        decode_keystore() {
-          local input="$1"
-          local output="$2"
-          printf '%s' "$input" | tr -d '[:space:]' | base64 --decode > "$output"
-          test -s "$output"
-          keytool -list -keystore "$output" -storepass android >/dev/null 2>&1
-        }
-
-        generate_debug_keystore() {
-          echo "Generating a new debug keystore..."
-          keytool -genkeypair -v -storetype JKS -keystore keystore/debug.keystore \
-            -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass android -keypass android \
-            -dname "CN=Android Debug,O=Android,C=US"
-        }
-
-        if [ -n "${ANDROID_KEYSTORE_BASE64:-}" ]; then
-          echo "Trying ANDROID_KEYSTORE_BASE64 secret..."
-          if decode_keystore "$ANDROID_KEYSTORE_BASE64" keystore/debug.keystore; then
-            echo "Using GitHub Actions keystore secret."
-          else
-            echo "ANDROID_KEYSTORE_BASE64 is empty/invalid; falling back to repository keystore." >&2
-            rm -f keystore/debug.keystore
-          fi
+        if [ -z "${ANDROID_KEYSTORE_BASE64:-}" ]; then
+          echo "ANDROID_KEYSTORE_BASE64 is required for a stable release signature." >&2
+          exit 1
         fi
 
-        if [ ! -s keystore/debug.keystore ]; then
-          if [ ! -s debug.keystore.base64 ]; then
-            echo "Stable signing key is missing or empty." >&2
-            echo "No repository keystore found — generating a temporary debug keystore so the build can continue." >&2
-            generate_debug_keystore
-          else
-            echo "Using repository fallback keystore. Attempting to decode..."
-            if tr -d '[:space:]' < debug.keystore.base64 | base64 --decode > keystore/debug.keystore 2>/tmp/base64.err; then
-              # decoded successfully; validate
-              if keytool -list -keystore keystore/debug.keystore -storepass android >/dev/null 2>&1; then
-                echo "Repository keystore restored and validated."
-              else
-                echo "Repository keystore decoded but is invalid/corrupted." >&2
-                echo "Generating a temporary debug keystore to allow CI to continue." >&2
-                rm -f keystore/debug.keystore
-                generate_debug_keystore
-              fi
-            else
-              echo "Repository keystore base64 decode failed:" >&2
-              sed -n '1,200p' /tmp/base64.err >&2 || true
-              echo "Generating a temporary debug keystore to allow CI to continue." >&2
-              rm -f keystore/debug.keystore || true
-              generate_debug_keystore
-            fi
-          fi
-        fi
+        printf '%s' "$ANDROID_KEYSTORE_BASE64" | tr -d '[:space:]' | base64 --decode > keystore/debug.keystore
+        test -s keystore/debug.keystore
+        keytool -list -keystore keystore/debug.keystore -storepass android -alias androiddebugkey >/dev/null
+        echo "Release keystore restored and validated."
 
-        echo "Keystore restored or generated and validated successfully."
+    - name: Run unit tests
+      run: |
+        chmod +x gradlew
+        ./gradlew testReleaseUnitTest
 
     - name: Build APK
       run: |
-        chmod +x gradlew
         TAG_NAME="${{ inputs.release_tag }}"
         if [ -z "$TAG_NAME" ] && [[ "${{ github.ref }}" == refs/tags/* ]]; then
           TAG_NAME="${{ github.ref_name }}"

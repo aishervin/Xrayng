@@ -5,5 +5,6 @@ data class ServersCache(
     val profile: ProfileItem,
     val testDelayMillis: Long = 0L,
     val geminiPassed: Boolean = false,
+    val geminiEligible: Boolean = false,
     val telegramPassed: Boolean = false
 )
