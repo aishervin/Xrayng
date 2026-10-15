@@ -560,36 +560,135 @@ object SettingsManager {
         MmkvManager.encodeSettings(migrationKey, true)
     }
 
+    fun isProRestricted(subId: String?): Boolean {
+        if (subId.isNullOrEmpty()) return false
+        val sub = decodeSubscription(subId) ?: return false
+        val remarks = sub.remarks.trim()
+        val url = sub.url.trim()
+        return remarks.equals(AppConfig.BUILTIN_SUB_XRAY_REMARKS, ignoreCase = true)
+            || remarks.equals(AppConfig.BUILTIN_SUB_WIREGUARD_REMARKS, ignoreCase = true)
+            || remarks.equals("SHΞN VLESS", ignoreCase = true)
+            || url.equals(AppConfig.BUILTIN_SUB_XRAY_URL, ignoreCase = true)
+            || url.equals(AppConfig.BUILTIN_SUB_WIREGUARD_URL, ignoreCase = true)
+            || url.equals("https://subshen.pages.dev", ignoreCase = true)
+    }
+
     /**
-     * Ensures built-in dedicated subscriptions (ProxyNG and VLESS) are added if not present.
+     * Ensures built-in dedicated subscriptions (Xray, Wireguard, Https/Sucks, Telegram proxy) are added if not present.
+     * All built-in subscriptions have auto-update enabled with a 1-hour (60 minute) interval.
      */
     fun ensureBuiltInSubscriptions() {
         val currentSubs = MmkvManager.decodeSubscriptions()
 
-        val hasProxyNg = currentSubs.any {
-            it.subscription.url.trim().equals(AppConfig.BUILTIN_SUB_PROXYNG_URL, ignoreCase = true)
+        // 1. Xray
+        val existingXray = currentSubs.firstOrNull {
+            it.subscription.url.trim().equals(AppConfig.BUILTIN_SUB_XRAY_URL, ignoreCase = true)
+                || it.subscription.url.trim().equals("https://subshen.pages.dev", ignoreCase = true)
+                || it.subscription.remarks.trim().equals(AppConfig.BUILTIN_SUB_XRAY_REMARKS, ignoreCase = true)
+                || it.subscription.remarks.trim().equals("SHΞN VLESS", ignoreCase = true)
         }
-        if (!hasProxyNg) {
-            val proxyNgSub = SubscriptionItem(
-                remarks = AppConfig.BUILTIN_SUB_PROXYNG_REMARKS,
-                url = AppConfig.BUILTIN_SUB_PROXYNG_URL,
+        if (existingXray == null) {
+            val xraySub = SubscriptionItem(
+                remarks = AppConfig.BUILTIN_SUB_XRAY_REMARKS,
+                url = AppConfig.BUILTIN_SUB_XRAY_URL,
                 enabled = true,
-                autoUpdate = true
+                autoUpdate = true,
+                updateInterval = 60
             )
-            encodeSubscription(Utils.getUuid(), proxyNgSub)
+            encodeSubscription(Utils.getUuid(), xraySub)
+        } else {
+            var changed = false
+            if (!existingXray.subscription.remarks.equals(AppConfig.BUILTIN_SUB_XRAY_REMARKS)) {
+                existingXray.subscription.remarks = AppConfig.BUILTIN_SUB_XRAY_REMARKS
+                changed = true
+            }
+            if (!existingXray.subscription.url.equals(AppConfig.BUILTIN_SUB_XRAY_URL, ignoreCase = true)) {
+                existingXray.subscription.url = AppConfig.BUILTIN_SUB_XRAY_URL
+                changed = true
+            }
+            if (!existingXray.subscription.autoUpdate || existingXray.subscription.updateInterval != 60L) {
+                existingXray.subscription.autoUpdate = true
+                existingXray.subscription.updateInterval = 60L
+                changed = true
+            }
+            if (changed) {
+                encodeSubscription(existingXray.guid, existingXray.subscription)
+            }
         }
 
-        val hasVless = currentSubs.any {
-            it.subscription.url.trim().equals(AppConfig.BUILTIN_SUB_VLESS_URL, ignoreCase = true)
+        // 2. Wireguard
+        val existingWg = currentSubs.firstOrNull {
+            it.subscription.url.trim().equals(AppConfig.BUILTIN_SUB_WIREGUARD_URL, ignoreCase = true)
+                || it.subscription.remarks.trim().equals(AppConfig.BUILTIN_SUB_WIREGUARD_REMARKS, ignoreCase = true)
         }
-        if (!hasVless) {
-            val vlessSub = SubscriptionItem(
-                remarks = AppConfig.BUILTIN_SUB_VLESS_REMARKS,
-                url = AppConfig.BUILTIN_SUB_VLESS_URL,
+        if (existingWg == null) {
+            val wgSub = SubscriptionItem(
+                remarks = AppConfig.BUILTIN_SUB_WIREGUARD_REMARKS,
+                url = AppConfig.BUILTIN_SUB_WIREGUARD_URL,
                 enabled = true,
-                autoUpdate = true
+                autoUpdate = true,
+                updateInterval = 60
             )
-            encodeSubscription(Utils.getUuid(), vlessSub)
+            encodeSubscription(Utils.getUuid(), wgSub)
+        } else {
+            if (!existingWg.subscription.autoUpdate || existingWg.subscription.updateInterval != 60L) {
+                existingWg.subscription.autoUpdate = true
+                existingWg.subscription.updateInterval = 60L
+                encodeSubscription(existingWg.guid, existingWg.subscription)
+            }
+        }
+
+        // 3. Https/Sucks (formerly ProxyNG)
+        val existingProxy = currentSubs.firstOrNull {
+            it.subscription.url.trim().equals(AppConfig.BUILTIN_SUB_HTTPSUCKS_URL, ignoreCase = true)
+                || it.subscription.remarks.trim().equals(AppConfig.BUILTIN_SUB_HTTPSUCKS_REMARKS, ignoreCase = true)
+                || it.subscription.remarks.trim().equals("SHΞN ProxyNG", ignoreCase = true)
+        }
+        if (existingProxy == null) {
+            val proxySub = SubscriptionItem(
+                remarks = AppConfig.BUILTIN_SUB_HTTPSUCKS_REMARKS,
+                url = AppConfig.BUILTIN_SUB_HTTPSUCKS_URL,
+                enabled = true,
+                autoUpdate = true,
+                updateInterval = 60
+            )
+            encodeSubscription(Utils.getUuid(), proxySub)
+        } else {
+            var changed = false
+            if (!existingProxy.subscription.remarks.equals(AppConfig.BUILTIN_SUB_HTTPSUCKS_REMARKS)) {
+                existingProxy.subscription.remarks = AppConfig.BUILTIN_SUB_HTTPSUCKS_REMARKS
+                changed = true
+            }
+            if (!existingProxy.subscription.autoUpdate || existingProxy.subscription.updateInterval != 60L) {
+                existingProxy.subscription.autoUpdate = true
+                existingProxy.subscription.updateInterval = 60L
+                changed = true
+            }
+            if (changed) {
+                encodeSubscription(existingProxy.guid, existingProxy.subscription)
+            }
+        }
+
+        // 4. Telegram proxy
+        val existingTg = currentSubs.firstOrNull {
+            it.subscription.url.trim().equals(AppConfig.BUILTIN_SUB_TGPROXY_URL, ignoreCase = true)
+                || it.subscription.remarks.trim().equals(AppConfig.BUILTIN_SUB_TGPROXY_REMARKS, ignoreCase = true)
+        }
+        if (existingTg == null) {
+            val tgSub = SubscriptionItem(
+                remarks = AppConfig.BUILTIN_SUB_TGPROXY_REMARKS,
+                url = AppConfig.BUILTIN_SUB_TGPROXY_URL,
+                enabled = true,
+                autoUpdate = true,
+                updateInterval = 60
+            )
+            encodeSubscription(Utils.getUuid(), tgSub)
+        } else {
+            if (!existingTg.subscription.autoUpdate || existingTg.subscription.updateInterval != 60L) {
+                existingTg.subscription.autoUpdate = true
+                existingTg.subscription.updateInterval = 60L
+                encodeSubscription(existingTg.guid, existingTg.subscription)
+            }
         }
     }
 

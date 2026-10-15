@@ -9,6 +9,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
@@ -101,8 +103,12 @@ jobs:
     - name: Build APK
       run: |
         chmod +x gradlew
-        if [ -n "${{ inputs.release_tag }}" ]; then
-          CLEAN_TAG=$(echo "${{ inputs.release_tag }}" | sed "s/^v//")
+        TAG_NAME="${{ inputs.release_tag }}"
+        if [ -z "$TAG_NAME" ] && [[ "${{ github.ref }}" == refs/tags/* ]]; then
+          TAG_NAME="${{ github.ref_name }}"
+        fi
+        if [ -n "$TAG_NAME" ]; then
+          CLEAN_TAG=$(echo "$TAG_NAME" | sed "s/^v//")
           ./gradlew assembleRelease -PVERSION_NAME=$CLEAN_TAG
         else
           ./gradlew assembleRelease
@@ -118,7 +124,7 @@ jobs:
   sign-and-release:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && inputs.release_tag != ''
+    if: (github.event_name == 'workflow_dispatch' && inputs.release_tag != '') || startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - name: Download APK artifacts
@@ -130,5 +136,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: release/**/*.apk
-          tag_name: ${{ inputs.release_tag }}
+          tag_name: ${{ inputs.release_tag || github.ref_name }}
           prerelease: false

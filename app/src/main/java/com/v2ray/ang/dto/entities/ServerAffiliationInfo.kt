@@ -1,3 +1,7 @@
 package com.v2ray.ang.dto.entities
 
-data class ServerAffiliationInfo(    var testDelayMillis: Long = 0L,    var geminiPassed: Boolean = false)
+data class ServerAffiliationInfo(
+    var testDelayMillis: Long = 0L,
+    var geminiPassed: Boolean = false,
+    var telegramPassed: Boolean = false
+)

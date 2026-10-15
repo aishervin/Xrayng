@@ -27,6 +27,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import com.v2ray.ang.R
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.ui.compose.LocalDarkTheme
 import com.v2ray.ang.ui.compose.QRCodeDialog
@@ -214,7 +234,9 @@ fun MainScreen(
 
                     HorizontalPager(
                         state = pagerState,
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
                         userScrollEnabled = true,
                         beyondViewportPageCount = 1,
                         key = { page -> groups.getOrNull(page)?.id ?: "group-page-$page" }
@@ -234,9 +256,112 @@ fun MainScreen(
                             onShareServer = { guid, profile -> shareTarget = Triple(guid, profile, false) },
                             onMoreServer = { guid, profile -> shareTarget = Triple(guid, profile, true) },
                             onRemoveServer = removeServer,
-                            contentPadding = PaddingValues(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 80.dp)
+                            contentPadding = PaddingValues(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 12.dp)
                         )
                     }
+
+                    // Bottom Test Action Bar: 2/3 Real Delay, 1/3 Gemini pass
+                    MainTestBottomBar(
+                        onRealDelayClick = { onAction(MainAction.TestRealAllServers) },
+                        onGeminiClick = { onAction(MainAction.TestGeminiServers) }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MainTestBottomBar(
+    onRealDelayClick: () -> Unit,
+    onGeminiClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 2.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // 2/3 width for Real delay (URL test)
+            Surface(
+                modifier = Modifier
+                    .weight(2f)
+                    .height(44.dp)
+                    .clickable(onClick = onRealDelayClick),
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                border = androidx.compose.foundation.BorderStroke(
+                    1.dp,
+                    MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f)
+                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_speed_24dp),
+                        contentDescription = stringResource(R.string.action_real_delay),
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.action_real_delay),
+                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+
+            // 1/3 width for Gemini pass
+            Surface(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(44.dp)
+                    .clickable(onClick = onGeminiClick),
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                border = androidx.compose.foundation.BorderStroke(
+                    1.dp,
+                    androidx.compose.ui.graphics.Brush.linearGradient(
+                        listOf(Color(0xFF4E82EE), Color(0xFF9B72CB), Color(0xFFD96570))
+                    )
+                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_gemini_logo),
+                        contentDescription = stringResource(R.string.action_gemini_pass),
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = stringResource(R.string.action_gemini_pass),
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.primary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         }

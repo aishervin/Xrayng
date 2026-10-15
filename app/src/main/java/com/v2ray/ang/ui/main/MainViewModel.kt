@@ -269,7 +269,8 @@ class MainViewModel(
                 guid = guid,
                 profile = profile.copy(),
                 testDelayMillis = affiliation?.testDelayMillis ?: 0L,
-                geminiPassed = affiliation?.geminiPassed ?: false
+                geminiPassed = affiliation?.geminiPassed ?: false,
+                telegramPassed = affiliation?.telegramPassed ?: false
             )
         }
 

@@ -1,16 +1,18 @@
 package com.v2ray.ang.ui.main
 
+import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.v2ray.ang.R
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
 import com.v2ray.ang.extension.isComplexType
+import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.ui.compose.AppDropdownMenuItems
 import com.v2ray.ang.ui.compose.SelectListDialog
-
-import androidx.annotation.DrawableRes
 
 private enum class ImportMenuAction(
     @StringRes val labelRes: Int,
@@ -38,8 +40,8 @@ enum class MainMoreMenuAction(
     val isPrimary: Boolean = false,
     val badge: String? = null
 ) {
-    TestAllRealPing(R.string.title_real_ping_all_server, R.drawable.ic_speed_24dp, isPrimary = true, badge = "URL"),
-    TestGemini(R.string.title_test_gemini, R.drawable.ic_sparkle_24dp, isPrimary = true, badge = "AI"),
+    TestAllRealPing(R.string.title_real_ping_all_server, R.drawable.ic_speed_24dp),
+    TestGemini(R.string.title_test_gemini, R.drawable.ic_gemini_logo),
     TestAll(R.string.title_ping_all_server, R.drawable.ic_flash_on_24dp),
     UpdateSubscriptions(R.string.title_sub_update, R.drawable.ic_cloud_download_24dp),
     SortByTestResults(R.string.title_sort_by_test_results, R.drawable.ic_outline_filter_alt_24),
@@ -98,15 +100,24 @@ fun ShareMethodDialog(
     onAction: (MainAction) -> Unit,
     onRemove: (String) -> Unit,
 ) {
+    val context = LocalContext.current
+    val isPro = SettingsManager.isProRestricted(profile.subscriptionId)
     val menuActions = serverMenuActions(
         isComplexProfile = profile.configType.isComplexType(),
         includeManagementActions = more,
     )
     SelectListDialog(
         options = menuActions,
-        optionText = { stringResource(it.labelRes) },
+        optionText = { action ->
+            val text = stringResource(action.labelRes)
+            if (isPro && action.isShareAction) "$text [PRO]" else text
+        },
         onSelected = { action ->
             onDismiss()
+            if (isPro && action.isShareAction) {
+                Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                return@SelectListDialog
+            }
             when (action) {
                 ServerMenuAction.ShareQRCode -> onAction(MainAction.ShareQRCode(guid))
                 ServerMenuAction.ShareClipboard -> onAction(MainAction.ShareClipboard(guid))

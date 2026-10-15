@@ -26,11 +26,15 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import android.widget.Toast
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -309,6 +313,7 @@ private fun ServerListItem(
     doubleColumnDisplay: Boolean,
     actions: ServerRowActions
 ) {
+    val context = LocalContext.current
     val testResult = if (row.testDelayMillis == 0L) {
         ""
     } else {
@@ -369,12 +374,39 @@ private fun ServerListItem(
                         )
                     }
                 } else {
-                    IconButton(onClick = { actions.share(row.guid, row.profile) }, Modifier.size(36.dp)) {
-                        Icon(
-                            painterResource(R.drawable.ic_share_24dp),
-                            stringResource(R.string.title_configuration_share),
-                            Modifier.size(24.dp)
-                        )
+                    Box(contentAlignment = Alignment.TopEnd) {
+                        IconButton(
+                            onClick = {
+                                if (row.isProRestricted) {
+                                    Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                                } else {
+                                    actions.share(row.guid, row.profile)
+                                }
+                            },
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Icon(
+                                painterResource(R.drawable.ic_share_24dp),
+                                stringResource(R.string.title_configuration_share),
+                                tint = if (row.isProRestricted) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                        if (row.isProRestricted) {
+                            Surface(
+                                color = Color(0xFFFF9800),
+                                shape = RoundedCornerShape(3.dp),
+                                modifier = Modifier.padding(top = 2.dp, end = 2.dp)
+                            ) {
+                                Text(
+                                    text = "PRO",
+                                    color = Color.White,
+                                    fontSize = 7.5.sp,
+                                    fontWeight = FontWeight.ExtraBold,
+                                    modifier = Modifier.padding(horizontal = 2.5.dp, vertical = 0.5.dp)
+                                )
+                            }
+                        }
                     }
                     IconButton(onClick = { actions.edit(row.guid, row.profile) }, Modifier.size(36.dp)) {
                         Icon(
@@ -420,6 +452,10 @@ private fun ServerListItem(
                     if (row.geminiPassed) {
                         Spacer(modifier = Modifier.width(6.dp))
                         Text("✨ Gemini passed", style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.primary, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
+                    if (row.telegramPassed) {
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("✈️ Telegram pass", style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold), color = Color(0xFF29B6F6), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
                 Text(testResult, style = MaterialTheme.typography.bodySmall, color = if (row.testDelayMillis < 0L) colorPingRed else colorPing, maxLines = 1, overflow = TextOverflow.Ellipsis)

@@ -3,6 +3,8 @@ package com.v2ray.ang.handler
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.TextUtils
+import android.widget.Toast
+import com.v2ray.ang.R
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.core.CoreConfigManager
 import com.v2ray.ang.dto.SubscriptionUpdateResult
@@ -69,6 +71,11 @@ object AngConfigManager {
      */
     fun share2Clipboard(context: Context, guid: String): Int {
         try {
+            val serverConfig = MmkvManager.decodeServerConfig(guid)
+            if (serverConfig != null && SettingsManager.isProRestricted(serverConfig.subscriptionId)) {
+                Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                return -1
+            }
             val conf = shareConfig(guid)
             if (TextUtils.isEmpty(conf)) {
                 return -1
@@ -94,6 +101,10 @@ object AngConfigManager {
         try {
             val sb = StringBuilder()
             for (guid in serverList) {
+                val serverConfig = MmkvManager.decodeServerConfig(guid)
+                if (serverConfig != null && SettingsManager.isProRestricted(serverConfig.subscriptionId)) {
+                    continue
+                }
                 val url = shareConfig(guid)
                 if (TextUtils.isEmpty(url)) {
                     continue
@@ -119,6 +130,10 @@ object AngConfigManager {
      */
     fun share2QRCode(guid: String): Bitmap? {
         try {
+            val serverConfig = MmkvManager.decodeServerConfig(guid)
+            if (serverConfig != null && SettingsManager.isProRestricted(serverConfig.subscriptionId)) {
+                return null
+            }
             val conf = shareConfig(guid)
             if (TextUtils.isEmpty(conf)) {
                 return null
@@ -141,6 +156,11 @@ object AngConfigManager {
     fun shareFullContent2Clipboard(context: Context, guid: String?): Int {
         try {
             if (guid == null) return -1
+            val serverConfig = MmkvManager.decodeServerConfig(guid)
+            if (serverConfig != null && SettingsManager.isProRestricted(serverConfig.subscriptionId)) {
+                Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
+                return -1
+            }
             val result = CoreConfigManager.getV2rayConfig(context, guid)
             if (result.status) {
                 Utils.setClipboard(context, result.content)
@@ -386,15 +406,32 @@ object AngConfigManager {
             return 0
         } else if (server.contains("[Interface]", ignoreCase = true) && server.contains("[Peer]", ignoreCase = true)) {
             try {
-                val config = WireguardFmt.parseWireguardConfFile(server)
-                config.subscriptionId = subid
-                config.description = generateDescription(config)
-                commitProfiles(
-                    configs = listOf(ParsedProfile(config, server)),
-                    subid = subid,
-                    append = append,
-                )
-                return 1
+                // Split multi-config Wireguard file by [Interface] sections
+                val rawBlocks = server.split("(?i)(?=\\[Interface\\])".toRegex())
+                    .map { it.trim() }
+                    .filter { it.contains("[Interface]", ignoreCase = true) && it.contains("[Peer]", ignoreCase = true) }
+
+                if (rawBlocks.isNotEmpty()) {
+                    val configs = rawBlocks.mapIndexed { index, block ->
+                        val config = WireguardFmt.parseWireguardConfFile(block)
+                        config.subscriptionId = subid
+                        if (config.remarks.isEmpty() || config.remarks == "none" || config.remarks.all { it.isDigit() }) {
+                            val endpoint = if (!config.server.isNullOrEmpty()) "${config.server}:${config.serverPort.orEmpty()}" else "#${index + 1}"
+                            config.remarks = "Wireguard $endpoint"
+                        }
+                        config.description = generateDescription(config)
+                        ParsedProfile(
+                            profile = config,
+                            rawConfig = block
+                        )
+                    }
+                    commitProfiles(
+                        configs = configs,
+                        subid = subid,
+                        append = append,
+                    )
+                    return configs.size
+                }
             } catch (e: ProfileStorageException) {
                 throw e
             } catch (e: Exception) {
@@ -597,6 +634,14 @@ object AngConfigManager {
             if (count > 0) {
                 it.subscription.lastUpdated = System.currentTimeMillis()
                 MmkvManager.encodeSubscription(it.guid, it.subscription)
+
+                // If updating Https/Sucks subscription, automatically transfer SOCKS5 proxies formatted as Telegram proxy
+                if (it.subscription.remarks.equals(AppConfig.BUILTIN_SUB_HTTPSUCKS_REMARKS, ignoreCase = true)
+                    || it.subscription.remarks.equals("SHΞN ProxyNG", ignoreCase = true)
+                ) {
+                    transferSocksToTelegramGroup(it.guid)
+                }
+
                 LogUtil.i(AppConfig.TAG, "Subscription updated: ${it.subscription.remarks}, $count configs")
                 return SubscriptionUpdateResult(
                     configCount = count,
@@ -706,5 +751,47 @@ object AngConfigManager {
         } ?: ""
 
         return "$addrPart : ${port ?: ""}"
+    }
+
+    /**
+     * Converts SOCKS5 proxies from Https/Sucks subscription into Telegram format
+     * and transfers them to the Telegram proxy group.
+     */
+    private fun transferSocksToTelegramGroup(httpsSucksSubId: String) {
+        try {
+            val tgSub = MmkvManager.decodeSubscriptions().firstOrNull {
+                it.subscription.remarks.equals(AppConfig.BUILTIN_SUB_TGPROXY_REMARKS, ignoreCase = true)
+            } ?: return
+
+            val serverGuids = MmkvManager.decodeServerList(httpsSucksSubId)
+            val socksConfigs = serverGuids.mapNotNull { MmkvManager.decodeServerConfig(it) }
+                .filter { it.configType == EConfigType.SOCKS }
+
+            if (socksConfigs.isEmpty()) return
+
+            val existingTgGuids = MmkvManager.decodeServerList(tgSub.guid)
+            val existingTgConfigs = existingTgGuids.mapNotNull { MmkvManager.decodeServerConfig(it) }
+
+            val newProfiles = socksConfigs.filter { socks ->
+                existingTgConfigs.none { it.server == socks.server && it.serverPort == socks.serverPort }
+            }.map { orig ->
+                val remarks = if (orig.remarks.startsWith("TG ")) orig.remarks else "TG ${orig.remarks}"
+                val tgConfig = orig.copy(
+                    subscriptionId = tgSub.guid,
+                    remarks = remarks
+                )
+                tgConfig.description = generateDescription(tgConfig)
+                val userPass = if (orig.username.isNotNullEmpty() && orig.password.isNotNullEmpty())
+                    "&user=${orig.username}&pass=${orig.password}" else ""
+                val tgUri = "tg://socks?server=${orig.server}&port=${orig.serverPort}$userPass#${Utils.encodeURIComponent(remarks)}"
+                ParsedProfile(profile = tgConfig, rawConfig = tgUri)
+            }
+
+            if (newProfiles.isNotEmpty()) {
+                commitProfiles(newProfiles, tgSub.guid, append = true)
+            }
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to transfer socks to telegram group", e)
+        }
     }
 }

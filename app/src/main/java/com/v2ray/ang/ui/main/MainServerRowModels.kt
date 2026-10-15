@@ -5,6 +5,7 @@ import com.v2ray.ang.dto.entities.ServersCache
 import com.v2ray.ang.extension.isComplexType
 import com.v2ray.ang.extension.nullIfBlank
 import com.v2ray.ang.handler.AngConfigManager
+import com.v2ray.ang.handler.SettingsManager
 
 internal data class ServerRowUiModel(
     val guid: String,
@@ -14,7 +15,9 @@ internal data class ServerRowUiModel(
     val typeDescription: String,
     val testDelayMillis: Long,
     val geminiPassed: Boolean,
+    val telegramPassed: Boolean,
     val subscriptionBadge: String,
+    val isProRestricted: Boolean,
 )
 
 internal data class ServerGroupUiState(
@@ -27,6 +30,7 @@ internal fun buildServerRowUiModel(
     subscriptionRemarks: String,
 ): ServerRowUiModel {
     val profile = server.profile
+    val isPro = SettingsManager.isProRestricted(profile.subscriptionId)
     return ServerRowUiModel(
         guid = server.guid,
         profile = profile,
@@ -36,7 +40,9 @@ internal fun buildServerRowUiModel(
         typeDescription = serverProtocolDescription(profile),
         testDelayMillis = server.testDelayMillis,
         geminiPassed = server.geminiPassed,
+        telegramPassed = server.telegramPassed,
         subscriptionBadge = subscriptionRemarks.firstOrNull()?.toString().orEmpty(),
+        isProRestricted = isPro,
     )
 }
 

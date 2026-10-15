@@ -20,10 +20,23 @@ object AppConfig {
     const val DEFAULT_SUBSCRIPTION_ID = "__default_subscription__"
 
     /** Built-in dedicated subscriptions */
-    const val BUILTIN_SUB_PROXYNG_URL = "https://raw.githubusercontent.com/shervinofpersia/Config/refs/heads/main/ProxyNg.json"
-    const val BUILTIN_SUB_PROXYNG_REMARKS = "SHΞN ProxyNG"
-    const val BUILTIN_SUB_VLESS_URL = "https://subshen.pages.dev"
-    const val BUILTIN_SUB_VLESS_REMARKS = "SHΞN VLESS"
+    const val BUILTIN_SUB_XRAY_URL = "https://raw.githubusercontent.com/aishervin/V2flair/refs/heads/main/clean_sub.txt"
+    const val BUILTIN_SUB_XRAY_REMARKS = "Xray"
+
+    const val BUILTIN_SUB_WIREGUARD_URL = "https://raw.githubusercontent.com/aishervin/V2flair/refs/heads/main/xrayng.txt"
+    const val BUILTIN_SUB_WIREGUARD_REMARKS = "Wireguard"
+
+    const val BUILTIN_SUB_HTTPSUCKS_URL = "https://raw.githubusercontent.com/shervinofpersia/Config/refs/heads/main/ProxyNg.json"
+    const val BUILTIN_SUB_HTTPSUCKS_REMARKS = "Https/Sucks"
+
+    const val BUILTIN_SUB_TGPROXY_URL = "https://raw.githubusercontent.com/SoliSpirit/mtproto/master/all_proxies.txt"
+    const val BUILTIN_SUB_TGPROXY_REMARKS = "Telegram proxy"
+
+    // Backward compatibility aliases
+    const val BUILTIN_SUB_PROXYNG_URL = BUILTIN_SUB_HTTPSUCKS_URL
+    const val BUILTIN_SUB_PROXYNG_REMARKS = BUILTIN_SUB_HTTPSUCKS_REMARKS
+    const val BUILTIN_SUB_VLESS_URL = BUILTIN_SUB_XRAY_URL
+    const val BUILTIN_SUB_VLESS_REMARKS = BUILTIN_SUB_XRAY_REMARKS
 
     /** Preferences mapped to MMKV storage. */
     const val PREF_SNIFFING_ENABLED = "pref_sniffing_enabled"

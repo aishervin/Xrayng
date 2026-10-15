@@ -159,7 +159,22 @@ class CoreTestService : Service() {
                     MmkvManager.encodeServerAffiliationInfo(event.guid, aff)
                     MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_GEMINI_SUCCESS, event.guid)
                 } else {
-                    MmkvManager.encodeServerTestDelayMillis(event.guid, event.delayMillis)
+                    val aff = MmkvManager.decodeServerAffiliationInfo(event.guid)
+                        ?: com.v2ray.ang.dto.entities.ServerAffiliationInfo()
+                    aff.testDelayMillis = event.delayMillis
+                    if (event.delayMillis > 0) {
+                        val serverConfig = MmkvManager.decodeServerConfig(event.guid)
+                        val sub = serverConfig?.subscriptionId?.let { MmkvManager.decodeSubscription(it) }
+                        val isTg = sub?.remarks.equals(AppConfig.BUILTIN_SUB_TGPROXY_REMARKS, ignoreCase = true)
+                            || serverConfig?.remarks?.contains("telegram", ignoreCase = true) == true
+                            || serverConfig?.remarks?.startsWith("TG ", ignoreCase = true) == true
+                        if (isTg) {
+                            aff.telegramPassed = true
+                        }
+                    } else {
+                        aff.telegramPassed = false
+                    }
+                    MmkvManager.encodeServerAffiliationInfo(event.guid, aff)
                     MessageHelper.sendMsg2UI(this, AppConfig.MSG_MEASURE_CONFIG_SUCCESS, event.guid)
                 }
             }

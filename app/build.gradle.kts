@@ -1,6 +1,6 @@
 import org.gradle.api.tasks.Copy
 
-val appVersionName = (project.findProperty("VERSION_NAME") as? String) ?: "1.1.0"
+val appVersionName = (project.findProperty("VERSION_NAME") as? String) ?: "2.0.0"
 
 plugins {
     alias(libs.plugins.android.application)
