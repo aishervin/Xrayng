@@ -18,6 +18,7 @@ internal data class ServerRowUiModel(
     val telegramPassed: Boolean,
     val subscriptionBadge: String,
     val isProRestricted: Boolean,
+    val isTelegramProxy: Boolean,
 )
 
 internal data class ServerGroupUiState(
@@ -31,6 +32,7 @@ internal fun buildServerRowUiModel(
 ): ServerRowUiModel {
     val profile = server.profile
     val isPro = SettingsManager.isProRestricted(profile.subscriptionId)
+    val isTelegramProxy = isPro && SettingsManager.isTelegramProxySubscription(profile.subscriptionId)
     return ServerRowUiModel(
         guid = server.guid,
         profile = profile,
@@ -43,6 +45,7 @@ internal fun buildServerRowUiModel(
         telegramPassed = server.telegramPassed,
         subscriptionBadge = subscriptionRemarks.firstOrNull()?.toString().orEmpty(),
         isProRestricted = isPro,
+        isTelegramProxy = isTelegramProxy,
     )
 }
 

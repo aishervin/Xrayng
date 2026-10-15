@@ -82,8 +82,10 @@ fun GroupPagerPage(
     lazyGridStates: MutableMap<String, LazyGridState>,
     onSelectServer: (String) -> Unit,
     onEditServer: (String, ProfileItem) -> Unit,
-    onShareServer: (String, ProfileItem) -> Unit,
-    onMoreServer: (String, ProfileItem) -> Unit,
+    onShareServer: (String, ProfileItem, Boolean, Boolean) -> Unit,
+    onCopyTelegramProxy: (String) -> Unit,
+    onSendTelegramProxy: (String) -> Unit,
+    onMoreServer: (String, ProfileItem, Boolean, Boolean) -> Unit,
     onRemoveServer: (String) -> Unit,
     contentPadding: PaddingValues
 ) {
@@ -96,6 +98,8 @@ fun GroupPagerPage(
         onSelectServer,
         onEditServer,
         onShareServer,
+        onCopyTelegramProxy,
+        onSendTelegramProxy,
         onMoreServer,
         onRemoveServer,
     ) {
@@ -103,6 +107,8 @@ fun GroupPagerPage(
             select = onSelectServer,
             edit = onEditServer,
             share = onShareServer,
+            copyTelegramProxy = onCopyTelegramProxy,
+            sendTelegramProxy = onSendTelegramProxy,
             more = onMoreServer,
             remove = onRemoveServer,
         )
@@ -128,8 +134,10 @@ fun GroupPagerPage(
 private class ServerRowActions(
     val select: (String) -> Unit,
     val edit: (String, ProfileItem) -> Unit,
-    val share: (String, ProfileItem) -> Unit,
-    val more: (String, ProfileItem) -> Unit,
+    val share: (String, ProfileItem, Boolean, Boolean) -> Unit,
+    val copyTelegramProxy: (String) -> Unit,
+    val sendTelegramProxy: (String) -> Unit,
+    val more: (String, ProfileItem, Boolean, Boolean) -> Unit,
     val remove: (String) -> Unit,
 )
 
@@ -366,7 +374,12 @@ private fun ServerListItem(
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(row.remarks, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge.copy(lineBreak = LineBreak.Paragraph), maxLines = 2, overflow = TextOverflow.Ellipsis)
                 if (doubleColumnDisplay) {
-                    IconButton(onClick = { actions.more(row.guid, row.profile) }, Modifier.size(36.dp)) {
+                    IconButton(
+                        onClick = {
+                            actions.more(row.guid, row.profile, row.isProRestricted, row.isTelegramProxy)
+                        },
+                        Modifier.size(36.dp)
+                    ) {
                         Icon(
                             painterResource(R.drawable.ic_more_vert_24dp),
                             stringResource(R.string.acc_more),
@@ -376,24 +389,28 @@ private fun ServerListItem(
                 } else {
                     IconButton(
                         onClick = {
-                            if (row.isProRestricted) {
+                            if (row.isTelegramProxy) {
+                                actions.sendTelegramProxy(row.guid)
+                            } else if (row.isProRestricted) {
                                 Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
                             } else {
-                                actions.share(row.guid, row.profile)
+                                actions.share(row.guid, row.profile, row.isProRestricted, row.isTelegramProxy)
                             }
                         },
                         modifier = Modifier.size(36.dp)
                     ) {
                         Icon(
                             painterResource(R.drawable.ic_share_24dp),
-                            stringResource(R.string.title_configuration_share),
-                            tint = if (row.isProRestricted) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
+                            stringResource(if (row.isTelegramProxy) R.string.send_to_telegram else R.string.title_configuration_share),
+                            tint = if (row.isProRestricted && !row.isTelegramProxy) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
                             modifier = Modifier.size(24.dp)
                         )
                     }
                     IconButton(
                         onClick = {
-                            if (row.isProRestricted) {
+                            if (row.isTelegramProxy) {
+                                actions.copyTelegramProxy(row.guid)
+                            } else if (row.isProRestricted) {
                                 Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
                             } else {
                                 actions.edit(row.guid, row.profile)
@@ -402,9 +419,9 @@ private fun ServerListItem(
                         modifier = Modifier.size(36.dp)
                     ) {
                         Icon(
-                            painterResource(R.drawable.ic_edit_24dp),
-                            stringResource(R.string.acc_edit),
-                            tint = if (row.isProRestricted) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
+                            painterResource(if (row.isTelegramProxy) R.drawable.ic_copy else R.drawable.ic_edit_24dp),
+                            stringResource(if (row.isTelegramProxy) R.string.share_method_clipboard else R.string.acc_edit),
+                            tint = if (row.isProRestricted && !row.isTelegramProxy) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f) else LocalContentColor.current,
                             modifier = Modifier.size(24.dp)
                         )
                     }

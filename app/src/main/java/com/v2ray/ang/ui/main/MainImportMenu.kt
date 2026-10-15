@@ -10,7 +10,6 @@ import com.v2ray.ang.R
 import com.v2ray.ang.dto.entities.ProfileItem
 import com.v2ray.ang.enums.EConfigType
 import com.v2ray.ang.extension.isComplexType
-import com.v2ray.ang.handler.SettingsManager
 import com.v2ray.ang.ui.compose.AppDropdownMenuItems
 import com.v2ray.ang.ui.compose.SelectListDialog
 
@@ -58,10 +57,13 @@ internal enum class ServerMenuAction(
     @StringRes val labelRes: Int,
     val isShareAction: Boolean,
     val supportsComplexProfiles: Boolean,
+    val telegramOnly: Boolean = false,
 ) {
     ShareQRCode(R.string.share_method_qrcode, isShareAction = true, supportsComplexProfiles = false),
     ShareClipboard(R.string.share_method_clipboard, isShareAction = true, supportsComplexProfiles = false),
     ShareFullContent(R.string.share_method_full_content, isShareAction = true, supportsComplexProfiles = true),
+    SendTelegram(R.string.send_to_telegram, isShareAction = true, supportsComplexProfiles = false, telegramOnly = true),
+    CopyTelegram(R.string.share_method_clipboard, isShareAction = true, supportsComplexProfiles = false, telegramOnly = true),
     Edit(R.string.action_edit, isShareAction = false, supportsComplexProfiles = true),
     Delete(R.string.action_delete, isShareAction = false, supportsComplexProfiles = true),
 }
@@ -69,8 +71,20 @@ internal enum class ServerMenuAction(
 internal fun serverMenuActions(
     isComplexProfile: Boolean,
     includeManagementActions: Boolean,
-): List<ServerMenuAction> = ServerMenuAction.entries.filter { action ->
-    (includeManagementActions || action.isShareAction) && (!isComplexProfile || action.supportsComplexProfiles)
+    isTelegramProxy: Boolean = false,
+): List<ServerMenuAction> {
+    if (isTelegramProxy) {
+        return buildList {
+            add(ServerMenuAction.SendTelegram)
+            add(ServerMenuAction.CopyTelegram)
+            if (includeManagementActions) add(ServerMenuAction.Delete)
+        }
+    }
+    return ServerMenuAction.entries.filter { action ->
+        !action.telegramOnly &&
+            (includeManagementActions || action.isShareAction) &&
+            (!isComplexProfile || action.supportsComplexProfiles)
+    }
 }
 
 @Composable
@@ -96,25 +110,27 @@ fun ShareMethodDialog(
     guid: String,
     profile: ProfileItem,
     more: Boolean,
+    isProRestricted: Boolean,
+    isTelegramProxy: Boolean,
     onDismiss: () -> Unit,
     onAction: (MainAction) -> Unit,
     onRemove: (String) -> Unit,
 ) {
     val context = LocalContext.current
-    val isPro = SettingsManager.isProRestricted(profile.subscriptionId)
     val menuActions = serverMenuActions(
         isComplexProfile = profile.configType.isComplexType(),
         includeManagementActions = more,
+        isTelegramProxy = isTelegramProxy,
     )
     SelectListDialog(
         options = menuActions,
         optionText = { action ->
             val text = stringResource(action.labelRes)
-            if (isPro && action.isShareAction) "$text [PRO]" else text
+            if (isProRestricted && action.isShareAction && !isTelegramProxy) "$text [PRO]" else text
         },
         onSelected = { action ->
             onDismiss()
-            if (isPro && action.isShareAction) {
+            if (isProRestricted && action.isShareAction && !isTelegramProxy) {
                 Toast.makeText(context, R.string.pro_share_restriction_notice, Toast.LENGTH_SHORT).show()
                 return@SelectListDialog
             }
@@ -122,6 +138,8 @@ fun ShareMethodDialog(
                 ServerMenuAction.ShareQRCode -> onAction(MainAction.ShareQRCode(guid))
                 ServerMenuAction.ShareClipboard -> onAction(MainAction.ShareClipboard(guid))
                 ServerMenuAction.ShareFullContent -> onAction(MainAction.ShareFullContent(guid))
+                ServerMenuAction.SendTelegram -> onAction(MainAction.SendTelegramProxy(guid))
+                ServerMenuAction.CopyTelegram -> onAction(MainAction.CopyTelegramProxy(guid))
                 ServerMenuAction.Edit -> onAction(MainAction.EditServer(guid, profile))
                 ServerMenuAction.Delete -> onRemove(guid)
             }

@@ -230,7 +230,9 @@ class MainViewModel(
             MainAction.LocateSelectedServer,
             is MainAction.EditServer,
             is MainAction.ShareClipboard,
-            is MainAction.ShareFullContent -> {
+            is MainAction.ShareFullContent,
+            is MainAction.CopyTelegramProxy,
+            is MainAction.SendTelegramProxy -> {
                 // Handled by Activity via its onAction lambda
             }
         }

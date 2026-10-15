@@ -455,6 +455,7 @@
     <string name="title_webdav_remote_path">الدليل البعيد (اختياري)</string>
 
     <string name="share_method_qrcode">رمز QR</string>
+    <string name="send_to_telegram">الإرسال عبر Telegram</string>
     <string name="share_method_clipboard">نسخ رابط التكوين</string>
     <string name="share_method_full_content">نسخ التكوين الكامل</string>
     <string name="action_edit">تعديل</string>

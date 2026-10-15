@@ -1,6 +1,7 @@
 package com.v2ray.ang.ui.main
 
 import android.content.Intent
+import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
@@ -108,6 +109,8 @@ class MainActivity : HelperBaseComponentActivity() {
                     is MainAction.EditServer -> editServer(action.guid, action.profile)
                     is MainAction.ShareClipboard -> shareToClipboard(action.guid)
                     is MainAction.ShareFullContent -> shareFullContentAsync(action.guid)
+                    is MainAction.CopyTelegramProxy -> copyTelegramProxy(action.guid)
+                    is MainAction.SendTelegramProxy -> sendTelegramProxy(action.guid)
                     else -> mainViewModel.onAction(action)
                 }
             },
@@ -116,6 +119,37 @@ class MainActivity : HelperBaseComponentActivity() {
     }
 
     private fun shareToClipboard(guid: String): Boolean = AngConfigManager.share2Clipboard(this, guid) == 0
+
+    private fun copyTelegramProxy(guid: String) {
+        val config = AngConfigManager.telegramProxyShareConfig(guid)
+        if (config == null) {
+            toastError(R.string.toast_failure)
+            return
+        }
+        if (Utils.setClipboard(this, config)) {
+            toastSuccess(R.string.toast_success)
+        } else {
+            toastError(R.string.toast_failure)
+        }
+    }
+
+    private fun sendTelegramProxy(guid: String) {
+        val config = AngConfigManager.telegramProxyShareConfig(guid)
+        if (config == null) {
+            toastError(R.string.toast_failure)
+            return
+        }
+        val shareUri = Uri.parse("https://t.me/share/url")
+            .buildUpon()
+            .appendQueryParameter("url", config)
+            .build()
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, shareUri))
+        } catch (e: Exception) {
+            LogUtil.e(AppConfig.TAG, "Failed to open Telegram share", e)
+            toastError(R.string.toast_tg_app_not_found)
+        }
+    }
 
     private fun shareFullContentAsync(guid: String) {
         lifecycleScope.launch(Dispatchers.IO) {

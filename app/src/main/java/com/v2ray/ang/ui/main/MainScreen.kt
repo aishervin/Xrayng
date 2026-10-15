@@ -55,6 +55,14 @@ import com.v2ray.ang.ui.compose.QRCodeDialog
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
+private data class ServerShareTarget(
+    val guid: String,
+    val profile: ProfileItem,
+    val more: Boolean,
+    val isProRestricted: Boolean,
+    val isTelegramProxy: Boolean,
+)
+
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel,
@@ -81,7 +89,7 @@ fun MainScreen(
     var showDelInvalidConfirm by remember { mutableStateOf(false) }
     var showRemoveConfirm by remember { mutableStateOf<String?>(null) }
 
-    var shareTarget by remember { mutableStateOf<Triple<String, ProfileItem, Boolean>?>(null) }
+    var shareTarget by remember { mutableStateOf<ServerShareTarget?>(null) }
     val removeServer: (String) -> Unit = { guid ->
         if (confirmRemove) showRemoveConfirm = guid else onAction(MainAction.RemoveServer(guid))
     }
@@ -137,12 +145,13 @@ fun MainScreen(
         onConfirmRemove = { guid -> showRemoveConfirm = null; onAction(MainAction.RemoveServer(guid)) }
     )
 
-    if (shareTarget != null) {
-        val (guid, profile, more) = shareTarget!!
+    shareTarget?.let { target ->
         ShareMethodDialog(
-            guid = guid,
-            profile = profile,
-            more = more,
+            guid = target.guid,
+            profile = target.profile,
+            more = target.more,
+            isProRestricted = target.isProRestricted,
+            isTelegramProxy = target.isTelegramProxy,
             onDismiss = { shareTarget = null },
             onAction = onAction,
             onRemove = removeServer,
@@ -255,8 +264,14 @@ fun MainScreen(
                             lazyGridStates = lazyGridStates,
                             onSelectServer = { guid -> onAction(MainAction.SelectServer(guid)) },
                             onEditServer = { guid, profile -> onAction(MainAction.EditServer(guid, profile)) },
-                            onShareServer = { guid, profile -> shareTarget = Triple(guid, profile, false) },
-                            onMoreServer = { guid, profile -> shareTarget = Triple(guid, profile, true) },
+                            onShareServer = { guid, profile, isProRestricted, isTelegramProxy ->
+                                shareTarget = ServerShareTarget(guid, profile, false, isProRestricted, isTelegramProxy)
+                            },
+                            onCopyTelegramProxy = { guid -> onAction(MainAction.CopyTelegramProxy(guid)) },
+                            onSendTelegramProxy = { guid -> onAction(MainAction.SendTelegramProxy(guid)) },
+                            onMoreServer = { guid, profile, isProRestricted, isTelegramProxy ->
+                                shareTarget = ServerShareTarget(guid, profile, true, isProRestricted, isTelegramProxy)
+                            },
                             onRemoveServer = removeServer,
                             contentPadding = PaddingValues(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 12.dp)
                         )

@@ -578,6 +578,16 @@ object SettingsManager {
             || url.equals("https://subshen.pages.dev", ignoreCase = true)
     }
 
+    fun isTelegramProxySubscription(subId: String?): Boolean {
+        if (subId.isNullOrEmpty()) return false
+        val sub = decodeSubscription(subId) ?: return false
+        return isTelegramProxySource(sub.remarks, sub.url)
+    }
+
+    internal fun isTelegramProxySource(remarks: String?, url: String?): Boolean =
+        remarks?.trim().equals(AppConfig.BUILTIN_SUB_TGPROXY_REMARKS, ignoreCase = true)
+            || url?.trim().equals(AppConfig.BUILTIN_SUB_TGPROXY_URL, ignoreCase = true)
+
     /**
      * Ensures built-in dedicated subscriptions (Xray, Wireguard, Https/Sucks, Telegram proxy) are added if not present.
      * All built-in subscriptions have auto-update enabled with a 1-hour (60 minute) interval.

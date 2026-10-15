@@ -455,6 +455,7 @@
     <string name="title_webdav_remote_path">دایرکتوری ره دیر (اختیاری)</string>
 
     <string name="share_method_qrcode">کود QR</string>
+    <string name="send_to_telegram">ارسال در تلگرام</string>
     <string name="share_method_clipboard">لف گیری لینک کانفیگ</string>
     <string name="share_method_full_content">لف گیری پوی کانفیگ</string>
     <string name="action_edit">آلشتکاری</string>

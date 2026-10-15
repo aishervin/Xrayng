@@ -62,6 +62,13 @@ object AngConfigManager {
         )
     }
 
+    /** Returns a shareable Telegram link only for profiles from the built-in Telegram source. */
+    fun telegramProxyShareConfig(guid: String): String? {
+        val serverConfig = MmkvManager.decodeServerConfig(guid) ?: return null
+        if (!SettingsManager.isTelegramProxySubscription(serverConfig.subscriptionId)) return null
+        return shareConfig(guid).takeIf { it.isNotBlank() }
+    }
+
     /**
      * Shares the configuration to the clipboard.
      *
@@ -185,7 +192,10 @@ object AngConfigManager {
             val config = MmkvManager.decodeServerConfig(guid) ?: return ""
 
             val sub = if (config.subscriptionId.isNotEmpty()) MmkvManager.decodeSubscription(config.subscriptionId) else null
-            val isTgSub = sub?.remarks?.contains("telegram", ignoreCase = true) == true
+            val isTgSub = sub?.let {
+                SettingsManager.isTelegramProxySource(it.remarks, it.url)
+                    || it.remarks.contains("telegram", ignoreCase = true)
+            } == true
             val isTgNamed = config.remarks.startsWith("TG-", ignoreCase = true) || config.remarks.contains("telegram", ignoreCase = true)
 
             if (isTgSub || isTgNamed) {

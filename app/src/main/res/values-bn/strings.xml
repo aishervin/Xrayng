@@ -455,6 +455,7 @@
     <string name="title_webdav_remote_path">দূরবর্তী ডিরেক্টরি (ঐচ্ছিক)</string>
 
     <string name="share_method_qrcode">QR কোড</string>
+    <string name="send_to_telegram">টেলিগ্রামের মাধ্যমে পাঠান</string>
     <string name="share_method_clipboard">প্রোফাইল লিংক কপি করুন</string>
     <string name="share_method_full_content">পূর্ণ কনফিগারেশন কপি করুন</string>
     <string name="action_edit">সম্পাদনা</string>

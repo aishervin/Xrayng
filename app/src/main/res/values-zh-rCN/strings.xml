@@ -455,6 +455,7 @@
     <string name="title_webdav_remote_path">远程文件夹名（可选）</string>
 
     <string name="share_method_qrcode">二维码</string>
+    <string name="send_to_telegram">通过 Telegram 发送</string>
     <string name="share_method_clipboard">复制配置链接</string>
     <string name="share_method_full_content">复制完整配置</string>
     <string name="action_edit">编辑</string>

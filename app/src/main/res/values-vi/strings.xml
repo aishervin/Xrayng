@@ -455,6 +455,7 @@
     <string name="title_webdav_remote_path">Thư mục từ xa (không bắt buộc)</string>
 
     <string name="share_method_qrcode">Mã QR</string>
+    <string name="send_to_telegram">Gửi qua Telegram</string>
     <string name="share_method_clipboard">Sao chép liên kết cấu hình</string>
     <string name="share_method_full_content">Sao chép toàn bộ cấu hình</string>
     <string name="action_edit">Chỉnh sửa</string>
