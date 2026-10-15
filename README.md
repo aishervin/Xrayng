@@ -4,7 +4,7 @@
 
 # Xrayng™ (v2.1.1)
 
-<img src="https://readme-typing-svg.demolab.com?font=Vazirmatn&weight=800&size=40&pause=1200&color=FFA500&center=true&vCenter=true&width=750&lines=Xrayng+v2.0.0+Released;Next-Gen+Android+Network+Client;Fast,+Modern,+Material+3" alt="Xrayng animated title">
+<img src="https://readme-typing-svg.demolab.com?font=Vazirmatn&weight=800&size=40&pause=1200&color=FFA500&center=true&vCenter=true&width=750&lines=Xrayng+v2.1.1+Released;Next-Gen+Android+Network+Client;Fast,+Modern,+Material+3" alt="Xrayng animated title">
 
 <div align="center">
   <img src="https://img.shields.io/badge/Version-v2.1.1-FFA500?style=for-the-badge&logo=android&logoColor=121212" alt="Version">
